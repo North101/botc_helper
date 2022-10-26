@@ -1,0 +1,79 @@
+name: botc_helper
+description: 'A Blood on the Clocktower Helper'
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+9
+
+environment:
+  sdk: '>=2.19.0-255.2.beta <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  collection: any
+  drift: any
+  file_picker: any
+  flutter_riverpod_restorable: { path: ../../riverpod_restorable_provider }
+  flutter_riverpod: 2.0.0-dev.09
+  flutter_sticky_header: any
+  freezed_annotation: any
+  freezed: any
+  http: any
+  json_annotation: any
+  path_provider: any
+  path: any
+  sqlite3_flutter_libs: any
+  uuid: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  build_runner: any
+  drift_dev: any
+  flutter_gen_runner: any
+  flutter_launcher_icons: any
+  flutter_lints: any
+  json_serializable: any
+
+dependency_overrides:
+  drift:
+    git:
+      url: https://github.com/simolus3/drift.git
+      ref: develop
+      path: drift
+  drift_dev:
+    git:
+      url: https://github.com/simolus3/drift.git
+      ref: develop
+      path: drift_dev
+  sqlparser:
+    git:
+      url: https://github.com/simolus3/drift.git
+      ref: develop
+      path: sqlparser
+  sqlite3_flutter_libs:
+    git:
+      url: https://github.com/simolus3/sqlite3.dart.git
+      ref: main
+      path: sqlite3_flutter_libs
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/data/
+    - assets/images/
+
+flutter_gen:
+  output: lib/util/
+
+flutter_icons:
+  ios: true
+  macos: true
+  android: true
+  image_path: assets/icons/app.png
+
+scripts: scripts.yaml

@@ -1,0 +1,20 @@
+import '/db/database.dart';
+import 'character.drift';
+
+CREATE TABLE character_option (
+  character_id TEXT REFERENCES character(id),
+  position INT NOT NULL,
+  title TEXT NOT NULL,
+  item TEXT NOT NULL MAPPED BY `const CharacterOptionItemConverter()`,
+  custom BOOL NOT NULL,
+
+  PRIMARY KEY (character_id, position)
+);
+
+listCharacterOptions($where = TRUE):
+SELECT *
+FROM character_option
+WHERE $where
+ORDER BY
+  character_option.character_id,
+  character_option.position;

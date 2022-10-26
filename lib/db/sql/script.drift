@@ -1,0 +1,10 @@
+CREATE TABLE script(
+  id TEXT NOT NULL PRIMARY KEY,
+  name TEXT NOT NULL,
+  custom BOOL NOT NULL
+);
+
+listScripts($where = TRUE):
+SELECT *
+FROM script
+WHERE $where;

@@ -1,0 +1,17 @@
+build_runner:
+  - flutter pub run build_runner build --delete-conflicting-outputs
+
+migrations:
+  - $build_runner
+  - flutter pub run drift_dev schema dump lib/db/database.dart db/schemas/
+
+build:
+  apk:
+    - $migrations
+    - flutter build apk --split-per-abi
+  appbundle:
+    - $migrations
+    - flutter build appbundle
+  ios:
+    - $migrations
+    - flutter build ios
