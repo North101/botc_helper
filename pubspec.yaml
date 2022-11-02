@@ -26,6 +26,7 @@ dependencies:
   path: any
   sqlite3_flutter_libs: any
   uuid: any
+  wakelock: any
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_restorable/flutter_riverpod_restorable.dart';
+import 'package:wakelock/wakelock.dart';
 
 import '/view/debug_page.dart';
 import '/view/main_page.dart';
@@ -14,6 +15,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Wakelock.enable();
+
     final theme = Theme.of(context);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
