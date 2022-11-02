@@ -3,7 +3,7 @@ description: 'A Blood on the Clocktower Helper'
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+9
+version: 1.0.0+10
 
 environment:
   sdk: '>=2.19.0-255.2.beta <3.0.0'
@@ -34,8 +34,8 @@ dev_dependencies:
   build_runner: any
   drift_dev: any
   flutter_gen_runner: any
-  flutter_launcher_icons: any
   flutter_lints: any
+  icons_launcher: any
   json_serializable: any
 
 dependency_overrides:
@@ -70,10 +70,16 @@ flutter:
 flutter_gen:
   output: lib/util/
 
-flutter_icons:
-  ios: true
-  macos: true
-  android: true
+icons_launcher:
   image_path: assets/icons/app.png
+  platforms:
+    android:
+      enable: true
+      adaptive_background_image: assets/icons/app_background.png
+      adaptive_foreground_image: assets/icons/app_foreground.png
+    ios:
+      enable: true
+    macos:
+      enable: true
 
 scripts: scripts.yaml
