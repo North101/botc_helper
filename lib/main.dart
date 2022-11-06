@@ -25,6 +25,7 @@ class App extends StatelessWidget {
         restorationScopeId: 'root',
         title: 'BotC Helper',
         theme: ThemeData(
+          brightness: Brightness.light,
           appBarTheme: theme.appBarTheme.copyWith(
             color: const Color(0xFF093156),
             systemOverlayStyle: SystemUiOverlayStyle.light,
@@ -43,6 +44,10 @@ class App extends StatelessWidget {
             buttonColor: const Color(0xFF093156),
           ),
         ),
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+        ),
+        themeMode: ThemeMode.system,
         builder: (context, child) => RestorableProviderRegister(
           restorationId: 'app',
           providers: const [],

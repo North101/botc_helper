@@ -7,16 +7,3 @@ CREATE TABLE script_character(
 
   PRIMARY KEY (script_id, character_id)
 );
-
-listScriptCharacter($where = TRUE):
-SELECT
-  character.*
-FROM script
-INNER JOIN script_character
-  ON script_character.script_id = script.id
-INNER JOIN character
-  ON character.id = script_character.character_id
-WHERE $where
-ORDER BY
-  script.id,
-  character.position;

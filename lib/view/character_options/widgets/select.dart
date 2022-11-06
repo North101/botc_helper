@@ -35,6 +35,7 @@ class OptionSelectItemWidget extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: DropdownButton<int>(
+        autofocus: true,
         isExpanded: true,
         itemHeight: 72,
         iconSize: 0.0,

@@ -4,6 +4,8 @@ import 'package:drift/drift.dart' hide JsonKey;
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '/db/database.dart';
+
 part 'character_option.freezed.dart';
 part 'character_option.g.dart';
 
@@ -36,8 +38,8 @@ class CharacterOptionItem {
   )
   final List<OptionItem> items;
   @JsonKey(
-    fromJson: characterOptionNextFromJson,
-    toJson: characterOptionNextToJson,
+    fromJson: characterOptionItemNFromJson,
+    toJson: characterOptionItemNToJson,
   )
   final CharacterOptionItem? next;
 
@@ -45,12 +47,6 @@ class CharacterOptionItem {
 
   Map<String, dynamic> toJson() => _$CharacterOptionItemToJson(this);
 }
-
-characterOptionItemsFromJson(List json) => json.map((e) => OptionItem.fromJson((e as Map).cast())).toList();
-characterOptionItemsToJson(List<OptionItem> items) => items.map((e) => e.toJson()).toList();
-
-characterOptionNextFromJson(Map? json) => json != null ? CharacterOptionItem.fromJson(json.cast()) : null;
-characterOptionNextToJson(CharacterOptionItem? data) => data?.toJson();
 
 @freezed
 class OptionItem with _$OptionItem {

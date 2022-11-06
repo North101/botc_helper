@@ -52,7 +52,7 @@ class DebugPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Debug'),
       ),
-      body: AsyncValueBuilder<DatabaseResult>(
+      body: AsyncValueBuilder(
         value: dbState,
         data: (state) => Stack(
           children: [

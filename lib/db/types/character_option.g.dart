@@ -9,14 +9,14 @@ part of 'character_option.dart';
 CharacterOptionItem _$CharacterOptionItemFromJson(Map json) =>
     CharacterOptionItem(
       characterOptionItemsFromJson(json['items'] as List),
-      characterOptionNextFromJson(json['next'] as Map?),
+      characterOptionItemNFromJson(json['next'] as Map?),
     );
 
 Map<String, dynamic> _$CharacterOptionItemToJson(
         CharacterOptionItem instance) =>
     <String, dynamic>{
       'items': characterOptionItemsToJson(instance.items),
-      'next': characterOptionNextToJson(instance.next),
+      'next': characterOptionItemNToJson(instance.next),
     };
 
 _$OptionLabelItem _$$OptionLabelItemFromJson(Map json) => _$OptionLabelItem(

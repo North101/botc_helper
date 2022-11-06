@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_restorable/flutter_riverpod_restorable.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import '/db/database.dart';
 import '/providers/db.dart';
 import '/view/character_options/page.dart';
 import '/view/header_list_tile.dart';
 import '/view/util.dart';
+
+part 'character_page.g.dart';
 
 final scriptProvider = Provider<ScriptData>((ref) => throw UnimplementedError());
 final characterProvider = Provider<CharacterData>((ref) => throw UnimplementedError());
@@ -27,32 +30,28 @@ final genericOptionListProvider = StreamProvider((ref) {
   dbProvider,
 ]);
 
-class CharacterPageArgument {
-  const CharacterPageArgument({
+@JsonSerializable()
+class CharacterPageArguments {
+  const CharacterPageArguments({
     required this.script,
     required this.character,
   });
 
-  CharacterPageArgument.fromJson(Map<String, dynamic> data)
-      : this(
-          script: ScriptData.fromJson((data['script'] as Map).cast()),
-          character: CharacterData.fromJson((data['character'] as Map).cast()),
-        );
+  factory CharacterPageArguments.fromJson(Map<String, dynamic> json) => _$CharacterPageArgumentsFromJson(json);
 
+  @JsonKey(fromJson: scriptFromJson, toJson: scriptToJson)
   final ScriptData script;
+  @JsonKey(fromJson: characterFromJson, toJson: characterToJson)
   final CharacterData character;
 
-  Map<String, dynamic> toJson() => {
-        'script': script.toJson(),
-        'character': character.toJson(),
-      };
+  Map<String, dynamic> toJson() => _$CharacterPageArgumentsToJson(this);
 }
 
 class CharacterPage extends ConsumerWidget {
   const CharacterPage({super.key});
 
   static Route<void> route(BuildContext context, Object? arg) {
-    final arguments = CharacterPageArgument.fromJson((arg as Map).cast());
+    final arguments = CharacterPageArguments.fromJson((arg as Map).cast());
     return MaterialPageRoute(builder: (context) {
       return CharacterPage.withOverrides(
         script: arguments.script,
@@ -90,21 +89,28 @@ class CharacterPage extends ConsumerWidget {
           const SliverToBoxAdapter(child: CharacterHeader()),
           characterOptionList.when(
             loading: () => const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator())),
-            data: (data) => SliverStickyHeader(
-              header: HeaderListTile.title(
-                title: 'Character Info',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              sliver: SliverList(
-                delegate: SliverChildSeperatedBuilderDelegate(
-                  (context, index) => CharacterOptionTile(option: data[index]),
-                  (context, index) => const Divider(),
-                  childCount: data.length,
+            data: (data) {
+              if (data.isEmpty) return const SliverToBoxAdapter(child: SizedBox.shrink());
+
+              return SliverStickyHeader(
+                header: HeaderListTile.title(
+                  title: '${character.name} Info',
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
-              ),
-            ),
+                sliver: SliverList(
+                  delegate: SliverChildSeperatedBuilderDelegate(
+                    (context, index) => CharacterOptionTile(option: data[index]),
+                    (context, index) => const Divider(),
+                    childCount: data.length,
+                  ),
+                ),
+              );
+            },
             error: (error, stackTrace) => SliverToBoxAdapter(child: Text(error.toString())),
           ),
+          characterOptionList.maybeWhen(data: (data) => data.isNotEmpty, orElse: () => false)
+              ? const SliverToBoxAdapter(child: SizedBox(height: 8))
+              : const SliverToBoxAdapter(child: SizedBox.shrink()),
           genericOptionList.when(
             loading: () => const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator())),
             data: (data) => SliverStickyHeader(
@@ -134,14 +140,24 @@ class CharacterHeader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final character = ref.watch(characterProvider);
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(children: [
-        character.image(),
-        const SizedBox(height: 8),
-        Text(character.description, style: Theme.of(context).textTheme.titleMedium),
-      ]),
-    );
+
+    return Column(children: [
+      character.image(
+        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) => Padding(
+          padding: const EdgeInsets.all(8),
+          child: child,
+        ),
+      ),
+      if (character.description.isNotEmpty)
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: Text(
+            character.description,
+            style: Theme.of(context).textTheme.titleMedium,
+            textAlign: TextAlign.center,
+          ),
+        ),
+    ]);
   }
 }
 

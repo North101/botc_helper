@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_restorable/flutter_riverpod_restorable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '/db/database.dart';
 import '/view/character_options/widgets/alignment.dart';
@@ -10,10 +11,13 @@ import '/view/character_options/widgets/number.dart';
 import '/view/character_options/widgets/select.dart';
 import '/view/character_options/widgets/text.dart';
 
+part 'page.g.dart';
+
 final scriptProvider = Provider<ScriptData>((ref) => throw UnimplementedError());
 final characterProvider = Provider<CharacterData>((ref) => throw UnimplementedError());
 final characterOptionProvider = Provider<CharacterOptionItem>((ref) => throw UnimplementedError());
 
+@JsonSerializable()
 class CharacterOptionArguments {
   const CharacterOptionArguments({
     required this.script,
@@ -21,22 +25,16 @@ class CharacterOptionArguments {
     required this.characterOption,
   });
 
-  CharacterOptionArguments.fromJson(Map<String, dynamic> data)
-      : this(
-          script: ScriptData.fromJson((data['script'] as Map).cast()),
-          character: CharacterData.fromJson((data['character'] as Map).cast()),
-          characterOption: CharacterOptionItem.fromJson((data['character_option'] as Map).cast()),
-        );
+  factory CharacterOptionArguments.fromJson(Map<String, dynamic> json) => _$CharacterOptionArgumentsFromJson(json);
 
+  @JsonKey(fromJson: scriptFromJson, toJson: scriptToJson)
   final ScriptData script;
+  @JsonKey(fromJson: characterFromJson, toJson: characterToJson)
   final CharacterData character;
+  @JsonKey(fromJson: characterOptionItemFromJson, toJson: characterOptionItemToJson)
   final CharacterOptionItem characterOption;
 
-  Map<String, dynamic> toJson() => {
-        'script': script.toJson(),
-        'character': character.toJson(),
-        'character_option': characterOption.toJson(),
-      };
+  Map<String, dynamic> toJson() => _$CharacterOptionArgumentsToJson(this);
 }
 
 class CharacterOptionPage extends ConsumerWidget {

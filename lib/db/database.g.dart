@@ -1234,28 +1234,6 @@ abstract class _$Database extends GeneratedDatabase {
         }).asyncMap(script.mapFromRow);
   }
 
-  Selectable<CharacterData> listScriptCharacter(
-      {ListScriptCharacter$where? where}) {
-    var $arrayStartIndex = 1;
-    final generatedwhere = $write(
-        where?.call(this.script, this.scriptCharacter, this.character) ??
-            const CustomExpression('(TRUE)'),
-        hasMultipleTables: true,
-        startIndex: $arrayStartIndex);
-    $arrayStartIndex += generatedwhere.amountOfVariables;
-    return customSelect(
-        'SELECT character.* FROM script INNER JOIN script_character ON script_character.script_id = script.id INNER JOIN character ON character.id = script_character.character_id WHERE ${generatedwhere.sql} ORDER BY script.id, character.position',
-        variables: [
-          ...generatedwhere.introducedVariables
-        ],
-        readsFrom: {
-          script,
-          scriptCharacter,
-          character,
-          ...generatedwhere.watchedTables,
-        }).asyncMap(character.mapFromRow);
-  }
-
   Selectable<CharacterData> listCharacters(
       {ListCharacters$where? where, ListCharacters$orderBy? orderBy}) {
     var $arrayStartIndex = 1;
@@ -1310,8 +1288,6 @@ abstract class _$Database extends GeneratedDatabase {
 }
 
 typedef ListScripts$where = Expression<bool> Function(Script script);
-typedef ListScriptCharacter$where = Expression<bool> Function(
-    Script script, ScriptCharacter script_character, Character character);
 typedef ListCharacters$where = Expression<bool> Function(Character character);
 typedef ListCharacters$orderBy = OrderBy Function(Character character);
 typedef ListCharacterOptions$where = Expression<bool> Function(

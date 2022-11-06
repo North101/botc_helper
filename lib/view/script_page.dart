@@ -6,10 +6,12 @@ import 'package:flutter_riverpod_restorable/flutter_riverpod_restorable.dart';
 
 import '/db/database.dart';
 import '/providers.dart';
+import '/util/restorable.dart';
 import '/view/async_value_builder.dart';
-import '/view/edit_script_page.dart';
-import '/view/character_grid.dart';
 import '/view/character_page.dart';
+import '/view/edit_script_page.dart';
+import '/view/hide_character_page.dart';
+import 'character_list.dart';
 
 final currentTabProvider = RestorableProvider<RestorableInt>(
   (ref) => throw UnimplementedError(),
@@ -31,7 +33,14 @@ final characterListProvider = StreamProvider((ref) {
   final db = ref.watch(dbProvider);
   final scriptId = ref.watch(scriptIdProvider);
   return db
-      .listScriptCharacter(where: (script, scriptCharacter, character) => script.id.equals(scriptId))
+      .listCharacters(
+        where: (character) =>
+            character.id.isInQuery(db.characterIdInScript(scriptId)) |
+            character.type.equalsValue(CharacterType.traveler),
+        orderBy: (character) => drift.OrderBy([
+          drift.OrderingTerm.asc(character.position),
+        ]),
+      )
       .watch()
       .map((e) => e.groupListsBy((e) => e.type).entries.toList());
 }, dependencies: [
@@ -42,44 +51,25 @@ final characterListProvider = StreamProvider((ref) {
 final nightListProvider = StreamProvider.family.autoDispose<List<CharacterData>, bool>((ref, state) {
   final db = ref.watch(dbProvider);
   final scriptId = ref.watch(scriptIdProvider);
+  final nightHidden = ref.watch(hiddenCharacterProvider).value;
   nightColumn(Character character) => state ? character.firstNight : character.otherNight;
   return db
       .listCharacters(
         where: (character) =>
-            (character.id.isInQuery(db.selectOnly(db.scriptCharacter)
-                  ..addColumns([db.scriptCharacter.characterId])
-                  ..where(db.scriptCharacter.scriptId.equals(scriptId))) |
+            (character.id.isInQuery(db.characterIdInScript(scriptId)) |
                 character.type.equalsValue(CharacterType.info)) &
-            nightColumn(character).isNotNull(),
+            nightColumn(character).isNotNull() &
+            character.id.isNotIn(nightHidden),
         orderBy: (character) => drift.OrderBy([
-          drift.OrderingTerm.asc(
-            nightColumn(character),
-          )
+          drift.OrderingTerm.asc(nightColumn(character)),
         ]),
       )
       .watch();
 }, dependencies: [
   dbProvider,
   scriptIdProvider,
+  hiddenCharacterProvider,
 ]);
-
-class RestorableSet<E> extends RestorableValue<Set<E>> {
-  RestorableSet(this._defaultValue);
-
-  final Set<E> _defaultValue;
-
-  @override
-  Set<E> createDefaultValue() => _defaultValue;
-
-  @override
-  void didUpdateValue(Set<E>? oldValue) => notifyListeners();
-
-  @override
-  Set<E> fromPrimitives(Object? data) => (data as List).toSet().cast();
-
-  @override
-  Object? toPrimitives() => value.toList();
-}
 
 final firstNightSelectedProvider = RestorableProvider<RestorableSet<String>>(
   (ref) => throw UnimplementedError(),
@@ -89,6 +79,11 @@ final firstNightSelectedProvider = RestorableProvider<RestorableSet<String>>(
 final otherNightSelectedProvider = RestorableProvider<RestorableSet<String>>(
   (ref) => throw UnimplementedError(),
   restorationId: 'otherNightSelectedProvider',
+);
+
+final hiddenCharacterProvider = RestorableProvider<RestorableSet<String>>(
+  (ref) => throw UnimplementedError(),
+  restorationId: 'hiddenCharacterProvider',
 );
 
 class ScriptPage extends ConsumerStatefulWidget {
@@ -114,6 +109,7 @@ class ScriptPage extends ConsumerStatefulWidget {
           currentTabProvider.overrideWithRestorable(RestorableInt(0)),
           firstNightSelectedProvider.overrideWithRestorable(RestorableSet({})),
           otherNightSelectedProvider.overrideWithRestorable(RestorableSet({})),
+          hiddenCharacterProvider.overrideWithRestorable(RestorableSet({})),
         ],
         child: const ScriptPage(),
       );
@@ -160,6 +156,11 @@ class ScriptPageState extends ConsumerState<ScriptPage> with TickerProviderState
           actions: [
             if (script.custom) const EditButton(),
             if (script.custom) const DeleteButton(),
+            if (currentTab == 0 || currentTab == 1)
+              ProviderScope(
+                parent: ProviderScope.containerOf(context),
+                child: const HideButton(),
+              ),
             if (currentTab == 0) const SelectButton(firstNight: true),
             if (currentTab == 1) const SelectButton(firstNight: false),
           ],
@@ -356,6 +357,55 @@ class SelectButton extends ConsumerWidget {
   }
 }
 
+class HideButton extends ConsumerStatefulWidget {
+  const HideButton({super.key});
+
+  @override
+  HideButtonState createState() => HideButtonState();
+}
+
+class HideButtonState extends ConsumerState<HideButton> with RestorationMixin {
+  late RestorableRouteFuture<Set<String>?> hideCharacterRouteFuture;
+
+  @override
+  void initState() {
+    super.initState();
+
+    hideCharacterRouteFuture = RestorableRouteFuture(
+      onPresent: (navigator, arguments) => navigator.restorablePush(
+        HideCharacterPage.route,
+        arguments: arguments,
+      ),
+      onComplete: (result) {
+        if (result == null) return;
+
+        final hiddenCharacter = ref.read(hiddenCharacterProvider);
+        hiddenCharacter.value = result;
+      },
+    );
+  }
+
+  @override
+  String restorationId = 'hide_button';
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    registerForRestoration(hideCharacterRouteFuture, 'hideCharacterRouteFuture');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      tooltip: 'Hide Characters',
+      onPressed: () async => hideCharacterRouteFuture.present(HideCharacterArgument(
+        script: await ref.read(scriptProvider.future),
+        characterIdList: ref.read(hiddenCharacterProvider).value,
+      ).toJson()),
+      icon: const Icon(Icons.visibility),
+    );
+  }
+}
+
 class NightView extends ConsumerWidget {
   const NightView({
     required this.firstNight,
@@ -370,7 +420,6 @@ class NightView extends ConsumerWidget {
     return AsyncValueBuilder(
       value: items,
       data: (data) => ListView.separated(
-        padding: const EdgeInsets.only(top: 8),
         itemBuilder: (context, index) => CharacterNightTile(
           firstNight: firstNight,
           character: data[index],
@@ -415,18 +464,16 @@ class CharacterNightTile extends ConsumerWidget {
           };
         },
       ),
-      onTap: character.type != CharacterType.info
-          ? () {
-              final script = ref.read(scriptProvider).value!;
-              Navigator.of(context).restorablePush(
-                CharacterPage.route,
-                arguments: CharacterPageArgument(
-                  script: script,
-                  character: character,
-                ).toJson(),
-              );
-            }
-          : null,
+      onTap: () {
+        final script = ref.read(scriptProvider).value!;
+        Navigator.of(context).restorablePush(
+          CharacterPage.route,
+          arguments: CharacterPageArguments(
+            script: script,
+            character: character,
+          ).toJson(),
+        );
+      },
     );
   }
 }
@@ -437,15 +484,15 @@ class CharacterListView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final characterList = ref.watch(characterListProvider);
-    return AsyncValueBuilder<List<MapEntry<CharacterType, List<CharacterData>>>>(
+    return AsyncValueBuilder(
       value: characterList,
-      data: (data) => CharacterGrid(
+      data: (data) => CharacterList(
         data: data,
         onTap: (character) {
           final script = ref.read(scriptProvider).value!;
           Navigator.of(context).restorablePush(
             CharacterPage.route,
-            arguments: CharacterPageArgument(
+            arguments: CharacterPageArguments(
               script: script,
               character: character,
             ).toJson(),

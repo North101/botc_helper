@@ -23,25 +23,66 @@
   },
   {
     "id": "minion",
-    "name": "Minion Info",
+    "name": "Minion Setup",
     "type": "info",
     "description": "",
     "first_night": 4,
     "first_night_reminder": "Show \"This is the Demon\" token. Point to the Demon.",
     "other_night": null,
     "other_night_reminder": "",
-    "options": []
+    "options": [
+      {
+        "title": "This is your Demon",
+        "items": [
+          {
+            "type": "label",
+            "value": "This is your Demon"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "demon",
-    "name": "Demon Info",
+    "name": "Demon Setup",
     "type": "info",
     "description": "",
     "first_night": 7,
     "first_night_reminder": "Show \"These are your Minions\" token. Point to all Minions.\nShow \"These characters are not in play\" token. Show 3 not-in-play character tokens.",
     "other_night": null,
     "other_night_reminder": "",
-    "options": []
+    "options": [
+      {
+        "title": "These are your Minion(s)",
+        "items": [
+          {
+            "type": "label",
+            "value": "These are your Minion(s)"
+          }
+        ]
+      },
+      {
+        "title": "Not in play",
+        "items": [
+          {
+            "type": "label",
+            "value": "These characters are NOT in play"
+          },
+          {
+            "type": "character",
+            "filter": []
+          },
+          {
+            "type": "character",
+            "filter": []
+          },
+          {
+            "type": "character",
+            "filter": []
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "washerwoman",

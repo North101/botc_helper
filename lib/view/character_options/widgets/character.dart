@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' as drift;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_restorable/flutter_riverpod_restorable.dart';
@@ -16,7 +17,14 @@ final characterProvider = StreamProvider((ref) {
   final db = ref.watch(dbProvider);
   final characterId = ref.watch(characterIdProvider).value;
   if (characterId == null) return Stream.value(null);
-  return db.listCharacters(where: (character) => character.id.equals(characterId)).watchSingleOrNull();
+  return db
+      .listCharacters(
+        where: (character) => character.id.equals(characterId),
+        orderBy: (character) => drift.OrderBy([
+          drift.OrderingTerm.asc(character.position),
+        ]),
+      )
+      .watchSingleOrNull();
 }, dependencies: [
   dbProvider,
   characterIdProvider,
@@ -33,19 +41,18 @@ class OptionCharacterItemWidget extends ConsumerStatefulWidget {
     required String restorationId,
     required ScriptData script,
     required OptionCharacterItem optionItem,
-  }) => RestorableProviderScope(
-      restorationId: restorationId,
-      restorableOverrides: [
-        characterIdProvider.overrideWithRestorable(RestorableStringN(optionItem.value)),
-      ],
-      overrides: [
-        scriptProvider.overrideWithValue(script)
-      ],
-      child: OptionCharacterItemWidget(
-        restorationId: '${restorationId}_page',
-        optionItem: optionItem,
-      ),
-    );
+  }) =>
+      RestorableProviderScope(
+        restorationId: restorationId,
+        restorableOverrides: [
+          characterIdProvider.overrideWithRestorable(RestorableStringN(optionItem.value)),
+        ],
+        overrides: [scriptProvider.overrideWithValue(script)],
+        child: OptionCharacterItemWidget(
+          restorationId: '${restorationId}_page',
+          optionItem: optionItem,
+        ),
+      );
 
   final OptionCharacterItem optionItem;
   final String restorationId;
@@ -62,7 +69,7 @@ class OptionCharacterItemWidgetState extends ConsumerState<OptionCharacterItemWi
     super.initState();
 
     characterFilterRouteFuture = RestorableRouteFuture<CharacterData?>(
-      onPresent: (navigator, arguments) => Navigator.of(context).restorablePush(
+      onPresent: (navigator, arguments) => navigator.restorablePush(
         CharacterFilterPage.route,
         arguments: arguments,
       ),
@@ -72,6 +79,14 @@ class OptionCharacterItemWidgetState extends ConsumerState<OptionCharacterItemWi
         ref.read(characterIdProvider).value = result.id;
       },
     );
+  }
+
+  @override
+  String? get restorationId => widget.restorationId;
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    registerForRestoration(characterFilterRouteFuture, 'characterFilterRouteFuture');
   }
 
   @override
@@ -96,7 +111,7 @@ class OptionCharacterItemWidgetState extends ConsumerState<OptionCharacterItemWi
                 ),
               ),
               onPressed: () => characterFilterRouteFuture.present(
-                CharacterFilterArgument(
+                CharacterFilterArguments(
                   script: script,
                   scriptFilterList: widget.optionItem.filter,
                 ).toJson(),
@@ -105,36 +120,33 @@ class OptionCharacterItemWidgetState extends ConsumerState<OptionCharacterItemWi
           );
         }
 
-        return InkWell(
-          onTap: () => characterFilterRouteFuture.present(
-            CharacterFilterArgument(
-              script: script,
-              scriptFilterList: widget.optionItem.filter,
-            ).toJson(),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              children: [
-                character.image(),
-                Text(
-                  character.name,
-                  style: Theme.of(context).textTheme.displaySmall,
-                  textAlign: TextAlign.center,
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Card(
+            child: InkWell(
+              onTap: () => characterFilterRouteFuture.present(
+                CharacterFilterArguments(
+                  script: script,
+                  scriptFilterList: widget.optionItem.filter,
+                ).toJson(),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  children: [
+                    character.image(),
+                    Text(
+                      character.name,
+                      style: Theme.of(context).textTheme.displaySmall,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         );
       },
     );
-  }
-
-  @override
-  String? get restorationId => widget.restorationId;
-
-  @override
-  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    registerForRestoration(characterFilterRouteFuture, 'characterFilterRouteFuture');
   }
 }

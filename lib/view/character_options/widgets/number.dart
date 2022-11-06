@@ -36,6 +36,7 @@ class OptionNumberItemWidget extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: TextFormField(
+        autofocus: true,
         initialValue: '${number.value}',
         onChanged: (value) {
           number.value = int.tryParse(value) ?? number.value;

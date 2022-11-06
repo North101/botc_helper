@@ -1,3 +1,4 @@
+import 'package:botc_helper/view/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
@@ -5,8 +6,8 @@ import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import '/db/database.dart';
 import '/view/header_list_tile.dart';
 
-class CharacterGrid extends ConsumerWidget {
-  const CharacterGrid({
+class CharacterList extends ConsumerWidget {
+  const CharacterList({
     required this.data,
     required this.onTap,
     super.key,
@@ -23,18 +24,15 @@ class CharacterGrid extends ConsumerWidget {
           SliverStickyHeader(
             header: HeaderListTile.title(
               title: characterByType.key.title,
-              style: Theme.of(context).textTheme.headlineSmall,
             ),
-            sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => CharacterGridItem(
+            sliver: SliverList(
+              delegate: SliverChildSeperatedBuilderDelegate(
+                (context, index) => CharacterTile(
                   character: characterByType.value[index],
                   onTap: onTap,
                 ),
-                childCount: characterByType.value.length,
+                (context, index) => const Divider(),
+                childCount: characterByType.value.length
               ),
             ),
           ),
@@ -43,8 +41,8 @@ class CharacterGrid extends ConsumerWidget {
   }
 }
 
-class CharacterGridItem extends StatelessWidget {
-  const CharacterGridItem({
+class CharacterTile extends StatelessWidget {
+  const CharacterTile({
     required this.character,
     this.onTap,
     super.key,
@@ -55,22 +53,11 @@ class CharacterGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap != null ? () => onTap?.call(character) : null,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            character.image(),
-            Text(
-              character.name,
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
+    return ListTile(
+      title: Text(character.name),
+      subtitle: Text(character.description),
+      leading: character.image(width: 40, height: 40),
+      onTap: onTap != null ? () => onTap!(character) : null,
     );
   }
 }

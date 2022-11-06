@@ -5,13 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_restorable/flutter_riverpod_restorable.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 import '/db/database.dart';
 import '/providers/db.dart';
+import '/util/restorable.dart';
 import '/util/script_data.dart';
 import '/view/async_value_builder.dart';
 import '/view/header_list_tile.dart';
+
+part 'edit_script_page.g.dart';
 
 final collapseProvider = RestorableProvider<RestorableBool>(
   (ref) => throw UnimplementedError(),
@@ -23,50 +27,10 @@ final scriptProvider = RestorableProvider<RestorableScriptData>(
   restorationId: 'script_provider',
 );
 
-abstract class RestorableDataClass<T extends drift.DataClass> extends RestorableValue<T> {
-  RestorableDataClass(this._defaultValue);
-
-  final T _defaultValue;
-
-  @override
-  T createDefaultValue() => _defaultValue;
-
-  @override
-  void didUpdateValue(T? oldValue) => notifyListeners();
-
-  @override
-  Object? toPrimitives() => value.toJson();
-}
-
-class RestorableScriptData extends RestorableDataClass<ScriptData> {
-  RestorableScriptData(super.defaultValue);
-
-  @override
-  ScriptData fromPrimitives(Object? data) => ScriptData.fromJson((data as Map).cast());
-}
-
 final characterIdListProvider = RestorableProvider<RestorableSet<String>>(
   (ref) => throw UnimplementedError(),
   restorationId: 'character_id_list_provider',
 );
-
-class RestorableSet<E> extends RestorableValue<Set<E>> {
-  RestorableSet(this._defaultValue);
-
-  final Set<E> _defaultValue;
-
-  @override
-  Set<E> createDefaultValue() => _defaultValue;
-
-  @override
-  void didUpdateValue(Set<E>? oldValue) => notifyListeners();
-
-  @override
-  Set<E> fromPrimitives(Object? data) => (data as List).cast<E>().toSet();
-
-  @override
-  Object? toPrimitives() => value.toList();
-}
 
 final characterListProvider = StreamProvider((ref) {
   final db = ref.watch(dbProvider);
@@ -74,11 +38,12 @@ final characterListProvider = StreamProvider((ref) {
   final characterIdList = ref.watch(characterIdListProvider).value;
   return db
       .listCharacters(
-        where: (character) => character.type.equalsValue(CharacterType.traveler).not(),
+        where: (character) => character.type.isNotInValues([
+          CharacterType.info,
+          CharacterType.traveler,
+        ]),
         orderBy: (character) => drift.OrderBy([
-          drift.OrderingTerm.asc(
-            character.position,
-          )
+          drift.OrderingTerm.asc(character.position),
         ]),
       )
       .watch()
@@ -90,25 +55,20 @@ final characterListProvider = StreamProvider((ref) {
   collapseProvider,
 ]);
 
+@JsonSerializable()
 class EditScriptArguments {
   const EditScriptArguments({
     required this.script,
     required this.characterIdList,
   });
 
-  EditScriptArguments.fromJson(Map<String, dynamic> data)
-      : this(
-          script: ScriptData.fromJson((data['script'] as Map).cast()),
-          characterIdList: (data['character_ids'] as List).cast<String>().toSet(),
-        );
+  factory EditScriptArguments.fromJson(Map<String, dynamic> json) => _$EditScriptArgumentsFromJson(json);
 
+  @JsonKey(fromJson: scriptFromJson, toJson: scriptToJson)
   final ScriptData script;
   final Set<String> characterIdList;
 
-  Map<String, dynamic> toJson() => {
-        'script': script.toJson(),
-        'character_ids': characterIdList.toList(),
-      };
+  Map<String, dynamic> toJson() => _$EditScriptArgumentsToJson(this);
 }
 
 class EditScriptPage extends ConsumerWidget {

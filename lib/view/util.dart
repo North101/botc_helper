@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class SliverChildSeperatedBuilderDelegate extends SliverChildBuilderDelegate {
   SliverChildSeperatedBuilderDelegate(
-    Widget? Function(BuildContext, int) builder,
-    Widget? Function(BuildContext, int) separatedBy, {
+    Widget? Function(BuildContext context, int index) builder,
+    Widget? Function(BuildContext context, int index) separatedBy, {
     super.findChildIndexCallback,
     int? childCount,
     super.addAutomaticKeepAlives,

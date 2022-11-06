@@ -30,7 +30,7 @@ class MainPage extends ConsumerWidget {
     final scriptList = ref.watch(scriptListProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('Scripts')),
-      body: AsyncValueBuilder<List<MapEntry<bool, List<ScriptData>>>>(
+      body: AsyncValueBuilder(
         value: scriptList,
         data: (data) => CustomScrollView(
           slivers: [

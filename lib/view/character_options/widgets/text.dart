@@ -35,6 +35,7 @@ class OptionTextItemWidget extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: TextFormField(
+        autofocus: true,
         initialValue: text.value,
         onChanged: (value) {
           text.value = value;

@@ -50,7 +50,7 @@ class Database extends _$Database {
   }
 
   @override
-  int schemaVersion = 1;
+  int schemaVersion = 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -62,6 +62,11 @@ class Database extends _$Database {
               print(error);
             });
           });
+        },
+        onUpgrade: (m, from, to) async {
+          if (from < 2) {
+            await initCharacters(this);
+          }
         },
       );
 
@@ -94,6 +99,10 @@ class Database extends _$Database {
     });
     return script;
   }
+
+  BaseSelectStatement characterIdInScript(String scriptId) => selectOnly(scriptCharacter)
+    ..addColumns([scriptCharacter.characterId])
+    ..where(scriptCharacter.scriptId.equals(scriptId));
 }
 
 extension BatchEx on Batch {
@@ -133,11 +142,7 @@ extension CharacterDataEx on CharacterData {
       key: key,
       bundle: bundle,
       frameBuilder: frameBuilder,
-      errorBuilder: errorBuilder ??
-          (context, error, stacktrace) => SizedBox(
-                width: width,
-                height: height,
-              ),
+      errorBuilder: errorBuilder ?? (context, error, stacktrace) => SizedBox(width: width, height: height),
       semanticLabel: semanticLabel ?? name,
       excludeFromSemantics: excludeFromSemantics,
       scale: scale,
@@ -160,3 +165,21 @@ extension CharacterDataEx on CharacterData {
     );
   }
 }
+
+Map<String, dynamic> scriptToJson(ScriptData script) => script.toJson();
+ScriptData scriptFromJson(Map<String, dynamic> json) => ScriptData.fromJson(json);
+
+Map<String, dynamic> characterToJson(CharacterData character) => character.toJson();
+CharacterData characterFromJson(Map<String, dynamic> json) => CharacterData.fromJson(json);
+
+List<dynamic> characterOptionItemsToJson(List<OptionItem> items) => items.map((e) => e.toJson()).toList();
+List<OptionItem> characterOptionItemsFromJson(List json) => json.map((e) => OptionItem.fromJson((e as Map).cast())).toList();
+
+Map<String, dynamic> characterOptionItemToJson(CharacterOptionItem data) => data.toJson();
+CharacterOptionItem characterOptionItemFromJson(Map json) => CharacterOptionItem.fromJson(json.cast());
+
+Map<String, dynamic>? characterOptionItemNToJson(CharacterOptionItem? data) => data != null ? characterOptionItemToJson(data) : null;
+CharacterOptionItem? characterOptionItemNFromJson(Map? json) => json != null ? characterOptionItemFromJson(json) : null;
+
+List<ScriptFilter> scriptFilterListFromJson(List<dynamic> json) => json.map((e) => ScriptFilter.fromJson((e as Map).cast())).toList();
+List<dynamic> scriptFilterListToJson(List<ScriptFilter> list) => list.map((e) => e.toJson()).toList();

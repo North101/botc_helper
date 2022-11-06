@@ -195,7 +195,7 @@ packages:
     description:
       path: drift
       ref: develop
-      resolved-ref: fdd1d2c66e4ba5d9e7b107cbdec8af9a800230ff
+      resolved-ref: "0f06640ddedcf78233363b9d7eb17efc1e6bb4d7"
       url: "https://github.com/simolus3/drift.git"
     source: git
     version: "2.3.0-dev"
@@ -204,7 +204,7 @@ packages:
     description:
       path: drift_dev
       ref: develop
-      resolved-ref: fdd1d2c66e4ba5d9e7b107cbdec8af9a800230ff
+      resolved-ref: "0f06640ddedcf78233363b9d7eb17efc1e6bb4d7"
       url: "https://github.com/simolus3/drift.git"
     source: git
     version: "2.3.0-dev"
@@ -586,7 +586,7 @@ packages:
       name: shelf_web_socket
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -625,7 +625,7 @@ packages:
     description:
       path: sqlite3_flutter_libs
       ref: main
-      resolved-ref: "065e6305a1320f83460cfe4e18c35ed5739b409d"
+      resolved-ref: "028f85ea50da0c8d221fb7071533cd2e5f1ba92b"
       url: "https://github.com/simolus3/sqlite3.dart.git"
     source: git
     version: "0.5.10"
@@ -634,7 +634,7 @@ packages:
     description:
       path: sqlparser
       ref: develop
-      resolved-ref: fdd1d2c66e4ba5d9e7b107cbdec8af9a800230ff
+      resolved-ref: "0f06640ddedcf78233363b9d7eb17efc1e6bb4d7"
       url: "https://github.com/simolus3/drift.git"
     source: git
     version: "0.23.3"
@@ -665,7 +665,7 @@ packages:
       name: stream_transform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.1.0"
   string_scanner:
     dependency: transitive
     description:
@@ -791,7 +791,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "3.1.0"
   xdg_directories:
     dependency: transitive
     description:
