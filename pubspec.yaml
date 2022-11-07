@@ -72,15 +72,17 @@ flutter_gen:
   output: lib/util/
 
 icons_launcher:
-  image_path: assets/icons/app.png
+  image_path: icons/app.png
   platforms:
     android:
       enable: true
-      adaptive_background_image: assets/icons/app_background.png
-      adaptive_foreground_image: assets/icons/app_foreground.png
+      adaptive_background_image: icons/app_background.png
+      adaptive_foreground_image: icons/app_foreground.png
+      adaptive_round_image: icons/app_round.png
     ios:
       enable: true
     macos:
       enable: true
+      image_path: icons/app_macos.png
 
 scripts: scripts.yaml
