@@ -108,24 +108,26 @@ class CharacterPage extends ConsumerWidget {
             },
             error: (error, stackTrace) => SliverToBoxAdapter(child: Text(error.toString())),
           ),
-          characterOptionList.maybeWhen(data: (data) => data.isNotEmpty, orElse: () => false)
-              ? const SliverToBoxAdapter(child: SizedBox(height: 8))
-              : const SliverToBoxAdapter(child: SizedBox.shrink()),
+          const SliverToBoxAdapter(child: OptionsDivider()),
           genericOptionList.when(
             loading: () => const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator())),
-            data: (data) => SliverStickyHeader(
-              header: HeaderListTile.title(
-                title: 'Generic Info',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              sliver: SliverList(
-                delegate: SliverChildSeperatedBuilderDelegate(
-                  (context, index) => CharacterOptionTile(option: data[index]),
-                  (context, index) => const Divider(),
-                  childCount: data.length,
+            data: (data) {
+              if (data.isEmpty) return const SliverToBoxAdapter(child: SizedBox.shrink());
+
+              return SliverStickyHeader(
+                header: HeaderListTile.title(
+                  title: 'Generic Info',
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
-              ),
-            ),
+                sliver: SliverList(
+                  delegate: SliverChildSeperatedBuilderDelegate(
+                    (context, index) => CharacterOptionTile(option: data[index]),
+                    (context, index) => const Divider(),
+                    childCount: data.length,
+                  ),
+                ),
+              );
+            },
             error: (error, stackTrace) => SliverToBoxAdapter(child: Text(error.toString())),
           ),
         ],
@@ -187,5 +189,25 @@ class CharacterOptionTile extends ConsumerWidget {
         ).toJson(),
       ),
     );
+  }
+}
+
+class OptionsDivider extends ConsumerWidget {
+  const OptionsDivider({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final hasCharacterOptionData = ref.watch(characterOptionListProvider.select((value) => value.when(
+          loading: () => false,
+          data: (data) => data.isNotEmpty,
+          error: (error, stackTrace) => true,
+        )));
+    final hasGenericOptionData = ref.watch(genericOptionListProvider.select((value) => value.when(
+          loading: () => false,
+          data: (data) => data.isNotEmpty,
+          error: (error, stackTrace) => true,
+        )));
+
+    return hasCharacterOptionData && hasGenericOptionData ? const SizedBox(height: 8) : const SizedBox.shrink();
   }
 }

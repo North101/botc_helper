@@ -47,8 +47,7 @@ final characterListProvider = StreamProvider((ref) {
         ]),
       )
       .watch()
-      .map((e) =>
-          e.where((e) => !collapsed || characterIdList.contains(e.id)).groupListsBy((e) => e.type).entries.toList());
+      .map((e) => e.where((e) => !collapsed || characterIdList.contains(e.id)).groupListsBy((e) => e.type).entries);
 }, dependencies: [
   dbProvider,
   characterIdListProvider,
@@ -66,7 +65,7 @@ class EditScriptArguments {
 
   @JsonKey(fromJson: scriptFromJson, toJson: scriptToJson)
   final ScriptData script;
-  final Set<String> characterIdList;
+  final Iterable<String> characterIdList;
 
   Map<String, dynamic> toJson() => _$EditScriptArgumentsToJson(this);
 }
@@ -86,7 +85,7 @@ class EditScriptPage extends ConsumerWidget {
 
   static Widget withOverrides({
     required ScriptData script,
-    required Set<String> characterIdList,
+    required Iterable<String> characterIdList,
   }) =>
       RestorableProviderScope(
         restorationId: 'edit_script_page',
@@ -191,6 +190,14 @@ class CharacterTile extends ConsumerWidget {
 
   final CharacterData character;
 
+  void onChange(WidgetRef ref, bool? value) {
+    final characterIdList = ref.read(characterIdListProvider);
+    characterIdList.value = {
+      ...characterIdList.value.where((e) => e != character.id),
+      if (value == true) character.id,
+    };
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final collapsed = ref.watch(collapseProvider).value;
@@ -201,24 +208,11 @@ class CharacterTile extends ConsumerWidget {
         height: 48,
       ),
       title: Text(character.name),
-      onTap: () {
-        final characterIdList = ref.read(characterIdListProvider);
-        final value = !characterIdList.value.contains(character.id);
-        characterIdList.value = {
-          ...characterIdList.value.where((e) => e != character.id),
-          if (value) character.id,
-        };
-      },
+      onTap: () => onChange(ref, !selected),
       trailing: !collapsed
           ? Checkbox(
               value: selected,
-              onChanged: (value) {
-                final characterIdList = ref.read(characterIdListProvider);
-                characterIdList.value = {
-                  ...characterIdList.value.where((e) => e != character.id),
-                  if (value == true) character.id,
-                };
-              },
+              onChanged: (value) => onChange(ref, value),
             )
           : null,
     );
@@ -265,7 +259,7 @@ class ImportButton extends ConsumerWidget {
         );
 
         final characterIdList = ref.read(characterIdListProvider);
-        characterIdList.value = data.characterIdList.toSet();
+        characterIdList.value = data.characterIdList;
 
         final collapsed = ref.read(collapseProvider);
         collapsed.value = true;

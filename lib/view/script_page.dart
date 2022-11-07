@@ -42,16 +42,16 @@ final characterListProvider = StreamProvider((ref) {
         ]),
       )
       .watch()
-      .map((e) => e.groupListsBy((e) => e.type).entries.toList());
+      .map((e) => e.groupListsBy((e) => e.type).entries);
 }, dependencies: [
   dbProvider,
   scriptIdProvider,
 ]);
 
-final nightListProvider = StreamProvider.family.autoDispose<List<CharacterData>, bool>((ref, state) {
+final nightListProvider = StreamProvider.family.autoDispose<Iterable<CharacterData>, bool>((ref, state) {
   final db = ref.watch(dbProvider);
   final scriptId = ref.watch(scriptIdProvider);
-  final nightHidden = ref.watch(hiddenCharacterProvider).value;
+  final nightHidden = ref.watch(hiddenCharacterIdListProvider).value;
   nightColumn(Character character) => state ? character.firstNight : character.otherNight;
   return db
       .listCharacters(
@@ -68,22 +68,17 @@ final nightListProvider = StreamProvider.family.autoDispose<List<CharacterData>,
 }, dependencies: [
   dbProvider,
   scriptIdProvider,
-  hiddenCharacterProvider,
+  hiddenCharacterIdListProvider,
 ]);
 
-final firstNightSelectedProvider = RestorableProvider<RestorableSet<String>>(
+final nightSelectedProvider = RestorableProvider<RestorableNightSelected>(
   (ref) => throw UnimplementedError(),
-  restorationId: 'firstNightSelectedProvider',
+  restorationId: 'nightSelectedProvider',
 );
 
-final otherNightSelectedProvider = RestorableProvider<RestorableSet<String>>(
+final hiddenCharacterIdListProvider = RestorableProvider<RestorableSet<String>>(
   (ref) => throw UnimplementedError(),
-  restorationId: 'otherNightSelectedProvider',
-);
-
-final hiddenCharacterProvider = RestorableProvider<RestorableSet<String>>(
-  (ref) => throw UnimplementedError(),
-  restorationId: 'hiddenCharacterProvider',
+  restorationId: 'hiddenCharacterIdListProvider',
 );
 
 class ScriptPage extends ConsumerStatefulWidget {
@@ -107,9 +102,11 @@ class ScriptPage extends ConsumerStatefulWidget {
         ],
         restorableOverrides: [
           currentTabProvider.overrideWithRestorable(RestorableInt(0)),
-          firstNightSelectedProvider.overrideWithRestorable(RestorableSet({})),
-          otherNightSelectedProvider.overrideWithRestorable(RestorableSet({})),
-          hiddenCharacterProvider.overrideWithRestorable(RestorableSet({})),
+          nightSelectedProvider.overrideWithRestorable(RestorableNightSelected(const NightSelected(
+            firstNight: {},
+            otherNight: {},
+          ))),
+          hiddenCharacterIdListProvider.overrideWithRestorable(RestorableSet({})),
         ],
         child: const ScriptPage(),
       );
@@ -154,15 +151,10 @@ class ScriptPageState extends ConsumerState<ScriptPage> with TickerProviderState
             ],
           ),
           actions: [
-            if (script.custom) const EditButton(),
-            if (script.custom) const DeleteButton(),
-            if (currentTab == 0 || currentTab == 1)
-              ProviderScope(
-                parent: ProviderScope.containerOf(context),
-                child: const HideButton(),
-              ),
+            if (currentTab == 0 || currentTab == 1) const HideButton(),
             if (currentTab == 0) const SelectButton(firstNight: true),
             if (currentTab == 1) const SelectButton(firstNight: false),
+            if (script.custom) const ScriptMoreAction(),
           ],
         ),
         body: TabBarView(
@@ -174,6 +166,7 @@ class ScriptPageState extends ConsumerState<ScriptPage> with TickerProviderState
           ],
         ),
       ),
+      error: (error, stackTrace) => const SizedBox.shrink(),
     );
   }
 }
@@ -193,7 +186,7 @@ class EditButton extends ConsumerWidget {
           EditScriptPage.route,
           arguments: EditScriptArguments(
             script: script,
-            characterIdList: characterList.map((e) => e.value).flattened.map((e) => e.id).toSet(),
+            characterIdList: characterList.map((e) => e.value).flattened.map((e) => e.id),
           ).toJson(),
         );
       },
@@ -290,6 +283,60 @@ final deleteScriptProvider = FutureProvider.autoDispose((ref) async {
   scriptProvider.future,
 ]);
 
+class ScriptMoreAction extends ConsumerWidget {
+  const ScriptMoreAction({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return PopupMenuButton(
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          onTap: () => Future(() async {
+            final navigator = Navigator.of(context);
+            final script = await ref.read(scriptProvider.future);
+            final characterList = await ref.read(characterListProvider.future);
+            navigator.restorablePush(
+              EditScriptPage.route,
+              arguments: EditScriptArguments(
+                script: script,
+                characterIdList: characterList.map((e) => e.value).flattened.map((e) => e.id),
+              ).toJson(),
+            );
+          }),
+          child: const ListTile(title: Text('Edit')),
+        ),
+        PopupMenuItem(
+          onTap: () => Future(() async {
+            final navigator = Navigator.of(context);
+            final scope = ProviderScope.containerOf(context);
+            final delete = await showDialog<bool>(
+              context: context,
+              builder: (context) => ProviderScope(
+                parent: scope,
+                child: const ConfirmDeleteScriptDialog(),
+              ),
+            );
+            if (delete != true) return;
+
+            final result = await showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => ProviderScope(
+                parent: scope,
+                child: const DeleteScriptDialog(),
+              ),
+            );
+            if (result == null) return;
+
+            navigator.pop();
+          }),
+          child: const ListTile(title: Text('Delete')),
+        ),
+      ],
+    );
+  }
+}
+
 class DeleteScriptDialog extends ConsumerWidget {
   const DeleteScriptDialog({super.key});
 
@@ -332,14 +379,16 @@ class SelectButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedProvider = firstNight ? firstNightSelectedProvider : otherNightSelectedProvider;
-    final hasSelected = ref.watch(selectedProvider.select((value) => value.value.isNotEmpty));
+    final hasSelected = ref.watch(nightSelectedProvider.select((value) => value.value.night(firstNight).isNotEmpty));
     if (hasSelected) {
       return IconButton(
         tooltip: 'Select None',
         onPressed: () async {
-          final nightSelected = ref.read(selectedProvider);
-          nightSelected.value = {};
+          final nightSelected = ref.read(nightSelectedProvider);
+          nightSelected.value = nightSelected.value.copyWith(
+            firstNight: firstNight ? {} : null,
+            otherNight: !firstNight ? {} : null,
+          );
         },
         icon: const Icon(Icons.deselect),
       );
@@ -349,8 +398,13 @@ class SelectButton extends ConsumerWidget {
       tooltip: 'Select All',
       onPressed: () async {
         final characterList = await ref.read(nightListProvider(firstNight).future);
-        final nightSelected = ref.read(selectedProvider);
-        nightSelected.value = characterList.map((e) => e.id).toSet();
+        final nightSelected = ref.read(nightSelectedProvider);
+
+        final newItems = characterList.map((e) => e.id).toSet();
+        nightSelected.value = nightSelected.value.copyWith(
+          firstNight: firstNight ? newItems : null,
+          otherNight: !firstNight ? newItems : null,
+        );
       },
       icon: const Icon(Icons.select_all),
     );
@@ -365,7 +419,7 @@ class HideButton extends ConsumerStatefulWidget {
 }
 
 class HideButtonState extends ConsumerState<HideButton> with RestorationMixin {
-  late RestorableRouteFuture<Set<String>?> hideCharacterRouteFuture;
+  late RestorableRouteFuture<Iterable<String>?> hideCharacterRouteFuture;
 
   @override
   void initState() {
@@ -379,8 +433,8 @@ class HideButtonState extends ConsumerState<HideButton> with RestorationMixin {
       onComplete: (result) {
         if (result == null) return;
 
-        final hiddenCharacter = ref.read(hiddenCharacterProvider);
-        hiddenCharacter.value = result;
+        final hiddenCharacterIdList = ref.read(hiddenCharacterIdListProvider);
+        hiddenCharacterIdList.value = result;
       },
     );
   }
@@ -399,7 +453,7 @@ class HideButtonState extends ConsumerState<HideButton> with RestorationMixin {
       tooltip: 'Hide Characters',
       onPressed: () async => hideCharacterRouteFuture.present(HideCharacterArgument(
         script: await ref.read(scriptProvider.future),
-        characterIdList: ref.read(hiddenCharacterProvider).value,
+        characterIdList: ref.read(hiddenCharacterIdListProvider).value,
       ).toJson()),
       icon: const Icon(Icons.visibility),
     );
@@ -420,9 +474,10 @@ class NightView extends ConsumerWidget {
     return AsyncValueBuilder(
       value: items,
       data: (data) => ListView.separated(
+        padding: const EdgeInsets.symmetric(vertical: 8),
         itemBuilder: (context, index) => CharacterNightTile(
           firstNight: firstNight,
-          character: data[index],
+          character: data.elementAt(index),
         ),
         separatorBuilder: (context, index) => const Divider(),
         itemCount: data.length,
@@ -441,11 +496,22 @@ class CharacterNightTile extends ConsumerWidget {
   final bool firstNight;
   final CharacterData character;
 
+  void onChange(WidgetRef ref, bool? value) {
+    final selectedItems = ref.read(nightSelectedProvider);
+    final newItems = {
+      ...selectedItems.value.night(firstNight).whereNot((e) => e == character.id),
+      if (value == true) character.id,
+    };
+    selectedItems.value = selectedItems.value.copyWith(
+      firstNight: firstNight ? newItems : null,
+      otherNight: !firstNight ? newItems : null,
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nightSelectedProvider = firstNight ? firstNightSelectedProvider : otherNightSelectedProvider;
     final selected = ref.watch(nightSelectedProvider.select((value) {
-      return value.value.contains(character.id);
+      return value.value.night(firstNight).contains(character.id);
     }));
     return ListTile(
       leading: character.image(
@@ -456,17 +522,12 @@ class CharacterNightTile extends ConsumerWidget {
       subtitle: Text(firstNight ? character.firstNightReminder : character.otherNightReminder),
       trailing: Checkbox(
         value: selected,
-        onChanged: (value) {
-          final selectedItems = ref.read(nightSelectedProvider);
-          selectedItems.value = {
-            ...selectedItems.value.whereNot((e) => e == character.id),
-            if (value == true) character.id,
-          };
-        },
+        onChanged: (value) => onChange(ref, value),
       ),
-      onTap: () {
-        final script = ref.read(scriptProvider).value!;
-        Navigator.of(context).restorablePush(
+      onTap: () async {
+        final navigator = Navigator.of(context);
+        final script = await ref.read(scriptProvider.future);
+        navigator.restorablePush(
           CharacterPage.route,
           arguments: CharacterPageArguments(
             script: script,

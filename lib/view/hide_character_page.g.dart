@@ -9,9 +9,8 @@ part of 'hide_character_page.dart';
 HideCharacterArgument _$HideCharacterArgumentFromJson(Map json) =>
     HideCharacterArgument(
       script: scriptFromJson(json['script'] as Map<String, dynamic>),
-      characterIdList: (json['characterIdList'] as List<dynamic>)
-          .map((e) => e as String)
-          .toSet(),
+      characterIdList:
+          (json['characterIdList'] as List<dynamic>).map((e) => e as String),
     );
 
 Map<String, dynamic> _$HideCharacterArgumentToJson(

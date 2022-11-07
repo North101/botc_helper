@@ -1,4 +1,3 @@
-import 'package:botc_helper/util/restorable.dart';
 import 'package:collection/collection.dart';
 import 'package:drift/drift.dart' as drift hide JsonKey;
 import 'package:flutter/material.dart';
@@ -9,6 +8,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '/db/database.dart';
 import '/providers.dart';
+import '/util/restorable.dart';
 import '/view/async_value_builder.dart';
 import '/view/header_list_tile.dart';
 import '/view/util.dart';
@@ -28,7 +28,7 @@ final characterListProvider = StreamProvider((ref) {
         ]),
       )
       .watch()
-      .map((e) => e.groupListsBy((e) => e.type).entries.toList());
+      .map((e) => e.groupListsBy((e) => e.type).entries);
 }, dependencies: [
   dbProvider,
   scriptProvider,
@@ -50,7 +50,7 @@ class HideCharacterArgument {
 
   @JsonKey(fromJson: scriptFromJson, toJson: scriptToJson)
   final ScriptData script;
-  final Set<String> characterIdList;
+  final Iterable<String> characterIdList;
 
   Map<String, dynamic> toJson() => _$HideCharacterArgumentToJson(this);
 }
@@ -60,7 +60,7 @@ class HideCharacterPage extends ConsumerWidget {
     super.key,
   });
 
-  static Route<Set<String>> route(BuildContext context, Object? args) {
+  static Route<Iterable<String>> route(BuildContext context, Object? args) {
     final data = HideCharacterArgument.fromJson((args as Map).cast());
     return MaterialPageRoute(builder: (context) {
       return HideCharacterPage.withOverrides(
@@ -72,7 +72,7 @@ class HideCharacterPage extends ConsumerWidget {
 
   static Widget withOverrides({
     required ScriptData script,
-    required Set<String> characterIdList,
+    required Iterable<String> characterIdList,
   }) =>
       RestorableProviderScope(
         restorationId: 'hide_character_page',
@@ -94,7 +94,7 @@ class HideCharacterPage extends ConsumerWidget {
         actions: [
           IconButton(
               tooltip: 'Done',
-              onPressed: () => Navigator.of(context).pop<Set<String>>(ref.read(hiddenCharacterProvider).value),
+              onPressed: () => Navigator.of(context).pop<Iterable<String>>(ref.read(hiddenCharacterProvider).value),
               icon: const Icon(Icons.done)),
         ],
       ),

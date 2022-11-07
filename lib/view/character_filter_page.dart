@@ -13,7 +13,7 @@ import '/view/character_list.dart';
 part 'character_filter_page.g.dart';
 
 final scriptProvider = Provider<ScriptData>((ref) => throw UnimplementedError());
-final filterListProvider = Provider<List<ScriptFilter>>((ref) => throw UnimplementedError());
+final filterListProvider = Provider<Iterable<ScriptFilter>>((ref) => throw UnimplementedError());
 
 final characterListProvider = StreamProvider((ref) {
   final db = ref.watch(dbProvider);
@@ -28,7 +28,7 @@ final characterListProvider = StreamProvider((ref) {
         ]),
       )
       .watch()
-      .map((e) => e.groupListsBy((e) => e.type).entries.toList());
+      .map((e) => e.groupListsBy((e) => e.type).entries);
 }, dependencies: [
   dbProvider,
   scriptProvider,
@@ -37,7 +37,7 @@ final characterListProvider = StreamProvider((ref) {
 
 drift.Expression<bool> buildFilter(
   Character character,
-  List<ScriptFilter> filterList,
+  Iterable<ScriptFilter> filterList,
 ) {
   if (filterList.isEmpty) return const drift.Constant(true);
   return filterList
@@ -84,7 +84,7 @@ class CharacterFilterPage extends ConsumerWidget {
 
   static Widget withOverrides({
     required ScriptData script,
-    required List<ScriptFilter> scriptFilterList,
+    required Iterable<ScriptFilter> scriptFilterList,
   }) =>
       RestorableProviderScope(
         restorationId: 'character_filter_page',

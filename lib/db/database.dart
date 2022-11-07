@@ -60,10 +60,7 @@ class Database extends _$Database {
             await m.createAll();
             await initDatabase(this);
           }).onError((error, stackTrace) {
-            if (kDebugMode) {
-              print(error);
-              print(stackTrace);
-            }
+            debugPrintStack(stackTrace: stackTrace);
           });
         },
         onUpgrade: (m, from, to) async {
@@ -82,7 +79,7 @@ class Database extends _$Database {
     });
   }
 
-  Future<ScriptData> upsertScript(ScriptData script, Set<String> characterIdList) async {
+  Future<ScriptData> upsertScript(ScriptData script, Iterable<String> characterIdList) async {
     await batch((batch) {
       batch.insert<Script, ScriptData>(
         this.script,
@@ -93,7 +90,7 @@ class Database extends _$Database {
         return scriptCharacter.scriptId.equals(script.id);
       });
       batch.insertAll<ScriptCharacter, ScriptCharacterData>(scriptCharacter, [
-        for (final characterId in characterIdList)
+        for (final characterId in characterIdList.toSet())
           ScriptCharacterCompanion.insert(
             scriptId: script.id,
             characterId: characterId,

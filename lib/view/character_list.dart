@@ -1,10 +1,10 @@
-import 'package:botc_helper/view/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 
 import '/db/database.dart';
 import '/view/header_list_tile.dart';
+import '/view/util.dart';
 
 class CharacterList extends ConsumerWidget {
   const CharacterList({
@@ -13,7 +13,7 @@ class CharacterList extends ConsumerWidget {
     super.key,
   });
 
-  final List<MapEntry<CharacterType, List<CharacterData>>> data;
+  final Iterable<MapEntry<CharacterType, Iterable<CharacterData>>> data;
   final void Function(CharacterData character)? onTap;
 
   @override
@@ -28,7 +28,7 @@ class CharacterList extends ConsumerWidget {
             sliver: SliverList(
               delegate: SliverChildSeperatedBuilderDelegate(
                 (context, index) => CharacterTile(
-                  character: characterByType.value[index],
+                  character: characterByType.value.elementAt(index),
                   onTap: onTap,
                 ),
                 (context, index) => const Divider(),

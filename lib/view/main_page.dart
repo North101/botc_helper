@@ -13,7 +13,7 @@ import '/view/script_page.dart';
 
 final scriptListProvider = StreamProvider((ref) {
   final db = ref.read(dbProvider);
-  return db.listScripts().watch().map((e) => e.groupListsBy((e) => e.custom).entries.toList());
+  return db.listScripts().watch().map((e) => e.groupListsBy((e) => e.custom).entries);
 });
 
 class MainPage extends ConsumerWidget {
