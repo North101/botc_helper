@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:drift/drift.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart'
     show
         Alignment,
@@ -57,10 +58,12 @@ class Database extends _$Database {
         onCreate: (m) async {
           await transaction(() async {
             await m.createAll();
-            await initDatabase(this).onError((error, stackTrace) {
-              print(stackTrace);
+            await initDatabase(this);
+          }).onError((error, stackTrace) {
+            if (kDebugMode) {
               print(error);
-            });
+              print(stackTrace);
+            }
           });
         },
         onUpgrade: (m, from, to) async {
