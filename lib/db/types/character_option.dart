@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:drift/drift.dart' hide JsonKey;
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '/db/database.dart';
@@ -75,30 +74,6 @@ enum ScriptFilterType {
   type,
   character,
   alignment,
-}
-
-enum CharacterAlignment {
-  good('Good', Color(0xff061af5)),
-  evil('Evil', Color(0xffb4261a));
-
-  const CharacterAlignment(this.title, this.color);
-
-  final String title;
-  final Color color;
-}
-
-enum CharacterType {
-  info('Info', null),
-  townsfolk('Townsfolk', CharacterAlignment.good),
-  outsider('Outsider', CharacterAlignment.good),
-  minion('Minion', CharacterAlignment.evil),
-  demon('Demon', CharacterAlignment.evil),
-  traveler('Traveler', null);
-
-  const CharacterType(this.title, this.alignment);
-
-  final String title;
-  final CharacterAlignment? alignment;
 }
 
 @freezed

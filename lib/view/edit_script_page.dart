@@ -1,3 +1,4 @@
+import 'package:botc_helper/view/select_character_page.dart';
 import 'package:collection/collection.dart';
 import 'package:drift/drift.dart' as drift;
 import 'package:file_picker/file_picker.dart';
@@ -17,11 +18,6 @@ import '/view/header_list_tile.dart';
 
 part 'edit_script_page.g.dart';
 
-final collapseProvider = RestorableProvider<RestorableBool>(
-  (ref) => throw UnimplementedError(),
-  restorationId: 'collapse_provider',
-);
-
 final scriptProvider = RestorableProvider<RestorableScriptData>(
   (ref) => throw UnimplementedError(),
   restorationId: 'script_provider',
@@ -32,26 +28,29 @@ final characterIdListProvider = RestorableProvider<RestorableSet<String>>(
   restorationId: 'character_id_list_provider',
 );
 
+const characterTypes = [
+  CharacterType.townsfolk,
+  CharacterType.outsider,
+  CharacterType.minion,
+  CharacterType.demon,
+];
+
 final characterListProvider = StreamProvider((ref) {
   final db = ref.watch(dbProvider);
-  final collapsed = ref.watch(collapseProvider).value;
   final characterIdList = ref.watch(characterIdListProvider).value;
   return db
       .listCharacters(
-        where: (character) => character.type.isNotInValues([
-          CharacterType.info,
-          CharacterType.traveler,
-        ]),
+        where: (character) => character.id.isIn(characterIdList),
         orderBy: (character) => drift.OrderBy([
           drift.OrderingTerm.asc(character.position),
         ]),
       )
       .watch()
-      .map((e) => e.where((e) => !collapsed || characterIdList.contains(e.id)).groupListsBy((e) => e.type).entries);
+      .map((e) => e.groupListsBy((e) => e.type))
+      .map((data) => characterTypes.map((e) => MapEntry(e, data[e] ?? [])));
 }, dependencies: [
   dbProvider,
   characterIdListProvider,
-  collapseProvider,
 ]);
 
 @JsonSerializable()
@@ -70,41 +69,66 @@ class EditScriptArguments {
   Map<String, dynamic> toJson() => _$EditScriptArgumentsToJson(this);
 }
 
-class EditScriptPage extends ConsumerWidget {
+class EditScriptPage extends ConsumerStatefulWidget {
   const EditScriptPage({super.key});
 
-  static Route<void> route(BuildContext context, Object? args) {
-    final data = EditScriptArguments.fromJson((args as Map).cast());
+  static Route<void> route(BuildContext context, Object? arguments) {
+    final args = EditScriptArguments.fromJson((arguments as Map).cast());
     return MaterialPageRoute(builder: (context) {
-      return EditScriptPage.withOverrides(
-        script: data.script,
-        characterIdList: data.characterIdList,
-      );
+      return EditScriptPage.withOverrides(args);
     });
   }
 
-  static Widget withOverrides({
-    required ScriptData script,
-    required Iterable<String> characterIdList,
-  }) =>
+  static Widget withOverrides(EditScriptArguments args) =>
       RestorableProviderScope(
-        restorationId: 'edit_script_page',
+        restorationId: 'edit_script_scope',
         restorableOverrides: [
-          scriptProvider.overrideWithRestorable(RestorableScriptData(script)),
-          collapseProvider.overrideWithRestorable(RestorableBool(characterIdList.isNotEmpty)),
-          characterIdListProvider.overrideWithRestorable(RestorableSet(characterIdList)),
+          scriptProvider.overrideWithRestorable(RestorableScriptData(args.script)),
+          characterIdListProvider.overrideWithRestorable(RestorableSet(args.characterIdList)),
         ],
         child: const EditScriptPage(),
       );
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  EditScriptPageState createState() => EditScriptPageState();
+}
+
+class EditScriptPageState extends ConsumerState<EditScriptPage> with RestorationMixin {
+  late RestorableRouteFuture<Iterable<String>?> selectCharacterRouteFuture;
+
+  @override
+  void initState() {
+    super.initState();
+
+    selectCharacterRouteFuture = RestorableRouteFuture(
+      onPresent: (navigator, arguments) => navigator.restorablePush(
+        SelectCharacterPage.route,
+        arguments: arguments,
+      ),
+      onComplete: (result) {
+        if (result == null) return;
+
+        final characterIdList = ref.read(characterIdListProvider);
+        characterIdList.value = result;
+      },
+    );
+  }
+
+  @override
+  String restorationId = 'edit_script_page';
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    registerForRestoration(selectCharacterRouteFuture, 'selectCharacterRouteFuture');
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final characterList = ref.watch(characterListProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Script'),
         actions: const [
-          CollapseButton(),
           ImportButton(),
           SaveButton(),
         ],
@@ -119,7 +143,10 @@ class EditScriptPage extends ConsumerWidget {
                 slivers: [
                   for (final characterByType in data)
                     SliverStickyHeader(
-                      header: HeaderListTile.title(title: characterByType.key.title),
+                      header: HeaderListTile.titleCount(
+                        title: characterByType.key.title,
+                        count: characterByType.value.length,
+                      ),
                       sliver: SliverList(
                         delegate: SliverChildBuilderDelegate(
                           (context, index) => CharacterTile(character: characterByType.value[index]),
@@ -132,6 +159,14 @@ class EditScriptPage extends ConsumerWidget {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => selectCharacterRouteFuture.present(SelectCharacterArgument(
+          script: null,
+          characterIdList: ref.read(characterIdListProvider).value,
+          invert: false,
+        ).toJson()),
+        child: const Icon(Icons.edit),
       ),
     );
   }
@@ -200,38 +235,12 @@ class CharacterTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final collapsed = ref.watch(collapseProvider).value;
-    final selected = ref.watch(characterIdListProvider.select((value) => value.value.contains(character.id)));
     return ListTile(
       leading: character.image(
         width: 48,
         height: 48,
       ),
       title: Text(character.name),
-      onTap: () => onChange(ref, !selected),
-      trailing: !collapsed
-          ? Checkbox(
-              value: selected,
-              onChanged: (value) => onChange(ref, value),
-            )
-          : null,
-    );
-  }
-}
-
-class CollapseButton extends ConsumerWidget {
-  const CollapseButton({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final collapsed = ref.watch(collapseProvider).value;
-    return IconButton(
-      tooltip: collapsed ? 'Uncollapse' : 'Collapse',
-      onPressed: () {
-        final collapse = ref.read(collapseProvider);
-        collapse.value = !collapse.value;
-      },
-      icon: collapsed ? const Icon(Icons.unfold_more) : const Icon(Icons.unfold_less),
     );
   }
 }
@@ -260,9 +269,6 @@ class ImportButton extends ConsumerWidget {
 
         final characterIdList = ref.read(characterIdListProvider);
         characterIdList.value = data.characterIdList;
-
-        final collapsed = ref.read(collapseProvider);
-        collapsed.value = true;
       },
       icon: const Icon(Icons.download),
     );

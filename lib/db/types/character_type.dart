@@ -1,8 +1,23 @@
 import 'package:drift/drift.dart';
 
-import 'character_option.dart';
+import 'character_alignment.dart';
 
-class CharacterTypeConverter extends TypeConverter<CharacterType, String> with JsonTypeConverter<CharacterType, String> {
+enum CharacterType {
+  info('Info', null),
+  townsfolk('Townsfolk', CharacterAlignment.good),
+  outsider('Outsider', CharacterAlignment.good),
+  minion('Minion', CharacterAlignment.evil),
+  demon('Demon', CharacterAlignment.evil),
+  traveler('Traveler', null);
+
+  const CharacterType(this.title, this.alignment);
+
+  final String title;
+  final CharacterAlignment? alignment;
+}
+
+class CharacterTypeConverter extends TypeConverter<CharacterType, String>
+    with JsonTypeConverter<CharacterType, String> {
   const CharacterTypeConverter();
 
   @override
@@ -12,10 +27,10 @@ class CharacterTypeConverter extends TypeConverter<CharacterType, String> with J
 
   @override
   String toSql(value) => value.name;
-  
+
   @override
   CharacterType fromJson(String json) => fromSql(json);
-  
+
   @override
   String toJson(CharacterType value) => toSql(value);
 }

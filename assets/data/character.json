@@ -4,10 +4,6 @@
     "name": "Dusk",
     "type": "info",
     "description": "",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 0,
-    "other_night_reminder": "Check that all eyes are closed. Some Travellers act.",
     "options": []
   },
   {
@@ -15,10 +11,6 @@
     "name": "Dawn",
     "type": "info",
     "description": "",
-    "first_night": 51,
-    "first_night_reminder": "Wait 10 seconds. Call for eyes open.",
-    "other_night": 71,
-    "other_night_reminder": "Wait 10 seconds. Call for eyes open and immediatly say who died.",
     "options": []
   },
   {
@@ -26,10 +18,6 @@
     "name": "Minion Setup",
     "type": "info",
     "description": "",
-    "first_night": 4,
-    "first_night_reminder": "Show \"This is the Demon\" token. Point to the Demon.",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": [
       {
         "title": "This is your Demon",
@@ -47,10 +35,6 @@
     "name": "Demon Setup",
     "type": "info",
     "description": "",
-    "first_night": 7,
-    "first_night_reminder": "Show \"These are your Minions\" token. Point to all Minions.\nShow \"These characters are not in play\" token. Show 3 not-in-play character tokens.",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": [
       {
         "title": "These are your Minion(s)",
@@ -89,10 +73,6 @@
     "name": "Washerwoman",
     "type": "townsfolk",
     "description": "You start knowing that 1 of 2 players is a particular Townsfolk.",
-    "first_night": 31,
-    "first_night_reminder": "Show the character token of a Townsfolk in play. Point to two players, one of which is that character.",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": [
       {
         "title": "First Night",
@@ -119,10 +99,6 @@
     "name": "Librarian",
     "type": "townsfolk",
     "description": "You start knowing that 1 of 2 players is a particular Outsider. (Or that zero are in play.)",
-    "first_night": 32,
-    "first_night_reminder": "Show the character token of an Outsider in play. Point to two players, one of which is that character.",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": [
       {
         "title": "First Night",
@@ -149,10 +125,6 @@
     "name": "Investigator",
     "type": "townsfolk",
     "description": "You start knowing that 1 of 2 players is a particular Minion.",
-    "first_night": 33,
-    "first_night_reminder": "Show the character token of a Minion in play. Point to two players, one of which is that character.",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": [
       {
         "title": "First Night",
@@ -179,10 +151,6 @@
     "name": "Chef",
     "type": "townsfolk",
     "description": "You start knowing how many pairs of evil players there are.",
-    "first_night": 34,
-    "first_night_reminder": "Show the finger signal (0, 1, 2, …) for the number of pairs of neighbouring evil players.",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": [
       {
         "title": "First Night",
@@ -204,10 +172,6 @@
     "name": "Empath",
     "type": "townsfolk",
     "description": "Each night, you learn how many of your 2 alive neighbours are evil.",
-    "first_night": 35,
-    "first_night_reminder": "Show the finger signal (0, 1, 2) for the number of evil alive neighbours of the Empath.",
-    "other_night": 52,
-    "other_night_reminder": "Show the finger signal (0, 1, 2) for the number of evil neighbours.",
     "options": [
       {
         "title": "Each Night",
@@ -230,10 +194,6 @@
     "name": "Fortune Teller",
     "type": "townsfolk",
     "description": "Each night, choose 2 players: you learn if either is a Demon. There is a good player that registers as a Demon to you.",
-    "first_night": 36,
-    "first_night_reminder": "The Fortune Teller points to two players. Give the head signal (nod yes, shake no) for whether one of those players is the Demon. ",
-    "other_night": 53,
-    "other_night_reminder": "The Fortune Teller points to two players. Show the head signal (nod 'yes', shake 'no') for whether one of those players is the Demon.",
     "options": [
       {
         "title": "Each Night",
@@ -262,10 +222,6 @@
     "name": "Undertaker",
     "type": "townsfolk",
     "description": "Each night*, you learn which character died by execution today.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 54,
-    "other_night_reminder": "If a player was executed today: Show that player’s character token.",
     "options": [
       {
         "title": "Each Night",
@@ -287,10 +243,6 @@
     "name": "Monk",
     "type": "townsfolk",
     "description": "Each night*, choose a player (not yourself): they are safe from the Demon tonight.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 11,
-    "other_night_reminder": "The previously protected player is no longer protected. The Monk points to a player not themself. Mark that player 'Protected'.",
     "options": [
       {
         "title": "Each Night",
@@ -308,10 +260,6 @@
     "name": "Ravenkeeper",
     "type": "townsfolk",
     "description": "If you die at night, you are woken to choose a player: you learn their character.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 51,
-    "other_night_reminder": "If the Ravenkeeper died tonight: The Ravenkeeper points to a player. Show that player’s character token.",
     "options": [
       {
         "title": "Congratulations!",
@@ -341,10 +289,6 @@
     "name": "Virgin",
     "type": "townsfolk",
     "description": "The 1st time you are nominated, if the nominator is a Townsfolk, they are executed immediately.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -352,10 +296,6 @@
     "name": "Slayer",
     "type": "townsfolk",
     "description": "Once per game, during the day, publicly choose a player: if they are the Demon, they die.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -363,10 +303,6 @@
     "name": "Soldier",
     "type": "townsfolk",
     "description": "You are safe from the Demon.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -374,10 +310,6 @@
     "name": "Mayor",
     "type": "townsfolk",
     "description": "If only 3 players live & no execution occurs, your type wins. If you die at night, another player might die instead.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -385,10 +317,6 @@
     "name": "Grandmother",
     "type": "townsfolk",
     "description": "You start knowing a good player & their character. If the Demon kills them, you die too.",
-    "first_night": 38,
-    "first_night_reminder": "Show the marked character token. Point to the marked player.",
-    "other_night": 50,
-    "other_night_reminder": "If the Grandmother’s grandchild was killed by the Demon tonight: The Grandmother dies.",
     "options": [
       {
         "title": "First Night",
@@ -415,10 +343,6 @@
     "name": "Sailor",
     "type": "townsfolk",
     "description": "Each night, choose an alive player: either you or they are drunk until dusk. You can't die.",
-    "first_night": 9,
-    "first_night_reminder": "The Sailor points to a living player. Either the Sailor, or the chosen player, is drunk.",
-    "other_night": 3,
-    "other_night_reminder": "The previously drunk player is no longer drunk. The Sailor points to a living player. Either the Sailor, or the chosen player, is drunk.",
     "options": [
       {
         "title": "Each Night",
@@ -436,10 +360,6 @@
     "name": "Chambermaid",
     "type": "townsfolk",
     "description": "Each night, choose 2 alive players (not yourself): you learn how many woke tonight due to their ability.",
-    "first_night": 49,
-    "first_night_reminder": "The Chambermaid points to two players. Show the number signal (0, 1, 2, …) for how many of those players wake tonight for their ability.",
-    "other_night": 69,
-    "other_night_reminder": "The Chambermaid points to two players. Show the number signal (0, 1, 2, …) for how many of those players wake tonight for their ability.",
     "options": [
       {
         "title": "Each Night",
@@ -460,10 +380,6 @@
     "name": "Exorcist",
     "type": "townsfolk",
     "description": "Each night*, choose a player (different to last night): the Demon, if chosen, learns who you are then doesn't wake tonight.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 20,
-    "other_night_reminder": "The Exorcist points to a player, different from the previous night. If that player is the Demon: Wake the Demon. Show the Exorcist token. Point to the Exorcist. The Demon does not act tonight.",
     "options": [
       {
         "title": "Each Night",
@@ -481,10 +397,6 @@
     "name": "Innkeeper",
     "type": "townsfolk",
     "description": "Each night*, choose 2 players: they can't die tonight, but 1 is drunk until dusk.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 8,
-    "other_night_reminder": "The previously protected and drunk players lose those markers. The Innkeeper points to two players. Those players are protected. One is drunk.",
     "options": [
       {
         "title": "Each Night",
@@ -502,10 +414,6 @@
     "name": "Gambler",
     "type": "townsfolk",
     "description": "Each night*, choose a player & guess their character: if you guess wrong, you die.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 9,
-    "other_night_reminder": "The Gambler points to a player, and a character on their sheet. If incorrect, the Gambler dies.",
     "options": [
       {
         "title": "Each Night",
@@ -527,10 +435,6 @@
     "name": "Gossip",
     "type": "townsfolk",
     "description": "Each day, you may make a public statement. Tonight, if it was true, a player dies.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 37,
-    "other_night_reminder": "If the Gossip’s public statement was true: Choose a player not protected from dying tonight. That player dies.",
     "options": []
   },
   {
@@ -538,10 +442,6 @@
     "name": "Courtier",
     "type": "townsfolk",
     "description": "Once per game, at night, choose a character: they are drunk for 3 nights & 3 days.",
-    "first_night": 17,
-    "first_night_reminder": "The Courtier either shows a 'no' head signal, or points to a character on the sheet. If the Courtier used their ability: If that character is in play, that player is drunk.",
-    "other_night": 7,
-    "other_night_reminder": "Reduce the remaining number of days the marked player is drunk. If the Courtier has not yet used their ability: The Courtier either shows a 'no' head signal, or points to a character on the sheet. If the Courtier used their ability: If that character is in play, that player is drunk.",
     "options": [
       {
         "title": "Once Per Game",
@@ -571,10 +471,6 @@
     "name": "Professor",
     "type": "townsfolk",
     "description": "Once per game, at night*, choose a dead player: if they are a Townsfolk, they are resurrected.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 42,
-    "other_night_reminder": "If the Professor has not used their ability: The Professor either shakes their head no, or points to a player. If that player is a Townsfolk, they are now alive.",
     "options": [
       {
         "title": "Once Per Game",
@@ -600,10 +496,6 @@
     "name": "Minstrel",
     "type": "townsfolk",
     "description": "When a Minion dies by execution, all other players (except Travellers) are drunk until dusk tomorrow.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -611,10 +503,6 @@
     "name": "Tea Lady",
     "type": "townsfolk",
     "description": "If both your alive neighbours are good, they can't die.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -622,10 +510,6 @@
     "name": "Pacifist",
     "type": "townsfolk",
     "description": "Executed good players might not die.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -633,10 +517,6 @@
     "name": "Fool",
     "type": "townsfolk",
     "description": "The first time you die, you don't.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -644,10 +524,6 @@
     "name": "Clockmaker",
     "type": "townsfolk",
     "description": "You start knowing how many steps from the Demon to its nearest Minion.",
-    "first_night": 39,
-    "first_night_reminder": "Show the hand signal for the number (1, 2, 3, etc.) of places from Demon to closest Minion.",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": [
       {
         "title": "First Night",
@@ -672,10 +548,6 @@
     "name": "Dreamer",
     "type": "townsfolk",
     "description": "Each night, choose a player (not yourself or Travellers): you learn 1 good and 1 evil character, 1 of which is correct.",
-    "first_night": 40,
-    "first_night_reminder": "The Dreamer points to a player. Show 1 good and 1 evil character token; one of these is correct.",
-    "other_night": 55,
-    "other_night_reminder": "The Dreamer points to a player. Show 1 good and 1 evil character token; one of these is correct.",
     "options": [
       {
         "title": "Each Night",
@@ -723,10 +595,6 @@
     "name": "Snake Charmer",
     "type": "townsfolk",
     "description": "Each night, choose an alive player: a chosen Demon swaps characters & alignments with you & is then poisoned.",
-    "first_night": 18,
-    "first_night_reminder": "The Snake Charmer points to a player. If that player is the Demon: swap the Demon and Snake Charmer character and alignments. Wake each player to inform them of their new role and alignment. The new Snake Charmer is poisoned.",
-    "other_night": 10,
-    "other_night_reminder": "The Snake Charmer points to a player. If that player is the Demon: swap the Demon and Snake Charmer character and alignments. Wake each player to inform them of their new role and alignment. The new Snake Charmer is poisoned.",
     "options": [
       {
         "title": "Each Night",
@@ -785,10 +653,6 @@
     "name": "Mathematician",
     "type": "townsfolk",
     "description": "Each night, you learn how many players’ abilities worked abnormally (since dawn) due to another character's ability.",
-    "first_night": 50,
-    "first_night_reminder": "Show the hand signal for the number (0, 1, 2, etc.) of players whose ability malfunctioned due to other abilities.",
-    "other_night": 70,
-    "other_night_reminder": "Show the hand signal for the number (0, 1, 2, etc.) of players whose ability malfunctioned due to other abilities.",
     "options": [
       {
         "title": "Each Night",
@@ -809,10 +673,6 @@
     "name": "Flowergirl",
     "type": "townsfolk",
     "description": "Each night*, you learn if a Demon voted today.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 56,
-    "other_night_reminder": "Nod 'yes' or shake head 'no' for whether the Demon voted today. Place the 'Demon not voted' marker (remove 'Demon voted', if any).",
     "options": [
       {
         "title": "Each Night",
@@ -833,10 +693,6 @@
     "name": "Town Crier",
     "type": "townsfolk",
     "description": "Each night*, you learn if a Minion nominated today.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 57,
-    "other_night_reminder": "Nod 'yes' or shake head 'no' for whether a Minion nominated today. Place the 'Minion not nominated' marker (remove 'Minion nominated', if any).",
     "options": [
       {
         "title": "Each Night",
@@ -857,10 +713,6 @@
     "name": "Oracle",
     "type": "townsfolk",
     "description": "Each night*, you learn how many dead players are evil.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 58,
-    "other_night_reminder": "Show the hand signal for the number (0, 1, 2, etc.) of dead evil players.",
     "options": [
       {
         "title": "Each Night",
@@ -881,10 +733,6 @@
     "name": "Savant",
     "type": "townsfolk",
     "description": "Each day, you may visit the Storyteller to learn 2 things in private: 1 is true & 1 is false.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -892,10 +740,6 @@
     "name": "Seamstress",
     "type": "townsfolk",
     "description": "Once per game, at night, choose 2 players (not yourself): you learn if they are the same alignment.",
-    "first_night": 41,
-    "first_night_reminder": "The Seamstress either shows a 'no' head signal, or points to two other players. If the Seamstress chose players , nod 'yes' or shake 'no' for whether they are of same alignment.",
-    "other_night": 59,
-    "other_night_reminder": "If the Seamstress has not yet used their ability: the Seamstress either shows a 'no' head signal, or points to two other players. If the Seamstress chose players , nod 'yes' or shake 'no' for whether they are of same alignment.",
     "options": [
       {
         "title": "Once Per Game",
@@ -921,10 +765,6 @@
     "name": "Philosopher",
     "type": "townsfolk",
     "description": "Once per game, at night, choose a good character: gain that ability. If this character is in play, they are drunk.",
-    "first_night": 0,
-    "first_night_reminder": "The Philosopher either shows a 'no' head signal, or points to a good character on their sheet. If they chose a character: Swap the out-of-play character token with the Philosopher token and add the 'Is the Philosopher' reminder. If the character is in play, place the drunk marker by that player.",
-    "other_night": 1,
-    "other_night_reminder": "If the Philosopher has not used their ability: the Philosopher either shows a 'no' head signal, or points to a good character on their sheet. If they chose a character: Swap the out-of-play character token with the Philosopher token and add the 'Is the Philosopher' reminder. If the character is in play, place the drunk marker by that player.",
     "options": [
       {
         "title": "Once Per Game",
@@ -959,10 +799,6 @@
     "name": "Artist",
     "type": "townsfolk",
     "description": "Once per game, during the day, privately ask the Storyteller any yes/no question.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -970,10 +806,6 @@
     "name": "Juggler",
     "type": "townsfolk",
     "description": "On your 1st day, publicly guess up to 5 players' characters. That night, you learn how many you got correct.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 60,
-    "other_night_reminder": "If today was the Juggler’s first day: Show the hand signal for the number (0, 1, 2, etc.) of 'Correct' markers. Remove markers.",
     "options": [
       {
         "title": "Juggle",
@@ -994,10 +826,6 @@
     "name": "Sage",
     "type": "townsfolk",
     "description": "If the Demon kills you, you learn that it is 1 of 2 players.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 41,
-    "other_night_reminder": "If the Sage was killed by a Demon: Point to two players, one of which is that Demon.",
     "options": [
       {
         "title": "Congratulations!",
@@ -1015,10 +843,6 @@
     "name": "Noble",
     "type": "townsfolk",
     "description": "You start knowing 3 players, 1 and only 1 of which is evil.",
-    "first_night": 42,
-    "first_night_reminder": "Point to 3 players including one evil player, in no particular order.",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": [
       {
         "title": "First Night",
@@ -1036,10 +860,6 @@
     "name": "Bounty Hunter",
     "type": "townsfolk",
     "description": "You start knowing 1 evil player. If the player you know dies, you learn another evil player tonight. [1 Townsfolk is evil]",
-    "first_night": 44,
-    "first_night_reminder": "Point to 1 evil player. Wake the townsfolk who is evil and show them the 'You are' card and the thumbs down evil sign.",
-    "other_night": 63,
-    "other_night_reminder": "If the known evil player has died, point to another evil player. ",
     "options": [
       {
         "title": "New Bounty",
@@ -1057,10 +877,6 @@
     "name": "Pixie",
     "type": "townsfolk",
     "description": "You start knowing 1 in-play Townsfolk. If you were \"mad\" that you were this character, you gain their ability when they die.",
-    "first_night": 27,
-    "first_night_reminder": "Show the Pixie 1 in-play Townsfolk character token.",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": [
       {
         "title": "First Night",
@@ -1091,10 +907,6 @@
     "name": "General",
     "type": "townsfolk",
     "description": "Each night, you learn which alignment the Storyteller believes is winning: good, evil, or neither.",
-    "first_night": 48,
-    "first_night_reminder": "Show the General thumbs up for good winning, thumbs down for evil winning or thumb to the side for neither.",
-    "other_night": 68,
-    "other_night_reminder": "Show the General thumbs up for good winning, thumbs down for evil winning or thumb to the side for neither.",
     "options": [
       {
         "title": "Each Night",
@@ -1120,10 +932,6 @@
     "name": "Preacher",
     "type": "townsfolk",
     "description": "Each night, choose a player: a Minion, if chosen, learns this. All chosen Minions have no ability.",
-    "first_night": 12,
-    "first_night_reminder": "The Preacher chooses a player. If a Minion is chosen, wake the Minion and show the 'This character selected you' card and then the Preacher token.",
-    "other_night": 5,
-    "other_night_reminder": "The Preacher chooses a player. If a Minion is chosen, wake the Minion and show the 'This character selected you' card and then the Preacher token.",
     "options": [
       {
         "title": "Each Night",
@@ -1159,10 +967,6 @@
     "name": "King",
     "type": "townsfolk",
     "description": "Each night, if the dead outnumber the living, you learn 1 alive character. The Demon knows who you are.",
-    "first_night": 8,
-    "first_night_reminder": "Wake the Demon, show them the 'This character selected you' card, show the King token and point to the King player.",
-    "other_night": 62,
-    "other_night_reminder": "If there are more dead than living, show the King a character token of a living player.",
     "options": [
       {
         "title": "Each Night (If the dead outnumber the living)",
@@ -1184,10 +988,6 @@
     "name": "Balloonist",
     "type": "townsfolk",
     "description": "Each night, you learn 1 player of each character type, until there are no more types to learn. [+1 Outsider]",
-    "first_night": 43,
-    "first_night_reminder": "Choose a character type. Point to a player whose character is of that type. Place the Balloonist's Seen reminder next to that character.",
-    "other_night": 61,
-    "other_night_reminder": "Choose a character type that does not yet have a Seen reminder next to a character of that type. Point to a player whose character is of that type, if there are any. Place the Balloonist's Seen reminder next to that character.",
     "options": [
       {
         "title": "Each Night",
@@ -1205,10 +1005,6 @@
     "name": "Cult Leader",
     "type": "townsfolk",
     "description": "Each night, you become the alignment of an alive neighbour. If all good players choose to join your cult, your type wins.",
-    "first_night": 46,
-    "first_night_reminder": "If the cult leader changed alignment, show them the thumbs up good signal of the thumbs down evil signal accordingly.",
-    "other_night": 65,
-    "other_night_reminder": "If the cult leader changed alignment, show them the thumbs up good signal of the thumbs down evil signal accordingly.",
     "options": [
       {
         "title": "Each Night",
@@ -1229,10 +1025,6 @@
     "name": "Lycanthrope",
     "type": "townsfolk",
     "description": "Each night*, choose a living player: if good, they die, but they are the only player that can die tonight.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 21,
-    "other_night_reminder": "The Lycanthrope points to a living player: if good, they die and no one else can die tonight.",
     "options": [
       {
         "title": "Each Night",
@@ -1250,10 +1042,6 @@
     "name": "Amnesiac",
     "type": "townsfolk",
     "description": "You do not know what your ability is. Each day, privately guess what it is: you learn how accurate you are.",
-    "first_night": 30,
-    "first_night_reminder": "Decide the Amnesiac's entire ability. If the Amnesiac's ability causes them to wake tonight: Wake the Amnesiac and run their ability.",
-    "other_night": 46,
-    "other_night_reminder": "If the Amnesiac's ability causes them to wake tonight: Wake the Amnesiac and run their ability.",
     "options": []
   },
   {
@@ -1261,10 +1049,6 @@
     "name": "Nightwatchman",
     "type": "townsfolk",
     "description": "Once per game, at night, choose a player: they learn who you are.",
-    "first_night": 45,
-    "first_night_reminder": "The Nightwatchman may point to a player. Wake that player, show the 'This character selected you' card and the Nightwatchman token, then point to the Nightwatchman player.",
-    "other_night": 64,
-    "other_night_reminder": "The Nightwatchman may point to a player. Wake that player, show the 'This character selected you' card and the Nightwatchman token, then point to the Nightwatchman player.",
     "options": [
       {
         "title": "Once Per Game",
@@ -1290,10 +1074,6 @@
     "name": "Engineer",
     "type": "townsfolk",
     "description": "Once per game, at night, choose which Minions or which Demon is in play.",
-    "first_night": 11,
-    "first_night_reminder": "The Engineer shows a 'no' head signal, or points to a Demon or points to the relevant number of Minions. If the Engineer chose characters, replace the Demon or Minions with the choices, then wake the relevant players and show them the You are card and the relevant character tokens.",
-    "other_night": 4,
-    "other_night_reminder": "The Engineer shows a 'no' head signal, or points to a Demon or points to the relevant number of Minions. If the Engineer chose characters, replace the Demon or Minions with the choices, then wake the relevant players and show them the 'You are' card and the relevant character tokens.",
     "options": [
       {
         "title": "Once Per Game",
@@ -1359,10 +1139,6 @@
     "name": "Fisherman",
     "type": "townsfolk",
     "description": "Once per game, during the day, visit the Storyteller for some advice to help you win.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1370,10 +1146,6 @@
     "name": "Huntsman",
     "type": "townsfolk",
     "description": "Once per game, at night, choose a living player: the Damsel, if chosen, becomes a not-in-play Townsfolk. [+the Damsel]",
-    "first_night": 28,
-    "first_night_reminder": "The Huntsman shakes their head 'no' or points to a player. If they point to the Damsel, wake that player, show the 'You are' card and a not-in-play character token.",
-    "other_night": 44,
-    "other_night_reminder": "The Huntsman shakes their head 'no' or points to a player. If they point to the Damsel, wake that player, show the 'You are' card and a not-in-play character token.",
     "options": [
       {
         "title": "Once Per Game",
@@ -1399,10 +1171,6 @@
     "name": "Alchemist",
     "type": "townsfolk",
     "description": "You have a not-in-play Minion ability.",
-    "first_night": 1,
-    "first_night_reminder": "Show the Alchemist a not-in-play Minion token",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": [
       {
         "title": "First Night",
@@ -1429,10 +1197,6 @@
     "name": "Farmer",
     "type": "townsfolk",
     "description": "If you die at night, an alive good player becomes a Farmer.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 47,
-    "other_night_reminder": "If a Farmer died tonight, choose another good player and make them the Farmer. Wake this player, show them the 'You are' card and the Farmer character token.",
     "options": []
   },
   {
@@ -1440,10 +1204,6 @@
     "name": "Magician",
     "type": "townsfolk",
     "description": "The Demon thinks you are a Minion. Minions think you are a Demon.",
-    "first_night": 3,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1451,10 +1211,6 @@
     "name": "Choirboy",
     "type": "townsfolk",
     "description": "If the Demon kills the King, you learn which player is the Demon. [+ the King]",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 43,
-    "other_night_reminder": "If the King was killed by the Demon, wake the Choirboy and point to the Demon player.",
     "options": [
       {
         "title": "The King is Dead",
@@ -1472,10 +1228,6 @@
     "name": "Poppy Grower",
     "type": "townsfolk",
     "description": "Minions & Demons do not know each other. If you die, they learn who each other are that night.",
-    "first_night": 2,
-    "first_night_reminder": "Do not inform the Demon/Minions who each other are",
-    "other_night": 2,
-    "other_night_reminder": "If the Poppy Grower has died, show the Minions/Demon who each other are.",
     "options": []
   },
   {
@@ -1483,10 +1235,6 @@
     "name": "Atheist",
     "type": "townsfolk",
     "description": "The Storyteller can break the game rules & if executed, good wins, even if you are dead. [No evil characters]",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1494,10 +1242,6 @@
     "name": "Cannibal",
     "type": "townsfolk",
     "description": "You have the ability of the recently killed executee. If they are evil, you are poisoned until a good player dies by execution.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1505,10 +1249,6 @@
     "name": "Butler",
     "type": "outsider",
     "description": "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too.",
-    "first_night": 37,
-    "first_night_reminder": "The Butler points to a player. Mark that player as 'Master'.",
-    "other_night": 66,
-    "other_night_reminder": "The Butler points to a player. Mark that player as 'Master'.",
     "options": [
       {
         "title": "Each Night",
@@ -1535,10 +1275,6 @@
     "name": "Drunk",
     "type": "outsider",
     "description": "You do not know you are the Drunk. You think you are a Townsfolk character, but you are not.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1546,10 +1282,6 @@
     "name": "Recluse",
     "type": "outsider",
     "description": "You might register as evil & as a Minion or Demon, even if dead.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1557,10 +1289,6 @@
     "name": "Saint",
     "type": "outsider",
     "description": "If you die by execution, your type loses.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1568,10 +1296,6 @@
     "name": "Tinker",
     "type": "outsider",
     "description": "You might die at any time.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 48,
-    "other_night_reminder": "The Tinker might die.",
     "options": []
   },
   {
@@ -1579,10 +1303,6 @@
     "name": "Moonchild",
     "type": "outsider",
     "description": "When you learn that you died, publicly choose 1 alive player. Tonight, if it was a good player, they die.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 49,
-    "other_night_reminder": "If the Moonchild used their ability to target a player today: If that player is good, they die.",
     "options": []
   },
   {
@@ -1590,10 +1310,6 @@
     "name": "Goon",
     "type": "outsider",
     "description": "Each night, the 1st player to choose you with their ability is drunk until dusk. You become their alignment.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": [
       {
         "title": "Alignment Changed",
@@ -1614,10 +1330,6 @@
     "name": "Lunatic",
     "type": "outsider",
     "description": "You think you are a Demon, but you are not. The Demon knows who you are & who you choose at night.",
-    "first_night": 6,
-    "first_night_reminder": "If 7 or more players: Show the Lunatic a number of arbitrary 'Minions', players equal to the number of Minions in play. Show 3 character tokens of arbitrary good characters. If the token received by the Lunatic is a Demon that would wake tonight: Allow the Lunatic to do the Demon actions. Place their 'attack' markers. Wake the Demon. Show the Demon’s real character token. Show them the Lunatic player. If the Lunatic attacked players: Show the real demon each marked player. Remove any Lunatic 'attack' markers.",
-    "other_night": 19,
-    "other_night_reminder": "Allow the Lunatic to do the actions of the Demon. Place their 'attack' markers. If the Lunatic selected players: Wake the Demon. Show the 'attack' marker, then point to each marked player. Remove any Lunatic 'attack' markers.",
     "options": []
   },
   {
@@ -1625,10 +1337,6 @@
     "name": "Mutant",
     "type": "outsider",
     "description": "If you are \"mad\" about being an Outsider, you might be executed.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1636,10 +1344,6 @@
     "name": "Sweetheart",
     "type": "outsider",
     "description": "When you die, 1 player is drunk from now on.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 40,
-    "other_night_reminder": "Choose a player that is drunk.",
     "options": []
   },
   {
@@ -1647,10 +1351,6 @@
     "name": "Barber",
     "type": "outsider",
     "description": "If you died today or tonight, the Demon may choose 2 players (not another Demon) to swap characters.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 39,
-    "other_night_reminder": "If the Barber died today: Wake the Demon. Show the 'This character selected you' card, then Barber token. The Demon either shows a 'no' head signal, or points to 2 players. If they chose players: Swap the character tokens. Wake each player. Show 'You are', then their new character token.",
     "options": [
       {
         "title": "Snip Snip",
@@ -1676,10 +1376,6 @@
     "name": "Klutz",
     "type": "outsider",
     "description": "When you learn that you died, publicly choose 1 alive player: if they are evil, your type loses.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1687,10 +1383,6 @@
     "name": "Snitch",
     "type": "outsider",
     "description": "Minions start knowing 3 not-in-play characters.",
-    "first_night": 5,
-    "first_night_reminder": "After Minion info wake each Minion and show them three not-in-play character tokens. These may be the same or different to each other and the ones shown to the Demon.",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1698,10 +1390,6 @@
     "name": "Acrobat",
     "type": "outsider",
     "description": "Each night*, if either good living neighbour is drunk or poisoned, you die.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 38,
-    "other_night_reminder": "If a good living neighbour is drunk or poisoned, the Acrobat player dies.",
     "options": []
   },
   {
@@ -1709,10 +1397,6 @@
     "name": "Puzzlemaster",
     "type": "outsider",
     "description": "1 player is drunk, even if you die. If you guess (once) who it is, learn the Demon player, but guess wrong & get false info.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1720,10 +1404,6 @@
     "name": "Heretic",
     "type": "outsider",
     "description": "Whoever wins, loses & whoever loses, wins, even if you are dead.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1731,10 +1411,6 @@
     "name": "Damsel",
     "type": "outsider",
     "description": "All Minions know you are in play. If a Minion publicly guesses you (once), your type loses.",
-    "first_night": 29,
-    "first_night_reminder": "Wake all the Minions, show them the 'This character selected you' card and the Damsel token.",
-    "other_night": 45,
-    "other_night_reminder": "If selected by the Huntsman, wake the Damsel, show 'You are' card and a not-in-play Townsfolk token.",
     "options": []
   },
   {
@@ -1742,10 +1418,6 @@
     "name": "Golem",
     "type": "outsider",
     "description": "You may only nominate once per game. When you do, if the nominee is not the Demon, they die.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1753,10 +1425,6 @@
     "name": "Politician",
     "type": "outsider",
     "description": "If you were the player most responsible for your type losing, you change alignment & win, even if dead.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1764,10 +1432,6 @@
     "name": "Poisoner",
     "type": "minion",
     "description": "Each night, choose a player: they are poisoned tonight and tomorrow day.",
-    "first_night": 15,
-    "first_night_reminder": "The Poisoner points to a player. That player is poisoned.",
-    "other_night": 6,
-    "other_night_reminder": "The previously poisoned player is no longer poisoned. The Poisoner points to a player. That player is poisoned.",
     "options": [
       {
         "title": "Each Night",
@@ -1785,10 +1449,6 @@
     "name": "Spy",
     "type": "minion",
     "description": "Each night, you see the Grimoire. You might register as good & as a Townsfolk or Outsider, even if dead.",
-    "first_night": 47,
-    "first_night_reminder": "Show the Grimoire to the Spy for as long as they need.",
-    "other_night": 67,
-    "other_night_reminder": "Show the Grimoire to the Spy for as long as they need.",
     "options": []
   },
   {
@@ -1796,10 +1456,6 @@
     "name": "Scarlet Woman",
     "type": "minion",
     "description": "If there are 5 or more players alive & the Demon dies, you become the Demon. (Travellers don’t count)",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 18,
-    "other_night_reminder": "If the Scarlet Woman became the Demon today: Show the 'You are' card, then the demon token.",
     "options": []
   },
   {
@@ -1807,10 +1463,6 @@
     "name": "Baron",
     "type": "minion",
     "description": "There are extra Outsiders in play. [+2 Outsiders]",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1818,10 +1470,6 @@
     "name": "Godfather",
     "type": "minion",
     "description": "You start knowing which Outsiders are in play. If 1 died today, choose a player tonight: they die. [−1 or +1 Outsider]",
-    "first_night": 19,
-    "first_night_reminder": "Show each of the Outsider tokens in play.",
-    "other_night": 36,
-    "other_night_reminder": "If an Outsider died today: The Godfather points to a player. That player dies.",
     "options": [
       {
         "title": "Who will you kill?",
@@ -1839,10 +1487,6 @@
     "name": "Devil's Advocate",
     "type": "minion",
     "description": "Each night, choose a living player (different to last night): if executed tomorrow, they don't die.",
-    "first_night": 20,
-    "first_night_reminder": "The Devil’s Advocate points to a living player. That player survives execution tomorrow.",
-    "other_night": 12,
-    "other_night_reminder": "The Devil’s Advocate points to a living player, different from the previous night. That player survives execution tomorrow.",
     "options": [
       {
         "title": "Each Night",
@@ -1860,10 +1504,6 @@
     "name": "Assassin",
     "type": "minion",
     "description": "Once per game, at night*, choose a player: they die, even if for some reason they could not.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 35,
-    "other_night_reminder": "If the Assassin has not yet used their ability: The Assassin either shows the 'no' head signal, or points to a player. That player dies.",
     "options": [
       {
         "title": "Once Per Game",
@@ -1889,10 +1529,6 @@
     "name": "Mastermind",
     "type": "minion",
     "description": "If the Demon dies by execution (ending the game), play for 1 more day. If a player is then executed, their type loses.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -1900,10 +1536,6 @@
     "name": "Evil Twin",
     "type": "minion",
     "description": "You & an opposing player know each other. If the good player is executed, evil wins. Good can't win if you both live.",
-    "first_night": 21,
-    "first_night_reminder": "Wake the Evil Twin and their twin. Confirm that they have acknowledged each other. Point to the Evil Twin. Show their Evil Twin token to the twin player. Point to the twin. Show their character token to the Evil Twin player.",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": [
       {
         "title": "First Night",
@@ -1937,10 +1569,6 @@
     "name": "Witch",
     "type": "minion",
     "description": "Each night, choose a player: if they nominate tomorrow, they die. If just 3 players live, you lose this ability.",
-    "first_night": 22,
-    "first_night_reminder": "The Witch points to a player. If that player nominates tomorrow they die immediately.",
-    "other_night": 13,
-    "other_night_reminder": "If there are 4 or more players alive: The Witch points to a player. If that player nominates tomorrow they die immediately.",
     "options": [
       {
         "title": "Each Night",
@@ -1958,10 +1586,6 @@
     "name": "Cerenovus",
     "type": "minion",
     "description": "Each night, choose a player & a good character: they are \"mad\" they are this character tomorrow, or might be executed.",
-    "first_night": 23,
-    "first_night_reminder": "The Cerenovus points to a player, then to a character on their sheet. Wake that player. Show the 'This character selected you' card, then the Cerenovus token. Show the selected character token. If the player is not \"mad\" about being that character tomorrow, they can be executed.",
-    "other_night": 14,
-    "other_night_reminder": "The Cerenovus points to a player, then to a character on their sheet. Wake that player. Show the 'This character selected you' card, then the Cerenovus token. Show the selected character token. If the player is not \"mad\" about being that character tomorrow, they can be executed.",
     "options": [
       {
         "title": "Each Night",
@@ -2014,10 +1638,6 @@
     "name": "Pit-Hag",
     "type": "minion",
     "description": "Each night*, choose a player & a character they become (if not-in-play). If a Demon is made, deaths tonight are arbitrary.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 15,
-    "other_night_reminder": "The Pit-Hag points to a player and a character on the sheet. If this character is not in play, wake that player and show them the 'You are' card and the relevant character token. If the character is in play, nothing happens.",
     "options": [
       {
         "title": "Each Night",
@@ -2054,10 +1674,6 @@
     "name": "Widow",
     "type": "minion",
     "description": "On your 1st night, look at the Grimoire and choose a player: they are poisoned. 1 good player knows a Widow is in play.",
-    "first_night": 16,
-    "first_night_reminder": "Show the Grimoire to the Widow for as long as they need. The Widow points to a player. That player is poisoned. Wake a good player. Show the 'These characters are in play' card, then the Widow character token.",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2065,10 +1681,6 @@
     "name": "Fearmonger",
     "type": "minion",
     "description": "Each night, choose a player. If you nominate & execute them, their type loses. All players know if you choose a new player.",
-    "first_night": 24,
-    "first_night_reminder": "The Fearmonger points to a player. Place the Fear token next to that player and announce that a new player has been selected with the Fearmonger ability.",
-    "other_night": 16,
-    "other_night_reminder": "The Fearmonger points to a player. If different from the previous night, place the Fear token next to that player and announce that a new player has been selected with the Fearmonger ability.",
     "options": [
       {
         "title": "Each Night",
@@ -2086,10 +1698,6 @@
     "name": "Psychopath",
     "type": "minion",
     "description": "Each day, before nominations, you may publicly choose a player: they die. If executed, you only die if you lose roshambo.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2097,10 +1705,6 @@
     "name": "Goblin",
     "type": "minion",
     "description": "If you publicly claim to be the Goblin when nominated & are executed that day, your type wins.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2108,10 +1712,6 @@
     "name": "Mezepheles",
     "type": "minion",
     "description": "You start knowing a secret word. The 1st good player to say this word becomes evil that night.",
-    "first_night": 25,
-    "first_night_reminder": "Show the Mezepheles their secret word.",
-    "other_night": 17,
-    "other_night_reminder": "Wake the 1st good player that said the Mezepheles' secret word and show them the 'You are' card and the thumbs down evil signal.",
     "options": [
       {
         "title": "First Night",
@@ -2141,10 +1741,6 @@
     "name": "Marionette",
     "type": "minion",
     "description": "You think you are a good character but you are not. The Demon knows who you are. [You neighbour the Demon]",
-    "first_night": 10,
-    "first_night_reminder": "Select one of the good players next to the Demon and place the Is the Marionette reminder token. Wake the Demon and show them the Marionette.",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2152,10 +1748,6 @@
     "name": "Boomdandy",
     "type": "minion",
     "description": "If you are executed, all but 3 players die. 1 minute later, the player with the most players pointing at them dies.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2163,10 +1755,6 @@
     "name": "Imp",
     "type": "demon",
     "description": "Each night*, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 23,
-    "other_night_reminder": "The Imp points to a player. That player dies. If the Imp chose themselves: Replace the character of 1 alive minion with a spare Imp token. Show the 'You are' card, then the Imp token.",
     "options": [
       {
         "title": "Who will you kill?",
@@ -2184,10 +1772,6 @@
     "name": "Zombuul",
     "type": "demon",
     "description": "Each night*, if no-one died today, choose a player: they die. The 1st time you die, you live but register as dead.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 24,
-    "other_night_reminder": "If no-one died during the day: The Zombuul points to a player. That player dies.",
     "options": [
       {
         "title": "Who will you kill?",
@@ -2205,10 +1789,6 @@
     "name": "Pukka",
     "type": "demon",
     "description": "Each night, choose a player: they are poisoned. The previously poisoned player dies then becomes healthy.",
-    "first_night": 26,
-    "first_night_reminder": "The Pukka points to a player. That player is poisoned.",
-    "other_night": 25,
-    "other_night_reminder": "The Pukka points to a player. That player is poisoned. The previously poisoned player dies. ",
     "options": [
       {
         "title": "Who will you kill?",
@@ -2226,10 +1806,6 @@
     "name": "Shabaloth",
     "type": "demon",
     "description": "Each night*, choose 2 players: they die. A dead player you chose last night might be regurgitated.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 26,
-    "other_night_reminder": "One player that the Shabaloth chose the previous night might be resurrected. The Shabaloth points to two players. Those players die.",
     "options": [
       {
         "title": "Who will you kill?",
@@ -2247,10 +1823,6 @@
     "name": "Po",
     "type": "demon",
     "description": "Each night*, you may choose a player: they die. If your last choice was no-one, choose 3 players tonight.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 27,
-    "other_night_reminder": "If the Po chose no-one the previous night: The Po points to three players. Otherwise: The Po either shows the 'no' head signal , or points to a player. Chosen players die",
     "options": [
       {
         "title": "Who will you kill?",
@@ -2268,10 +1840,6 @@
     "name": "Fang Gu",
     "type": "demon",
     "description": "Each night*, choose a player: they die. The 1st Outsider this kills becomes an evil Fang Gu & you die instead. [+1 Outsider]",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 28,
-    "other_night_reminder": "The Fang Gu points to a player. That player dies. Or, if that player was an Outsider and there are no other Fang Gu in play: The Fang Gu dies instead of the chosen player. The chosen player is now an evil Fang Gu. Wake the new Fang Gu. Show the 'You are' card, then the Fang Gu token. Show the 'You are' card, then the thumb-down 'evil' hand sign.",
     "options": [
       {
         "title": "Who will you kill?",
@@ -2289,10 +1857,6 @@
     "name": "Vigormortis",
     "type": "demon",
     "description": "Each night*, choose a player: they die. Minions you kill keep their ability & poison 1 Townsfolk neighbour. [−1 Outsider]",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 31,
-    "other_night_reminder": "The Vigormortis points to a player. That player dies. If a Minion, they keep their ability and one of their Townsfolk neighbours is poisoned.",
     "options": [
       {
         "title": "Who will you kill?",
@@ -2310,10 +1874,6 @@
     "name": "No Dashii",
     "type": "demon",
     "description": "Each night*, choose a player: they die. Your 2 Townsfolk neighbours are poisoned.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 29,
-    "other_night_reminder": "The No Dashii points to a player. That player dies.",
     "options": [
       {
         "title": "Who will you kill?",
@@ -2331,10 +1891,6 @@
     "name": "Vortox",
     "type": "demon",
     "description": "Each night*, choose a player: they die. Townsfolk abilities yield false info. Each day, if no-one is executed, evil wins.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 30,
-    "other_night_reminder": "The Vortox points to a player. That player dies.",
     "options": [
       {
         "title": "Who will you kill?",
@@ -2352,10 +1908,6 @@
     "name": "Lil' Monsta",
     "type": "demon",
     "description": "Each night, Minions choose who babysits Lil' Monsta's token & \"is the Demon\". A player dies each night*. [+1 Minion]",
-    "first_night": 13,
-    "first_night_reminder": "Wake all Minions together, allow them to vote by pointing at who they want to babysit Lil' Monsta.",
-    "other_night": 34,
-    "other_night_reminder": "Wake all Minions together, allow them to vote by pointing at who they want to babysit Lil' Monsta. Choose a player, that player dies.",
     "options": [
       {
         "title": "Each Night",
@@ -2373,10 +1925,6 @@
     "name": "Lleech",
     "type": "demon",
     "description": "Each night*, choose a player: they die. You start by choosing an alive player: they are poisoned - you die if & only if they die.",
-    "first_night": 14,
-    "first_night_reminder": "The Lleech points to a player. Place the Poisoned reminder token.",
-    "other_night": 33,
-    "other_night_reminder": "The Lleech points to a player. That player dies.",
     "options": [
       {
         "title": "First Night",
@@ -2403,10 +1951,6 @@
     "name": "Al-Hadikhia",
     "type": "demon",
     "description": "Each night*, choose 3 players (all players learn who): each silently chooses to live or die, but if all live, all die.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 32,
-    "other_night_reminder": "The Al-Hadikhia chooses 3 players. Announce the first player, wake them to nod yes to live or shake head no to die, kill or resurrect accordingly, then put to sleep and announce the next player. If all 3 are alive after this, all 3 die.",
     "options": [
       {
         "title": "Each Night",
@@ -2424,10 +1968,6 @@
     "name": "Legion",
     "type": "demon",
     "description": "Each night*, a player might die. Executions fail if only evil voted. You register as a Minion too. [Most players are Legion]",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": 22,
-    "other_night_reminder": "Choose a player, that player dies.",
     "options": []
   },
   {
@@ -2435,10 +1975,6 @@
     "name": "Leviathan",
     "type": "demon",
     "description": "If more than 1 good player is executed, you win. All players know you are in play. After day 5, evil wins.",
-    "first_night": 52,
-    "first_night_reminder": "Place the Leviathan 'Day 1' marker. Announce 'The Leviathan is in play; this is Day 1.'",
-    "other_night": 72,
-    "other_night_reminder": "Change the Leviathan Day reminder for the next day.",
     "options": []
   },
   {
@@ -2446,10 +1982,6 @@
     "name": "Riot",
     "type": "demon",
     "description": "Nominees die, but may nominate again immediately (on day 3, they must). After day 3, evil wins. [All Minions are Riot]",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2457,32 +1989,40 @@
     "name": "Bureaucrat",
     "type": "traveler",
     "description": "Each night, choose a player (not yourself): their vote counts as 3 votes tomorrow.",
-    "first_night": null,
-    "first_night_reminder": "The Bureaucrat points to a player. Put the Bureaucrat's '3 votes' reminder by the chosen player's character token.",
-    "other_night": null,
-    "other_night_reminder": "The Bureaucrat points to a player. Put the Bureaucrat's '3 votes' reminder by the chosen player's character token.",
-    "options": []
+    "options": [
+      {
+        "title": "Each Night",
+        "items": [
+          {
+            "type": "label",
+            "value": "Each night, choose a player (not yourself):\n\nTheir vote counts as 3 votes tomorrow."
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "thief",
     "name": "Thief",
     "type": "traveler",
     "description": "Each night, choose a player (not yourself): their vote counts negatively tomorrow.",
-    "first_night": null,
-    "first_night_reminder": "The Thief points to a player. Put the Thief's 'Negative vote' reminder by the chosen player's character token.",
-    "other_night": null,
-    "other_night_reminder": "The Thief points to a player. Put the Thief's 'Negative vote' reminder by the chosen player's character token.",
-    "options": []
+    "options": [
+      {
+        "title": "Each Night",
+        "items": [
+          {
+            "type": "label",
+            "value": "Each night, choose a player (not yourself):\n\nTheir vote counts negatively tomorrow."
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "gunslinger",
     "name": "Gunslinger",
     "type": "traveler",
     "description": "Each day, after the 1st vote has been tallied, you may choose a player that voted: they die.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2490,10 +2030,6 @@
     "name": "Scapegoat",
     "type": "traveler",
     "description": "If a player of your alignment is executed, you might be executed instead.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2501,10 +2037,6 @@
     "name": "Beggar",
     "type": "traveler",
     "description": "You must use a vote token to vote. Dead players may choose to give you theirs. If so, you learn their alignment. You are sober & healthy.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2512,10 +2044,6 @@
     "name": "Apprentice",
     "type": "traveler",
     "description": "On your 1st night, you gain a Townsfolk ability (if good), or a Minion ability (if evil).",
-    "first_night": null,
-    "first_night_reminder": "Show the Apprentice the 'You are' card, then a Townsfolk or Minion token. In the Grimoire, replace the Apprentice token with that character token, and put the Apprentice's 'Is the Apprentice' reminder by that character token.",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2523,10 +2051,6 @@
     "name": "Matron",
     "type": "traveler",
     "description": "Each day, you may choose up to 3 sets of 2 players to swap seats. Players may not leave their seats to talk in private.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2534,10 +2058,6 @@
     "name": "Judge",
     "type": "traveler",
     "description": "Once per game, if another player nominated, you may choose to force the current execution to pass or fail.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2545,10 +2065,6 @@
     "name": "Bishop",
     "type": "traveler",
     "description": "Only the Storyteller can nominate. At least 1 opposite player must be nominated each day.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2556,10 +2072,6 @@
     "name": "Voudon",
     "type": "traveler",
     "description": "Only you and the dead can vote. They don't need a vote token to do so. A 50% majority is not required.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2567,10 +2079,6 @@
     "name": "Barista",
     "type": "traveler",
     "description": "Each night, until dusk, 1) a player becomes sober, healthy and gets true info, or 2) their ability works twice. They learn which.",
-    "first_night": null,
-    "first_night_reminder": "Choose a player, wake them and tell them which Barista power is affecting them. Treat them accordingly (sober/healthy/true info or activate their ability twice).",
-    "other_night": null,
-    "other_night_reminder": "Choose a player, wake them and tell them which Barista power is affecting them. Treat them accordingly (sober/healthy/true info or activate their ability twice).",
     "options": []
   },
   {
@@ -2578,10 +2086,6 @@
     "name": "Harlot",
     "type": "traveler",
     "description": "Each night*, choose a living player: if they agree, you learn their character, but you both might die.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "The Harlot points at any player. Then, put the Harlot to sleep. Wake the chosen player, show them the 'This character selected you' token, then the Harlot token. That player either nods their head yes or shakes their head no. If they nodded their head yes, wake the Harlot and show them the chosen player's character token. Then, you may decide that both players die.",
     "options": [
       {
         "title": "Each Night",
@@ -2599,10 +2103,6 @@
     "name": "Butcher",
     "type": "traveler",
     "description": "Each day, after the 1st execution, you may nominate again.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2610,10 +2110,6 @@
     "name": "Bone Collector",
     "type": "traveler",
     "description": "Once per game, at night, choose a dead player: they regain their ability until dusk.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "The Bone Collector either shakes their head no or points at any dead player. If they pointed at any dead player, put the Bone Collector's 'Has Ability' reminder by the chosen player's character token. (They may need to be woken tonight to use it.)",
     "options": [
       {
         "title": "Once Per Game",
@@ -2639,10 +2135,6 @@
     "name": "Deviant",
     "type": "traveler",
     "description": "If you were funny today, you cannot die by exile.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   },
   {
@@ -2650,10 +2142,6 @@
     "name": "Gangster",
     "type": "traveler",
     "description": "Once per day, you may choose to kill an alive neighbour, if your other alive neighbour agrees.",
-    "first_night": null,
-    "first_night_reminder": "",
-    "other_night": null,
-    "other_night_reminder": "",
     "options": []
   }
 ]

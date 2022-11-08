@@ -1,0 +1,22 @@
+import 'package:drift/drift.dart';
+import '/db/database.dart';
+import 'character.drift';
+
+CREATE TABLE character_night(
+  character_id TEXT NOT NULL REFERENCES character(id),
+  type TEXT MAPPED BY `const NightTypeConverter()` NOT NULL,
+  position INT NOT NULL,
+  reminder TEXT NOT NULL,
+
+  PRIMARY KEY (character_id, type),
+  UNIQUE (type, position)
+);
+
+listCharacterWithNight($where = TRUE):
+SELECT character.**, character_night.**
+FROM character
+INNER JOIN character_night
+  ON character_night.character_id = character.id
+  AND character_night.type = $nightType
+WHERE $where
+ORDER BY $orderBy;

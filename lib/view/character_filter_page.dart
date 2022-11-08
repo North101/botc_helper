@@ -72,26 +72,20 @@ class CharacterFilterArguments {
 class CharacterFilterPage extends ConsumerWidget {
   const CharacterFilterPage({super.key});
 
-  static Route<CharacterData> route(BuildContext context, Object? args) {
-    final data = CharacterFilterArguments.fromJson((args as Map).cast());
+  static Route<CharacterData> route(BuildContext context, Object? arguments) {
+    final args = CharacterFilterArguments.fromJson((arguments as Map).cast());
     return MaterialPageRoute(builder: (context) {
-      return CharacterFilterPage.withOverrides(
-        script: data.script,
-        scriptFilterList: data.scriptFilterList,
-      );
+      return CharacterFilterPage.withOverrides(args);
     });
   }
 
-  static Widget withOverrides({
-    required ScriptData script,
-    required Iterable<ScriptFilter> scriptFilterList,
-  }) =>
+  static Widget withOverrides(CharacterFilterArguments args) =>
       RestorableProviderScope(
         restorationId: 'character_filter_page',
         restorableOverrides: const [],
         overrides: [
-          scriptProvider.overrideWithValue(script),
-          filterListProvider.overrideWithValue(scriptFilterList),
+          scriptProvider.overrideWithValue(args.script),
+          filterListProvider.overrideWithValue(args.scriptFilterList),
         ],
         child: const CharacterFilterPage(),
       );

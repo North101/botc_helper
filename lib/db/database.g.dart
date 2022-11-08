@@ -222,10 +222,6 @@ class CharacterData extends DataClass implements Insertable<CharacterData> {
   final int position;
   final CharacterType type;
   final String description;
-  final int? firstNight;
-  final String firstNightReminder;
-  final int? otherNight;
-  final String otherNightReminder;
   final bool custom;
   const CharacterData(
       {required this.id,
@@ -233,10 +229,6 @@ class CharacterData extends DataClass implements Insertable<CharacterData> {
       required this.position,
       required this.type,
       required this.description,
-      this.firstNight,
-      required this.firstNightReminder,
-      this.otherNight,
-      required this.otherNightReminder,
       required this.custom});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -249,14 +241,6 @@ class CharacterData extends DataClass implements Insertable<CharacterData> {
       map['type'] = Variable<String>(converter.toSql(type));
     }
     map['description'] = Variable<String>(description);
-    if (!nullToAbsent || firstNight != null) {
-      map['first_night'] = Variable<int>(firstNight);
-    }
-    map['first_night_reminder'] = Variable<String>(firstNightReminder);
-    if (!nullToAbsent || otherNight != null) {
-      map['other_night'] = Variable<int>(otherNight);
-    }
-    map['other_night_reminder'] = Variable<String>(otherNightReminder);
     map['custom'] = Variable<bool>(custom);
     return map;
   }
@@ -268,14 +252,6 @@ class CharacterData extends DataClass implements Insertable<CharacterData> {
       position: Value(position),
       type: Value(type),
       description: Value(description),
-      firstNight: firstNight == null && nullToAbsent
-          ? const Value.absent()
-          : Value(firstNight),
-      firstNightReminder: Value(firstNightReminder),
-      otherNight: otherNight == null && nullToAbsent
-          ? const Value.absent()
-          : Value(otherNight),
-      otherNightReminder: Value(otherNightReminder),
       custom: Value(custom),
     );
   }
@@ -290,12 +266,6 @@ class CharacterData extends DataClass implements Insertable<CharacterData> {
       type: Character.$converter0
           .fromJson(serializer.fromJson<String>(json['type'])),
       description: serializer.fromJson<String>(json['description']),
-      firstNight: serializer.fromJson<int?>(json['first_night']),
-      firstNightReminder:
-          serializer.fromJson<String>(json['first_night_reminder']),
-      otherNight: serializer.fromJson<int?>(json['other_night']),
-      otherNightReminder:
-          serializer.fromJson<String>(json['other_night_reminder']),
       custom: serializer.fromJson<bool>(json['custom']),
     );
   }
@@ -308,10 +278,6 @@ class CharacterData extends DataClass implements Insertable<CharacterData> {
       'position': serializer.toJson<int>(position),
       'type': serializer.toJson<String>(Character.$converter0.toJson(type)),
       'description': serializer.toJson<String>(description),
-      'first_night': serializer.toJson<int?>(firstNight),
-      'first_night_reminder': serializer.toJson<String>(firstNightReminder),
-      'other_night': serializer.toJson<int?>(otherNight),
-      'other_night_reminder': serializer.toJson<String>(otherNightReminder),
       'custom': serializer.toJson<bool>(custom),
     };
   }
@@ -322,10 +288,6 @@ class CharacterData extends DataClass implements Insertable<CharacterData> {
           int? position,
           CharacterType? type,
           String? description,
-          Value<int?> firstNight = const Value.absent(),
-          String? firstNightReminder,
-          Value<int?> otherNight = const Value.absent(),
-          String? otherNightReminder,
           bool? custom}) =>
       CharacterData(
         id: id ?? this.id,
@@ -333,10 +295,6 @@ class CharacterData extends DataClass implements Insertable<CharacterData> {
         position: position ?? this.position,
         type: type ?? this.type,
         description: description ?? this.description,
-        firstNight: firstNight.present ? firstNight.value : this.firstNight,
-        firstNightReminder: firstNightReminder ?? this.firstNightReminder,
-        otherNight: otherNight.present ? otherNight.value : this.otherNight,
-        otherNightReminder: otherNightReminder ?? this.otherNightReminder,
         custom: custom ?? this.custom,
       );
   @override
@@ -347,18 +305,14 @@ class CharacterData extends DataClass implements Insertable<CharacterData> {
           ..write('position: $position, ')
           ..write('type: $type, ')
           ..write('description: $description, ')
-          ..write('firstNight: $firstNight, ')
-          ..write('firstNightReminder: $firstNightReminder, ')
-          ..write('otherNight: $otherNight, ')
-          ..write('otherNightReminder: $otherNightReminder, ')
           ..write('custom: $custom')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, position, type, description,
-      firstNight, firstNightReminder, otherNight, otherNightReminder, custom);
+  int get hashCode =>
+      Object.hash(id, name, position, type, description, custom);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -368,10 +322,6 @@ class CharacterData extends DataClass implements Insertable<CharacterData> {
           other.position == this.position &&
           other.type == this.type &&
           other.description == this.description &&
-          other.firstNight == this.firstNight &&
-          other.firstNightReminder == this.firstNightReminder &&
-          other.otherNight == this.otherNight &&
-          other.otherNightReminder == this.otherNightReminder &&
           other.custom == this.custom);
 }
 
@@ -381,10 +331,6 @@ class CharacterCompanion extends UpdateCompanion<CharacterData> {
   final Value<int> position;
   final Value<CharacterType> type;
   final Value<String> description;
-  final Value<int?> firstNight;
-  final Value<String> firstNightReminder;
-  final Value<int?> otherNight;
-  final Value<String> otherNightReminder;
   final Value<bool> custom;
   const CharacterCompanion({
     this.id = const Value.absent(),
@@ -392,10 +338,6 @@ class CharacterCompanion extends UpdateCompanion<CharacterData> {
     this.position = const Value.absent(),
     this.type = const Value.absent(),
     this.description = const Value.absent(),
-    this.firstNight = const Value.absent(),
-    this.firstNightReminder = const Value.absent(),
-    this.otherNight = const Value.absent(),
-    this.otherNightReminder = const Value.absent(),
     this.custom = const Value.absent(),
   });
   CharacterCompanion.insert({
@@ -404,18 +346,12 @@ class CharacterCompanion extends UpdateCompanion<CharacterData> {
     required int position,
     required CharacterType type,
     required String description,
-    this.firstNight = const Value.absent(),
-    required String firstNightReminder,
-    this.otherNight = const Value.absent(),
-    required String otherNightReminder,
     required bool custom,
   })  : id = Value(id),
         name = Value(name),
         position = Value(position),
         type = Value(type),
         description = Value(description),
-        firstNightReminder = Value(firstNightReminder),
-        otherNightReminder = Value(otherNightReminder),
         custom = Value(custom);
   static Insertable<CharacterData> createCustom({
     Expression<String>? id,
@@ -423,10 +359,6 @@ class CharacterCompanion extends UpdateCompanion<CharacterData> {
     Expression<int>? position,
     Expression<String>? type,
     Expression<String>? description,
-    Expression<int>? firstNight,
-    Expression<String>? firstNightReminder,
-    Expression<int>? otherNight,
-    Expression<String>? otherNightReminder,
     Expression<bool>? custom,
   }) {
     return RawValuesInsertable({
@@ -435,12 +367,6 @@ class CharacterCompanion extends UpdateCompanion<CharacterData> {
       if (position != null) 'position': position,
       if (type != null) 'type': type,
       if (description != null) 'description': description,
-      if (firstNight != null) 'first_night': firstNight,
-      if (firstNightReminder != null)
-        'first_night_reminder': firstNightReminder,
-      if (otherNight != null) 'other_night': otherNight,
-      if (otherNightReminder != null)
-        'other_night_reminder': otherNightReminder,
       if (custom != null) 'custom': custom,
     });
   }
@@ -451,10 +377,6 @@ class CharacterCompanion extends UpdateCompanion<CharacterData> {
       Value<int>? position,
       Value<CharacterType>? type,
       Value<String>? description,
-      Value<int?>? firstNight,
-      Value<String>? firstNightReminder,
-      Value<int?>? otherNight,
-      Value<String>? otherNightReminder,
       Value<bool>? custom}) {
     return CharacterCompanion(
       id: id ?? this.id,
@@ -462,10 +384,6 @@ class CharacterCompanion extends UpdateCompanion<CharacterData> {
       position: position ?? this.position,
       type: type ?? this.type,
       description: description ?? this.description,
-      firstNight: firstNight ?? this.firstNight,
-      firstNightReminder: firstNightReminder ?? this.firstNightReminder,
-      otherNight: otherNight ?? this.otherNight,
-      otherNightReminder: otherNightReminder ?? this.otherNightReminder,
       custom: custom ?? this.custom,
     );
   }
@@ -489,18 +407,6 @@ class CharacterCompanion extends UpdateCompanion<CharacterData> {
     if (description.present) {
       map['description'] = Variable<String>(description.value);
     }
-    if (firstNight.present) {
-      map['first_night'] = Variable<int>(firstNight.value);
-    }
-    if (firstNightReminder.present) {
-      map['first_night_reminder'] = Variable<String>(firstNightReminder.value);
-    }
-    if (otherNight.present) {
-      map['other_night'] = Variable<int>(otherNight.value);
-    }
-    if (otherNightReminder.present) {
-      map['other_night_reminder'] = Variable<String>(otherNightReminder.value);
-    }
     if (custom.present) {
       map['custom'] = Variable<bool>(custom.value);
     }
@@ -515,10 +421,6 @@ class CharacterCompanion extends UpdateCompanion<CharacterData> {
           ..write('position: $position, ')
           ..write('type: $type, ')
           ..write('description: $description, ')
-          ..write('firstNight: $firstNight, ')
-          ..write('firstNightReminder: $firstNightReminder, ')
-          ..write('otherNight: $otherNight, ')
-          ..write('otherNightReminder: $otherNightReminder, ')
           ..write('custom: $custom')
           ..write(')'))
         .toString();
@@ -562,32 +464,6 @@ class Character extends Table with TableInfo<Character, CharacterData> {
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL');
-  final VerificationMeta _firstNightMeta = const VerificationMeta('firstNight');
-  late final GeneratedColumn<int> firstNight = GeneratedColumn<int>(
-      'first_night', aliasedName, true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      $customConstraints: 'UNIQUE');
-  final VerificationMeta _firstNightReminderMeta =
-      const VerificationMeta('firstNightReminder');
-  late final GeneratedColumn<String> firstNightReminder =
-      GeneratedColumn<String>('first_night_reminder', aliasedName, false,
-          type: DriftSqlType.string,
-          requiredDuringInsert: true,
-          $customConstraints: 'NOT NULL');
-  final VerificationMeta _otherNightMeta = const VerificationMeta('otherNight');
-  late final GeneratedColumn<int> otherNight = GeneratedColumn<int>(
-      'other_night', aliasedName, true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      $customConstraints: 'UNIQUE');
-  final VerificationMeta _otherNightReminderMeta =
-      const VerificationMeta('otherNightReminder');
-  late final GeneratedColumn<String> otherNightReminder =
-      GeneratedColumn<String>('other_night_reminder', aliasedName, false,
-          type: DriftSqlType.string,
-          requiredDuringInsert: true,
-          $customConstraints: 'NOT NULL');
   final VerificationMeta _customMeta = const VerificationMeta('custom');
   late final GeneratedColumn<bool> custom = GeneratedColumn<bool>(
       'custom', aliasedName, false,
@@ -595,18 +471,8 @@ class Character extends Table with TableInfo<Character, CharacterData> {
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL');
   @override
-  List<GeneratedColumn> get $columns => [
-        id,
-        name,
-        position,
-        type,
-        description,
-        firstNight,
-        firstNightReminder,
-        otherNight,
-        otherNightReminder,
-        custom
-      ];
+  List<GeneratedColumn> get $columns =>
+      [id, name, position, type, description, custom];
   @override
   String get aliasedName => _alias ?? 'character';
   @override
@@ -642,34 +508,6 @@ class Character extends Table with TableInfo<Character, CharacterData> {
     } else if (isInserting) {
       context.missing(_descriptionMeta);
     }
-    if (data.containsKey('first_night')) {
-      context.handle(
-          _firstNightMeta,
-          firstNight.isAcceptableOrUnknown(
-              data['first_night']!, _firstNightMeta));
-    }
-    if (data.containsKey('first_night_reminder')) {
-      context.handle(
-          _firstNightReminderMeta,
-          firstNightReminder.isAcceptableOrUnknown(
-              data['first_night_reminder']!, _firstNightReminderMeta));
-    } else if (isInserting) {
-      context.missing(_firstNightReminderMeta);
-    }
-    if (data.containsKey('other_night')) {
-      context.handle(
-          _otherNightMeta,
-          otherNight.isAcceptableOrUnknown(
-              data['other_night']!, _otherNightMeta));
-    }
-    if (data.containsKey('other_night_reminder')) {
-      context.handle(
-          _otherNightReminderMeta,
-          otherNightReminder.isAcceptableOrUnknown(
-              data['other_night_reminder']!, _otherNightReminderMeta));
-    } else if (isInserting) {
-      context.missing(_otherNightReminderMeta);
-    }
     if (data.containsKey('custom')) {
       context.handle(_customMeta,
           custom.isAcceptableOrUnknown(data['custom']!, _customMeta));
@@ -695,14 +533,6 @@ class Character extends Table with TableInfo<Character, CharacterData> {
           .read(DriftSqlType.string, data['${effectivePrefix}type'])!),
       description: attachedDatabase.options.types
           .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
-      firstNight: attachedDatabase.options.types
-          .read(DriftSqlType.int, data['${effectivePrefix}first_night']),
-      firstNightReminder: attachedDatabase.options.types.read(
-          DriftSqlType.string, data['${effectivePrefix}first_night_reminder'])!,
-      otherNight: attachedDatabase.options.types
-          .read(DriftSqlType.int, data['${effectivePrefix}other_night']),
-      otherNightReminder: attachedDatabase.options.types.read(
-          DriftSqlType.string, data['${effectivePrefix}other_night_reminder'])!,
       custom: attachedDatabase.options.types
           .read(DriftSqlType.bool, data['${effectivePrefix}custom'])!,
     );
@@ -1211,6 +1041,272 @@ class CharacterOption extends Table
   bool get dontWriteConstraints => true;
 }
 
+class CharacterNightData extends DataClass
+    implements Insertable<CharacterNightData> {
+  final String characterId;
+  final NightType type;
+  final int position;
+  final String reminder;
+  const CharacterNightData(
+      {required this.characterId,
+      required this.type,
+      required this.position,
+      required this.reminder});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['character_id'] = Variable<String>(characterId);
+    {
+      final converter = CharacterNight.$converter0;
+      map['type'] = Variable<String>(converter.toSql(type));
+    }
+    map['position'] = Variable<int>(position);
+    map['reminder'] = Variable<String>(reminder);
+    return map;
+  }
+
+  CharacterNightCompanion toCompanion(bool nullToAbsent) {
+    return CharacterNightCompanion(
+      characterId: Value(characterId),
+      type: Value(type),
+      position: Value(position),
+      reminder: Value(reminder),
+    );
+  }
+
+  factory CharacterNightData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CharacterNightData(
+      characterId: serializer.fromJson<String>(json['character_id']),
+      type: CharacterNight.$converter0
+          .fromJson(serializer.fromJson<String>(json['type'])),
+      position: serializer.fromJson<int>(json['position']),
+      reminder: serializer.fromJson<String>(json['reminder']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'character_id': serializer.toJson<String>(characterId),
+      'type':
+          serializer.toJson<String>(CharacterNight.$converter0.toJson(type)),
+      'position': serializer.toJson<int>(position),
+      'reminder': serializer.toJson<String>(reminder),
+    };
+  }
+
+  CharacterNightData copyWith(
+          {String? characterId,
+          NightType? type,
+          int? position,
+          String? reminder}) =>
+      CharacterNightData(
+        characterId: characterId ?? this.characterId,
+        type: type ?? this.type,
+        position: position ?? this.position,
+        reminder: reminder ?? this.reminder,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('CharacterNightData(')
+          ..write('characterId: $characterId, ')
+          ..write('type: $type, ')
+          ..write('position: $position, ')
+          ..write('reminder: $reminder')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(characterId, type, position, reminder);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CharacterNightData &&
+          other.characterId == this.characterId &&
+          other.type == this.type &&
+          other.position == this.position &&
+          other.reminder == this.reminder);
+}
+
+class CharacterNightCompanion extends UpdateCompanion<CharacterNightData> {
+  final Value<String> characterId;
+  final Value<NightType> type;
+  final Value<int> position;
+  final Value<String> reminder;
+  const CharacterNightCompanion({
+    this.characterId = const Value.absent(),
+    this.type = const Value.absent(),
+    this.position = const Value.absent(),
+    this.reminder = const Value.absent(),
+  });
+  CharacterNightCompanion.insert({
+    required String characterId,
+    required NightType type,
+    required int position,
+    required String reminder,
+  })  : characterId = Value(characterId),
+        type = Value(type),
+        position = Value(position),
+        reminder = Value(reminder);
+  static Insertable<CharacterNightData> custom({
+    Expression<String>? characterId,
+    Expression<String>? type,
+    Expression<int>? position,
+    Expression<String>? reminder,
+  }) {
+    return RawValuesInsertable({
+      if (characterId != null) 'character_id': characterId,
+      if (type != null) 'type': type,
+      if (position != null) 'position': position,
+      if (reminder != null) 'reminder': reminder,
+    });
+  }
+
+  CharacterNightCompanion copyWith(
+      {Value<String>? characterId,
+      Value<NightType>? type,
+      Value<int>? position,
+      Value<String>? reminder}) {
+    return CharacterNightCompanion(
+      characterId: characterId ?? this.characterId,
+      type: type ?? this.type,
+      position: position ?? this.position,
+      reminder: reminder ?? this.reminder,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (characterId.present) {
+      map['character_id'] = Variable<String>(characterId.value);
+    }
+    if (type.present) {
+      final converter = CharacterNight.$converter0;
+      map['type'] = Variable<String>(converter.toSql(type.value));
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (reminder.present) {
+      map['reminder'] = Variable<String>(reminder.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CharacterNightCompanion(')
+          ..write('characterId: $characterId, ')
+          ..write('type: $type, ')
+          ..write('position: $position, ')
+          ..write('reminder: $reminder')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class CharacterNight extends Table
+    with TableInfo<CharacterNight, CharacterNightData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  CharacterNight(this.attachedDatabase, [this._alias]);
+  final VerificationMeta _characterIdMeta =
+      const VerificationMeta('characterId');
+  late final GeneratedColumn<String> characterId = GeneratedColumn<String>(
+      'character_id', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL REFERENCES character(id)');
+  final VerificationMeta _typeMeta = const VerificationMeta('type');
+  late final GeneratedColumnWithTypeConverter<NightType, String> type =
+      GeneratedColumn<String>('type', aliasedName, false,
+              type: DriftSqlType.string,
+              requiredDuringInsert: true,
+              $customConstraints: 'NOT NULL')
+          .withConverter<NightType>(CharacterNight.$converter0);
+  final VerificationMeta _positionMeta = const VerificationMeta('position');
+  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+      'position', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  final VerificationMeta _reminderMeta = const VerificationMeta('reminder');
+  late final GeneratedColumn<String> reminder = GeneratedColumn<String>(
+      'reminder', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  @override
+  List<GeneratedColumn> get $columns => [characterId, type, position, reminder];
+  @override
+  String get aliasedName => _alias ?? 'character_night';
+  @override
+  String get actualTableName => 'character_night';
+  @override
+  VerificationContext validateIntegrity(Insertable<CharacterNightData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('character_id')) {
+      context.handle(
+          _characterIdMeta,
+          characterId.isAcceptableOrUnknown(
+              data['character_id']!, _characterIdMeta));
+    } else if (isInserting) {
+      context.missing(_characterIdMeta);
+    }
+    context.handle(_typeMeta, const VerificationResult.success());
+    if (data.containsKey('position')) {
+      context.handle(_positionMeta,
+          position.isAcceptableOrUnknown(data['position']!, _positionMeta));
+    } else if (isInserting) {
+      context.missing(_positionMeta);
+    }
+    if (data.containsKey('reminder')) {
+      context.handle(_reminderMeta,
+          reminder.isAcceptableOrUnknown(data['reminder']!, _reminderMeta));
+    } else if (isInserting) {
+      context.missing(_reminderMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {characterId, type};
+  @override
+  CharacterNightData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CharacterNightData(
+      characterId: attachedDatabase.options.types
+          .read(DriftSqlType.string, data['${effectivePrefix}character_id'])!,
+      type: CharacterNight.$converter0.fromSql(attachedDatabase.options.types
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])!),
+      position: attachedDatabase.options.types
+          .read(DriftSqlType.int, data['${effectivePrefix}position'])!,
+      reminder: attachedDatabase.options.types
+          .read(DriftSqlType.string, data['${effectivePrefix}reminder'])!,
+    );
+  }
+
+  @override
+  CharacterNight createAlias(String alias) {
+    return CharacterNight(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<NightType, String, String> $converter0 =
+      const NightTypeConverter();
+  @override
+  List<String> get customConstraints =>
+      const ['PRIMARY KEY (character_id, type)', 'UNIQUE (type, position)'];
+  @override
+  bool get dontWriteConstraints => true;
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(e);
   _$Database.connect(DatabaseConnection c) : super.connect(c);
@@ -1218,6 +1314,7 @@ abstract class _$Database extends GeneratedDatabase {
   late final Character character = Character(this);
   late final ScriptCharacter scriptCharacter = ScriptCharacter(this);
   late final CharacterOption characterOption = CharacterOption(this);
+  late final CharacterNight characterNight = CharacterNight(this);
   Selectable<ScriptData> listScripts({ListScripts$where? where}) {
     var $arrayStartIndex = 1;
     final generatedwhere = $write(
@@ -1246,7 +1343,7 @@ abstract class _$Database extends GeneratedDatabase {
         startIndex: $arrayStartIndex);
     $arrayStartIndex += generatedorderBy.amountOfVariables;
     return customSelect(
-        'SELECT * FROM character WHERE ${generatedwhere.sql} ${generatedorderBy.sql}',
+        'SELECT character.* FROM character WHERE ${generatedwhere.sql} ${generatedorderBy.sql}',
         variables: [
           ...generatedwhere.introducedVariables,
           ...generatedorderBy.introducedVariables
@@ -1276,12 +1373,56 @@ abstract class _$Database extends GeneratedDatabase {
         }).asyncMap(characterOption.mapFromRow);
   }
 
+  Selectable<ListCharacterWithNightResult> listCharacterWithNight(
+      {required ListCharacterWithNight$nightType nightType,
+      ListCharacterWithNight$where? where,
+      ListCharacterWithNight$orderBy? orderBy}) {
+    var $arrayStartIndex = 1;
+    final generatednightType = $write(
+        nightType(this.character, this.characterNight),
+        hasMultipleTables: true,
+        startIndex: $arrayStartIndex);
+    $arrayStartIndex += generatednightType.amountOfVariables;
+    final generatedwhere = $write(
+        where?.call(this.character, this.characterNight) ??
+            const CustomExpression('(TRUE)'),
+        hasMultipleTables: true,
+        startIndex: $arrayStartIndex);
+    $arrayStartIndex += generatedwhere.amountOfVariables;
+    final generatedorderBy = $write(
+        orderBy?.call(this.character, this.characterNight) ??
+            const OrderBy.nothing(),
+        hasMultipleTables: true,
+        startIndex: $arrayStartIndex);
+    $arrayStartIndex += generatedorderBy.amountOfVariables;
+    return customSelect(
+        'SELECT"character"."id" AS "nested_0.id", "character"."name" AS "nested_0.name", "character"."position" AS "nested_0.position", "character"."type" AS "nested_0.type", "character"."description" AS "nested_0.description", "character"."custom" AS "nested_0.custom","character_night"."character_id" AS "nested_1.character_id", "character_night"."type" AS "nested_1.type", "character_night"."position" AS "nested_1.position", "character_night"."reminder" AS "nested_1.reminder" FROM character INNER JOIN character_night ON character_night.character_id = character.id AND character_night.type = ${generatednightType.sql} WHERE ${generatedwhere.sql} ${generatedorderBy.sql}',
+        variables: [
+          ...generatednightType.introducedVariables,
+          ...generatedwhere.introducedVariables,
+          ...generatedorderBy.introducedVariables
+        ],
+        readsFrom: {
+          character,
+          characterNight,
+          ...generatednightType.watchedTables,
+          ...generatedwhere.watchedTables,
+          ...generatedorderBy.watchedTables,
+        }).asyncMap((QueryRow row) async {
+      return ListCharacterWithNightResult(
+        character: await character.mapFromRow(row, tablePrefix: 'nested_0'),
+        characterNight:
+            await characterNight.mapFromRow(row, tablePrefix: 'nested_1'),
+      );
+    });
+  }
+
   @override
   Iterable<TableInfo<Table, dynamic>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [script, character, scriptCharacter, characterOption];
+      [script, character, scriptCharacter, characterOption, characterNight];
   @override
   DriftDatabaseOptions get options =>
       const DriftDatabaseOptions(storeDateTimeAsText: true);
@@ -1292,3 +1433,35 @@ typedef ListCharacters$where = Expression<bool> Function(Character character);
 typedef ListCharacters$orderBy = OrderBy Function(Character character);
 typedef ListCharacterOptions$where = Expression<bool> Function(
     CharacterOption character_option);
+
+class ListCharacterWithNightResult {
+  final CharacterData character;
+  final CharacterNightData characterNight;
+  ListCharacterWithNightResult({
+    required this.character,
+    required this.characterNight,
+  });
+  @override
+  int get hashCode => Object.hash(character, characterNight);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ListCharacterWithNightResult &&
+          other.character == this.character &&
+          other.characterNight == this.characterNight);
+  @override
+  String toString() {
+    return (StringBuffer('ListCharacterWithNightResult(')
+          ..write('character: $character, ')
+          ..write('characterNight: $characterNight')
+          ..write(')'))
+        .toString();
+  }
+}
+
+typedef ListCharacterWithNight$nightType = Expression<String> Function(
+    Character character, CharacterNight character_night);
+typedef ListCharacterWithNight$where = Expression<bool> Function(
+    Character character, CharacterNight character_night);
+typedef ListCharacterWithNight$orderBy = OrderBy Function(
+    Character character, CharacterNight character_night);

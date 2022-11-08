@@ -22,8 +22,9 @@ class CharacterList extends ConsumerWidget {
       slivers: [
         for (final characterByType in data)
           SliverStickyHeader(
-            header: HeaderListTile.title(
+            header: HeaderListTile.titleCount(
               title: characterByType.key.title,
+              count: characterByType.value.length,
             ),
             sliver: SliverList(
               delegate: SliverChildSeperatedBuilderDelegate(

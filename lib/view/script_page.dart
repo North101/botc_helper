@@ -10,7 +10,7 @@ import '/util/restorable.dart';
 import '/view/async_value_builder.dart';
 import '/view/character_page.dart';
 import '/view/edit_script_page.dart';
-import '/view/hide_character_page.dart';
+import 'select_character_page.dart';
 import 'character_list.dart';
 
 final currentTabProvider = RestorableProvider<RestorableInt>(
@@ -48,20 +48,19 @@ final characterListProvider = StreamProvider((ref) {
   scriptIdProvider,
 ]);
 
-final nightListProvider = StreamProvider.family.autoDispose<Iterable<CharacterData>, bool>((ref, state) {
+final nightListProvider = StreamProvider.family.autoDispose<Iterable<ListCharacterWithNightResult>, bool>((ref, state) {
   final db = ref.watch(dbProvider);
   final scriptId = ref.watch(scriptIdProvider);
   final nightHidden = ref.watch(hiddenCharacterIdListProvider).value;
-  nightColumn(Character character) => state ? character.firstNight : character.otherNight;
   return db
-      .listCharacters(
-        where: (character) =>
+      .listCharacterWithNight(
+        nightType: (character, characterNight) => drift.Variable(const NightTypeConverter().toSql(state ? NightType.firstNight : NightType.otherNight)),
+        where: (character, characterNight) =>
             (character.id.isInQuery(db.characterIdInScript(scriptId)) |
-                character.type.equalsValue(CharacterType.info)) &
-            nightColumn(character).isNotNull() &
-            character.id.isNotIn(nightHidden),
-        orderBy: (character) => drift.OrderBy([
-          drift.OrderingTerm.asc(nightColumn(character)),
+                character.type.isInValues([CharacterType.info, CharacterType.traveler])) &
+            character.id.isNotIn(nightHidden).equalsExp(character.type.equalsValue(CharacterType.traveler).not()),
+        orderBy: (character, characterNight) => drift.OrderBy([
+          drift.OrderingTerm.asc(characterNight.position),
         ]),
       )
       .watch();
@@ -84,10 +83,11 @@ final hiddenCharacterIdListProvider = RestorableProvider<RestorableSet<String>>(
 class ScriptPage extends ConsumerStatefulWidget {
   const ScriptPage({super.key});
 
-  static Route<void> route(BuildContext context, Object? args) {
+  static Route<void> route(BuildContext context, Object? arguments) {
+    final args = arguments as String;
     return MaterialPageRoute(builder: (context) {
       return ScriptPage.withOverrides(
-        scriptId: args as String,
+        scriptId: args,
       );
     });
   }
@@ -400,7 +400,7 @@ class SelectButton extends ConsumerWidget {
         final characterList = await ref.read(nightListProvider(firstNight).future);
         final nightSelected = ref.read(nightSelectedProvider);
 
-        final newItems = characterList.map((e) => e.id).toSet();
+        final newItems = characterList.map((e) => e.character.id).toSet();
         nightSelected.value = nightSelected.value.copyWith(
           firstNight: firstNight ? newItems : null,
           otherNight: !firstNight ? newItems : null,
@@ -419,15 +419,15 @@ class HideButton extends ConsumerStatefulWidget {
 }
 
 class HideButtonState extends ConsumerState<HideButton> with RestorationMixin {
-  late RestorableRouteFuture<Iterable<String>?> hideCharacterRouteFuture;
+  late RestorableRouteFuture<Iterable<String>?> selectCharacterRouteFuture;
 
   @override
   void initState() {
     super.initState();
 
-    hideCharacterRouteFuture = RestorableRouteFuture(
+    selectCharacterRouteFuture = RestorableRouteFuture(
       onPresent: (navigator, arguments) => navigator.restorablePush(
-        HideCharacterPage.route,
+        SelectCharacterPage.route,
         arguments: arguments,
       ),
       onComplete: (result) {
@@ -444,16 +444,17 @@ class HideButtonState extends ConsumerState<HideButton> with RestorationMixin {
 
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    registerForRestoration(hideCharacterRouteFuture, 'hideCharacterRouteFuture');
+    registerForRestoration(selectCharacterRouteFuture, 'selectCharacterRouteFuture');
   }
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       tooltip: 'Hide Characters',
-      onPressed: () async => hideCharacterRouteFuture.present(HideCharacterArgument(
+      onPressed: () async => selectCharacterRouteFuture.present(SelectCharacterArgument(
         script: await ref.read(scriptProvider.future),
         characterIdList: ref.read(hiddenCharacterIdListProvider).value,
+        invert: true,
       ).toJson()),
       icon: const Icon(Icons.visibility),
     );
@@ -494,13 +495,13 @@ class CharacterNightTile extends ConsumerWidget {
   });
 
   final bool firstNight;
-  final CharacterData character;
+  final ListCharacterWithNightResult character;
 
   void onChange(WidgetRef ref, bool? value) {
     final selectedItems = ref.read(nightSelectedProvider);
     final newItems = {
-      ...selectedItems.value.night(firstNight).whereNot((e) => e == character.id),
-      if (value == true) character.id,
+      ...selectedItems.value.night(firstNight).whereNot((e) => e == character.character.id),
+      if (value == true) character.character.id,
     };
     selectedItems.value = selectedItems.value.copyWith(
       firstNight: firstNight ? newItems : null,
@@ -511,15 +512,15 @@ class CharacterNightTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selected = ref.watch(nightSelectedProvider.select((value) {
-      return value.value.night(firstNight).contains(character.id);
+      return value.value.night(firstNight).contains(character.character.id);
     }));
     return ListTile(
-      leading: character.image(
+      leading: character.character.image(
         width: 48,
         height: 48,
       ),
-      title: Text(character.name),
-      subtitle: Text(firstNight ? character.firstNightReminder : character.otherNightReminder),
+      title: Text(character.character.name),
+      subtitle: Text(character.characterNight.reminder),
       trailing: Checkbox(
         value: selected,
         onChanged: (value) => onChange(ref, value),
@@ -531,7 +532,7 @@ class CharacterNightTile extends ConsumerWidget {
           CharacterPage.route,
           arguments: CharacterPageArguments(
             script: script,
-            character: character,
+            character: character.character,
           ).toJson(),
         );
       },

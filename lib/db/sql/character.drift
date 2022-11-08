@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import '/db/database.dart';
+import 'character_night.drift';
 
 CREATE TABLE character(
   id TEXT NOT NULL PRIMARY KEY,
@@ -7,15 +8,11 @@ CREATE TABLE character(
   position INT NOT NULL UNIQUE,
   type TEXT MAPPED BY `const CharacterTypeConverter()` NOT NULL,
   description TEXT NOT NULL,
-  first_night INT UNIQUE,
-  first_night_reminder TEXT NOT NULL,
-  other_night INT UNIQUE,
-  other_night_reminder TEXT NOT NULL,
   custom BOOL NOT NULL
 );
 
 listCharacters($where = TRUE):
-SELECT *
+SELECT character.*
 FROM character
 WHERE $where
 ORDER BY $orderBy;

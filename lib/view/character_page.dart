@@ -50,25 +50,19 @@ class CharacterPageArguments {
 class CharacterPage extends ConsumerWidget {
   const CharacterPage({super.key});
 
-  static Route<void> route(BuildContext context, Object? arg) {
-    final arguments = CharacterPageArguments.fromJson((arg as Map).cast());
+  static Route<void> route(BuildContext context, Object? arguments) {
+    final args = CharacterPageArguments.fromJson((arguments as Map).cast());
     return MaterialPageRoute(builder: (context) {
-      return CharacterPage.withOverrides(
-        script: arguments.script,
-        character: arguments.character,
-      );
+      return CharacterPage.withOverrides(args);
     });
   }
 
-  static Widget withOverrides({
-    required ScriptData script,
-    required CharacterData character,
-  }) =>
+  static Widget withOverrides(CharacterPageArguments args) =>
       RestorableProviderScope(
         restorationId: 'character_page',
         overrides: [
-          scriptProvider.overrideWithValue(script),
-          characterProvider.overrideWithValue(character),
+          scriptProvider.overrideWithValue(args.script),
+          characterProvider.overrideWithValue(args.character),
         ],
         restorableOverrides: const [],
         child: const CharacterPage(),

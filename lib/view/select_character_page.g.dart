@@ -1,21 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'hide_character_page.dart';
+part of 'select_character_page.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-HideCharacterArgument _$HideCharacterArgumentFromJson(Map json) =>
-    HideCharacterArgument(
-      script: scriptFromJson(json['script'] as Map<String, dynamic>),
+SelectCharacterArgument _$SelectCharacterArgumentFromJson(Map json) =>
+    SelectCharacterArgument(
+      script: scriptNFromJson(json['script'] as Map<String, dynamic>?),
       characterIdList:
           (json['characterIdList'] as List<dynamic>).map((e) => e as String),
+      invert: json['invert'] as bool,
     );
 
-Map<String, dynamic> _$HideCharacterArgumentToJson(
-        HideCharacterArgument instance) =>
+Map<String, dynamic> _$SelectCharacterArgumentToJson(
+        SelectCharacterArgument instance) =>
     <String, dynamic>{
-      'script': scriptToJson(instance.script),
+      'script': scriptNToJson(instance.script),
       'characterIdList': instance.characterIdList.toList(),
+      'invert': instance.invert,
     };

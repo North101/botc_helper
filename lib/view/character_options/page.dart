@@ -40,29 +40,21 @@ class CharacterOptionArguments {
 class CharacterOptionPage extends ConsumerWidget {
   const CharacterOptionPage({super.key});
 
-  static Route<void> route(BuildContext context, Object? args) {
-    final data = CharacterOptionArguments.fromJson((args as Map).cast());
+  static Route<void> route(BuildContext context, Object? arguments) {
+    final args = CharacterOptionArguments.fromJson((arguments as Map).cast());
     return MaterialPageRoute(builder: (context) {
-      return CharacterOptionPage.withOverrides(
-        script: data.script,
-        character: data.character,
-        characterOption: data.characterOption,
-      );
+      return CharacterOptionPage.withOverrides(args);
     });
   }
 
-  static Widget withOverrides({
-    required ScriptData script,
-    required CharacterData character,
-    required CharacterOptionItem characterOption,
-  }) =>
+  static Widget withOverrides(CharacterOptionArguments args) =>
       RestorableProviderScope(
         restorationId: 'character_option_page',
         restorableOverrides: const [],
         overrides: [
-          scriptProvider.overrideWithValue(script),
-          characterProvider.overrideWithValue(character),
-          characterOptionProvider.overrideWithValue(characterOption),
+          scriptProvider.overrideWithValue(args.script),
+          characterProvider.overrideWithValue(args.character),
+          characterOptionProvider.overrideWithValue(args.characterOption),
         ],
         child: const CharacterOptionPage(),
       );

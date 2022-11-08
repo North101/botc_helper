@@ -36,7 +36,10 @@ class MainPage extends ConsumerWidget {
           slivers: [
             for (final custom in data)
               SliverStickyHeader(
-                header: HeaderListTile.title(title: custom.key ? 'Custom' : 'Official'),
+                header: HeaderListTile.titleCount(
+                  title: custom.key ? 'Custom' : 'Official',
+                  count: custom.value.length,
+                ),
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) => ScriptTile(item: custom.value[index]),

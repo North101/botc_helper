@@ -18,11 +18,14 @@ class $AssetsDataGen {
   /// File path: assets/data/generic.json
   String get generic => 'assets/data/generic.json';
 
+  /// File path: assets/data/night.json
+  String get night => 'assets/data/night.json';
+
   /// File path: assets/data/script.json
   String get script => 'assets/data/script.json';
 
   /// List of all assets
-  List<String> get values => [character, generic, script];
+  List<String> get values => [character, generic, night, script];
 }
 
 class $AssetsImagesGen {

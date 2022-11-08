@@ -3,7 +3,7 @@ description: 'A Blood on the Clocktower Helper'
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.1+12
+version: 1.0.2+13
 
 environment:
   sdk: '>=2.19.0-255.2.beta <3.0.0'
@@ -19,8 +19,6 @@ dependencies:
   flutter_riverpod: 2.0.0-dev.09
   flutter_sticky_header: any
   freezed_annotation: any
-  freezed: any
-  http: any
   json_annotation: any
   path_provider: any
   path: any
@@ -36,6 +34,7 @@ dev_dependencies:
   drift_dev: any
   flutter_gen_runner: any
   flutter_lints: any
+  freezed: any
   icons_launcher: any
   json_serializable: any
 
