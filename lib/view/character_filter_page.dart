@@ -22,7 +22,9 @@ final characterListProvider = StreamProvider((ref) {
   return db
       .listCharacters(
         where: (character) =>
-            character.id.isInQuery(db.characterIdInScript(scriptId)) & buildFilter(character, filterList),
+            (character.id.isInQuery(db.characterIdInScript(scriptId)) |
+                character.type.equalsValue(CharacterType.traveller)) &
+            buildFilter(character, filterList),
         orderBy: (character) => drift.OrderBy([
           drift.OrderingTerm.asc(character.position),
         ]),
@@ -46,7 +48,7 @@ drift.Expression<bool> buildFilter(
             character: (type, value) => character.id.equals(value),
             alignment: (type, value) => character.type.isInValues([
               for (final type in CharacterType.values)
-                if (type.alignment == value || type.alignment == null) type
+                if (type.alignment == value) type
             ]),
           ))
       .reduce((value, element) => value | element);
@@ -79,8 +81,7 @@ class CharacterFilterPage extends ConsumerWidget {
     });
   }
 
-  static Widget withOverrides(CharacterFilterArguments args) =>
-      RestorableProviderScope(
+  static Widget withOverrides(CharacterFilterArguments args) => RestorableProviderScope(
         restorationId: 'character_filter_page',
         restorableOverrides: const [],
         overrides: [

@@ -79,9 +79,9 @@ class NightSelected {
   Set<String> night(bool firstNight) => firstNight ? this.firstNight : otherNight;
 
   NightSelected copyWith({Set<String>? firstNight, Set<String>? otherNight}) => NightSelected(
-    firstNight: firstNight ?? this.firstNight,
-    otherNight: otherNight ?? this.otherNight,
-  );
+        firstNight: firstNight ?? this.firstNight,
+        otherNight: otherNight ?? this.otherNight,
+      );
 
   Map<String, dynamic> toJson() => _$NightSelectedToJson(this);
 }

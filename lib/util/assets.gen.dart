@@ -46,6 +46,9 @@ class $AssetsImagesGen {
   AssetGenImage get amnesiac =>
       const AssetGenImage('assets/images/amnesiac.png');
 
+  /// File path: assets/images/angel.png
+  AssetGenImage get angel => const AssetGenImage('assets/images/angel.png');
+
   /// File path: assets/images/apprentice.png
   AssetGenImage get apprentice =>
       const AssetGenImage('assets/images/apprentice.png');
@@ -90,6 +93,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/bounty_hunter.png
   AssetGenImage get bountyHunter =>
       const AssetGenImage('assets/images/bounty_hunter.png');
+
+  /// File path: assets/images/buddhist.png
+  AssetGenImage get buddhist =>
+      const AssetGenImage('assets/images/buddhist.png');
 
   /// File path: assets/images/bureaucrat.png
   AssetGenImage get bureaucrat =>
@@ -142,11 +149,21 @@ class $AssetsImagesGen {
   AssetGenImage get devilsAdvocate =>
       const AssetGenImage('assets/images/devils_advocate.png');
 
+  /// File path: assets/images/djinn.png
+  AssetGenImage get djinn => const AssetGenImage('assets/images/djinn.png');
+
+  /// File path: assets/images/doomsayer.png
+  AssetGenImage get doomsayer =>
+      const AssetGenImage('assets/images/doomsayer.png');
+
   /// File path: assets/images/dreamer.png
   AssetGenImage get dreamer => const AssetGenImage('assets/images/dreamer.png');
 
   /// File path: assets/images/drunk.png
   AssetGenImage get drunk => const AssetGenImage('assets/images/drunk.png');
+
+  /// File path: assets/images/duchess.png
+  AssetGenImage get duchess => const AssetGenImage('assets/images/duchess.png');
 
   /// File path: assets/images/empath.png
   AssetGenImage get empath => const AssetGenImage('assets/images/empath.png');
@@ -172,6 +189,12 @@ class $AssetsImagesGen {
   /// File path: assets/images/fearmonger.png
   AssetGenImage get fearmonger =>
       const AssetGenImage('assets/images/fearmonger.png');
+
+  /// File path: assets/images/fibbin.png
+  AssetGenImage get fibbin => const AssetGenImage('assets/images/fibbin.png');
+
+  /// File path: assets/images/fiddler.png
+  AssetGenImage get fiddler => const AssetGenImage('assets/images/fiddler.png');
 
   /// File path: assets/images/fisherman.png
   AssetGenImage get fisherman =>
@@ -224,6 +247,10 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/harlot.png
   AssetGenImage get harlot => const AssetGenImage('assets/images/harlot.png');
+
+  /// File path: assets/images/hells_librarian.png
+  AssetGenImage get hellsLibrarian =>
+      const AssetGenImage('assets/images/hells_librarian.png');
 
   /// File path: assets/images/heretic.png
   AssetGenImage get heretic => const AssetGenImage('assets/images/heretic.png');
@@ -389,6 +416,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/recluse.png
   AssetGenImage get recluse => const AssetGenImage('assets/images/recluse.png');
 
+  /// File path: assets/images/revolutionary.png
+  AssetGenImage get revolutionary =>
+      const AssetGenImage('assets/images/revolutionary.png');
+
   /// File path: assets/images/riot.png
   AssetGenImage get riot => const AssetGenImage('assets/images/riot.png');
 
@@ -416,6 +447,10 @@ class $AssetsImagesGen {
   AssetGenImage get seamstress =>
       const AssetGenImage('assets/images/seamstress.png');
 
+  /// File path: assets/images/sentinel.png
+  AssetGenImage get sentinel =>
+      const AssetGenImage('assets/images/sentinel.png');
+
   /// File path: assets/images/shabaloth.png
   AssetGenImage get shabaloth =>
       const AssetGenImage('assets/images/shabaloth.png');
@@ -432,6 +467,10 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/soldier.png
   AssetGenImage get soldier => const AssetGenImage('assets/images/soldier.png');
+
+  /// File path: assets/images/spirit_of_ivory.png
+  AssetGenImage get spiritOfIvory =>
+      const AssetGenImage('assets/images/spirit_of_ivory.png');
 
   /// File path: assets/images/spy.png
   AssetGenImage get spy => const AssetGenImage('assets/images/spy.png');
@@ -457,6 +496,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/town_crier.png
   AssetGenImage get townCrier =>
       const AssetGenImage('assets/images/town_crier.png');
+
+  /// File path: assets/images/toymaker.png
+  AssetGenImage get toymaker =>
+      const AssetGenImage('assets/images/toymaker.png');
 
   /// File path: assets/images/undertaker.png
   AssetGenImage get undertaker =>
@@ -494,6 +537,7 @@ class $AssetsImagesGen {
         alHadikhia,
         alchemist,
         amnesiac,
+        angel,
         apprentice,
         artist,
         assassin,
@@ -507,6 +551,7 @@ class $AssetsImagesGen {
         boneCollector,
         boomdandy,
         bountyHunter,
+        buddhist,
         bureaucrat,
         butcher,
         butler,
@@ -521,8 +566,11 @@ class $AssetsImagesGen {
         damsel,
         deviant,
         devilsAdvocate,
+        djinn,
+        doomsayer,
         dreamer,
         drunk,
+        duchess,
         empath,
         engineer,
         evilTwin,
@@ -530,6 +578,8 @@ class $AssetsImagesGen {
         fangGu,
         farmer,
         fearmonger,
+        fibbin,
+        fiddler,
         fisherman,
         flowergirl,
         fool,
@@ -545,6 +595,7 @@ class $AssetsImagesGen {
         grandmother,
         gunslinger,
         harlot,
+        hellsLibrarian,
         heretic,
         huntsman,
         imp,
@@ -591,6 +642,7 @@ class $AssetsImagesGen {
         puzzlemaster,
         ravenkeeper,
         recluse,
+        revolutionary,
         riot,
         sage,
         sailor,
@@ -599,11 +651,13 @@ class $AssetsImagesGen {
         scapegoat,
         scarletWoman,
         seamstress,
+        sentinel,
         shabaloth,
         slayer,
         snakeCharmer,
         snitch,
         soldier,
+        spiritOfIvory,
         spy,
         stormCatcher,
         sweetheart,
@@ -611,6 +665,7 @@ class $AssetsImagesGen {
         thief,
         tinker,
         townCrier,
+        toymaker,
         undertaker,
         vigormortis,
         virgin,

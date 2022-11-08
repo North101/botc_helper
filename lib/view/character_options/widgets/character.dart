@@ -110,12 +110,10 @@ class OptionCharacterItemWidgetState extends ConsumerState<OptionCharacterItemWi
                   ),
                 ),
               ),
-              onPressed: () => characterFilterRouteFuture.present(
-                CharacterFilterArguments(
-                  script: script,
-                  scriptFilterList: widget.optionItem.filter,
-                ).toJson(),
-              ),
+              onPressed: () => characterFilterRouteFuture.present(CharacterFilterArguments(
+                script: script,
+                scriptFilterList: widget.optionItem.filter,
+              ).toJson()),
             ),
           );
         }
@@ -124,12 +122,10 @@ class OptionCharacterItemWidgetState extends ConsumerState<OptionCharacterItemWi
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Card(
             child: InkWell(
-              onTap: () => characterFilterRouteFuture.present(
-                CharacterFilterArguments(
-                  script: script,
-                  scriptFilterList: widget.optionItem.filter,
-                ).toJson(),
-              ),
+              onTap: () => characterFilterRouteFuture.present(CharacterFilterArguments(
+                script: script,
+                scriptFilterList: widget.optionItem.filter,
+              ).toJson()),
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Column(

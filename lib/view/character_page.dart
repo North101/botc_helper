@@ -18,14 +18,22 @@ final characterProvider = Provider<CharacterData>((ref) => throw UnimplementedEr
 final characterOptionListProvider = StreamProvider((ref) {
   final db = ref.watch(dbProvider);
   final characterId = ref.watch(characterProvider).id;
-  return db.listCharacterOptions(where: (characerOption) => characerOption.characterId.equals(characterId)).watch();
+  return db
+      .listCharacterOptions(
+        where: (characerOption) => characerOption.characterId.equals(characterId),
+      )
+      .watch();
 }, dependencies: [
   dbProvider,
   characterProvider,
 ]);
 final genericOptionListProvider = StreamProvider((ref) {
   final db = ref.watch(dbProvider);
-  return db.listCharacterOptions(where: (characerOption) => characerOption.characterId.isNull()).watch();
+  return db
+      .listCharacterOptions(
+        where: (characerOption) => characerOption.characterId.isNull(),
+      )
+      .watch();
 }, dependencies: [
   dbProvider,
 ]);
@@ -57,8 +65,7 @@ class CharacterPage extends ConsumerWidget {
     });
   }
 
-  static Widget withOverrides(CharacterPageArguments args) =>
-      RestorableProviderScope(
+  static Widget withOverrides(CharacterPageArguments args) => RestorableProviderScope(
         restorationId: 'character_page',
         overrides: [
           scriptProvider.overrideWithValue(args.script),

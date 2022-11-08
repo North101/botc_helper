@@ -1987,7 +1987,7 @@
   {
     "id": "bureaucrat",
     "name": "Bureaucrat",
-    "type": "traveler",
+    "type": "traveller",
     "description": "Each night, choose a player (not yourself): their vote counts as 3 votes tomorrow.",
     "options": [
       {
@@ -2004,7 +2004,7 @@
   {
     "id": "thief",
     "name": "Thief",
-    "type": "traveler",
+    "type": "traveller",
     "description": "Each night, choose a player (not yourself): their vote counts negatively tomorrow.",
     "options": [
       {
@@ -2021,70 +2021,70 @@
   {
     "id": "gunslinger",
     "name": "Gunslinger",
-    "type": "traveler",
+    "type": "traveller",
     "description": "Each day, after the 1st vote has been tallied, you may choose a player that voted: they die.",
     "options": []
   },
   {
     "id": "scapegoat",
     "name": "Scapegoat",
-    "type": "traveler",
+    "type": "traveller",
     "description": "If a player of your alignment is executed, you might be executed instead.",
     "options": []
   },
   {
     "id": "beggar",
     "name": "Beggar",
-    "type": "traveler",
+    "type": "traveller",
     "description": "You must use a vote token to vote. Dead players may choose to give you theirs. If so, you learn their alignment. You are sober & healthy.",
     "options": []
   },
   {
     "id": "apprentice",
     "name": "Apprentice",
-    "type": "traveler",
+    "type": "traveller",
     "description": "On your 1st night, you gain a Townsfolk ability (if good), or a Minion ability (if evil).",
     "options": []
   },
   {
     "id": "matron",
     "name": "Matron",
-    "type": "traveler",
+    "type": "traveller",
     "description": "Each day, you may choose up to 3 sets of 2 players to swap seats. Players may not leave their seats to talk in private.",
     "options": []
   },
   {
     "id": "judge",
     "name": "Judge",
-    "type": "traveler",
+    "type": "traveller",
     "description": "Once per game, if another player nominated, you may choose to force the current execution to pass or fail.",
     "options": []
   },
   {
     "id": "bishop",
     "name": "Bishop",
-    "type": "traveler",
+    "type": "traveller",
     "description": "Only the Storyteller can nominate. At least 1 opposite player must be nominated each day.",
     "options": []
   },
   {
     "id": "voudon",
     "name": "Voudon",
-    "type": "traveler",
+    "type": "traveller",
     "description": "Only you and the dead can vote. They don't need a vote token to do so. A 50% majority is not required.",
     "options": []
   },
   {
     "id": "barista",
     "name": "Barista",
-    "type": "traveler",
+    "type": "traveller",
     "description": "Each night, until dusk, 1) a player becomes sober, healthy and gets true info, or 2) their ability works twice. They learn which.",
     "options": []
   },
   {
     "id": "harlot",
     "name": "Harlot",
-    "type": "traveler",
+    "type": "traveller",
     "description": "Each night*, choose a living player: if they agree, you learn their character, but you both might die.",
     "options": [
       {
@@ -2101,14 +2101,14 @@
   {
     "id": "butcher",
     "name": "Butcher",
-    "type": "traveler",
+    "type": "traveller",
     "description": "Each day, after the 1st execution, you may nominate again.",
     "options": []
   },
   {
     "id": "bone_collector",
     "name": "Bone Collector",
-    "type": "traveler",
+    "type": "traveller",
     "description": "Once per game, at night, choose a dead player: they regain their ability until dusk.",
     "options": [
       {
@@ -2133,15 +2133,106 @@
   {
     "id": "deviant",
     "name": "Deviant",
-    "type": "traveler",
+    "type": "traveller",
     "description": "If you were funny today, you cannot die by exile.",
     "options": []
   },
   {
     "id": "gangster",
     "name": "Gangster",
-    "type": "traveler",
+    "type": "traveller",
     "description": "Once per day, you may choose to kill an alive neighbour, if your other alive neighbour agrees.",
+    "options": []
+  },
+  {
+    "id": "angel",
+    "name": "Angel",
+    "type": "fabled",
+    "description": "Something bad might happen to whoever is most responsible for the death of a new player.",
+    "options": []
+  },
+  {
+    "id": "buddhist",
+    "name": "Buddhist",
+    "type": "fabled",
+    "description": "For the first 2 minutes of each day, veteran players may not talk.",
+    "options": []
+  },
+  {
+    "id": "djinn",
+    "name": "Djinn",
+    "type": "fabled",
+    "description": "Use the Djinn's special rule. All players know what it is.",
+    "options": []
+  },
+  {
+    "id": "doomsayer",
+    "name": "Doomsayer",
+    "type": "fabled",
+    "description": "If 4 or more players live, each living player may publicly choose (once per game) that a player of their own alignment dies.",
+    "options": []
+  },
+  {
+    "id": "duchess",
+    "name": "Duchess",
+    "type": "fabled",
+    "description": "Each day, 3 players may choose to visit you. At night*, each visitor learns how many visitors are evil, but 1 gets false info.",
+    "options": []
+  },
+  {
+    "id": "fibbin",
+    "name": "Fibbin",
+    "type": "fabled",
+    "description": "Once per game, 1 good player might get incorrect information.",
+    "options": []
+  },
+  {
+    "id": "fiddler",
+    "name": "Fiddler",
+    "type": "fabled",
+    "description": "Once per game, the Demon secretly chooses an opposing player: all players choose which of these 2 players win.",
+    "options": []
+  },
+  {
+    "id": "hells_librarian",
+    "name": "Hell's Librarian",
+    "type": "fabled",
+    "description": "Something bad might happen to whoever talks when the Storyteller has asked for silence.",
+    "options": []
+  },
+  {
+    "id": "revolutionary",
+    "name": "Revolutionary",
+    "type": "fabled",
+    "description": "2 neighboring players are known to be the same alignment. Once per game, 1 of them registers falsely.",
+    "options": []
+  },
+  {
+    "id": "sentinel",
+    "name": "Sentinel",
+    "type": "fabled",
+    "description": "There might be 1 extra or 1 fewer Outsider in play.",
+    "options": []
+  },
+  {
+    "id": "spirit_of_ivory",
+    "name": "Spirit Of Ivory",
+    "type": "fabled",
+    "description": "There can't be more than 1 extra evil player.",
+    "options": []
+  },
+  {
+    "id": "storm_catcher",
+    "name": "Storm Catcher",
+    "type": "fabled",
+    "description": "",
+    "options": []
+  },
+  {
+    "id": "toymaker",
+    "name": "Toymaker",
+    "type": "fabled",
+    "description": "The Demon may choose not to attack & must do this at least once per game. Evil players get normal starting info.",
     "options": []
   }
 ]

@@ -24,13 +24,20 @@ final characterListProvider = StreamProvider((ref) {
   final script = ref.watch(scriptProvider);
   return db
       .listCharacters(
-        where: (character) => script != null
-            ? character.id.isInQuery(db.characterIdInScript(script.id)) |
-                character.type.equalsValue(CharacterType.traveler)
-            : character.type.isNotInValues([
-                CharacterType.info,
-                CharacterType.traveler,
-              ]),
+        where: (character) {
+          if (script != null) {
+            return character.id.isInQuery(db.characterIdInScript(script.id)) |
+                character.type.equalsValue(CharacterType.traveller);
+          }
+
+          return character.type.isInValues(const {
+            CharacterType.townsfolk,
+            CharacterType.outsider,
+            CharacterType.minion,
+            CharacterType.demon,
+            CharacterType.fabled,
+          });
+        },
         orderBy: (character) => drift.OrderBy([
           drift.OrderingTerm.asc(character.position),
         ]),
@@ -77,8 +84,7 @@ class SelectCharacterPage extends ConsumerWidget {
     });
   }
 
-  static Widget withOverrides(SelectCharacterArgument args) =>
-      RestorableProviderScope(
+  static Widget withOverrides(SelectCharacterArgument args) => RestorableProviderScope(
         restorationId: 'hide_character_page',
         overrides: [
           scriptProvider.overrideWithValue(args.script),
@@ -134,17 +140,16 @@ class HideCharacterTile extends ConsumerWidget {
 
   final CharacterData character;
 
-  bool isSelected(bool value, bool invert) {
-    final selected = character.type == CharacterType.traveler ? !value : value;
-    return invert ? !selected : selected;
-  }
+  bool get isTraveller => character.type == CharacterType.traveller;
 
-  void onChange(WidgetRef ref, bool? value) {
+  bool isSelected(bool value, bool invert) => value ^ isTraveller ^ invert;
+
+  void onChange(WidgetRef ref, bool value) {
     final invert = ref.read(invertProvider);
     final nightHidden = ref.read(selectedCharacterIdProvider);
     nightHidden.value = {
       ...nightHidden.value.where((e) => e != character.id),
-      if (isSelected(value == true, invert)) character.id,
+      if (isSelected(value, invert)) character.id,
     };
   }
 
@@ -160,7 +165,7 @@ class HideCharacterTile extends ConsumerWidget {
       onTap: () => onChange(ref, !selected),
       trailing: Checkbox(
         value: selected,
-        onChanged: (value) => onChange(ref, value),
+        onChanged: (value) => onChange(ref, value == true),
       ),
     );
   }

@@ -56,7 +56,7 @@ class Database extends _$Database {
   }
 
   @override
-  int schemaVersion = 3;
+  int schemaVersion = 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -76,7 +76,7 @@ class Database extends _$Database {
               }
             });
           } else if (details.hadUpgrade) {
-            if (details.versionBefore! < 3) {
+            if (details.versionBefore! < 4) {
               await initCharacters(this);
             }
           }

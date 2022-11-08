@@ -36,7 +36,7 @@ final characterListProvider = StreamProvider((ref) {
       .listCharacters(
         where: (character) =>
             character.id.isInQuery(db.characterIdInScript(scriptId)) |
-            character.type.equalsValue(CharacterType.traveler),
+            character.type.equalsValue(CharacterType.traveller),
         orderBy: (character) => drift.OrderBy([
           drift.OrderingTerm.asc(character.position),
         ]),
@@ -51,14 +51,18 @@ final characterListProvider = StreamProvider((ref) {
 final nightListProvider = StreamProvider.family.autoDispose<Iterable<ListCharacterWithNightResult>, bool>((ref, state) {
   final db = ref.watch(dbProvider);
   final scriptId = ref.watch(scriptIdProvider);
-  final nightHidden = ref.watch(hiddenCharacterIdListProvider).value;
+  final hiddenIdList = ref.watch(hiddenIdListProvider).value;
   return db
       .listCharacterWithNight(
-        nightType: (character, characterNight) => drift.Variable(const NightTypeConverter().toSql(state ? NightType.firstNight : NightType.otherNight)),
+        nightType: (character, characterNight) =>
+            drift.Variable(const NightTypeConverter().toSql(state ? NightType.firstNight : NightType.otherNight)),
         where: (character, characterNight) =>
             (character.id.isInQuery(db.characterIdInScript(scriptId)) |
-                character.type.isInValues([CharacterType.info, CharacterType.traveler])) &
-            character.id.isNotIn(nightHidden).equalsExp(character.type.equalsValue(CharacterType.traveler).not()),
+                character.type.isInValues(const {
+                  CharacterType.info,
+                  CharacterType.traveller,
+                })) &
+            character.id.isNotIn(hiddenIdList).equalsExp(character.type.equalsValue(CharacterType.traveller).not()),
         orderBy: (character, characterNight) => drift.OrderBy([
           drift.OrderingTerm.asc(characterNight.position),
         ]),
@@ -67,7 +71,7 @@ final nightListProvider = StreamProvider.family.autoDispose<Iterable<ListCharact
 }, dependencies: [
   dbProvider,
   scriptIdProvider,
-  hiddenCharacterIdListProvider,
+  hiddenIdListProvider,
 ]);
 
 final nightSelectedProvider = RestorableProvider<RestorableNightSelected>(
@@ -75,9 +79,9 @@ final nightSelectedProvider = RestorableProvider<RestorableNightSelected>(
   restorationId: 'nightSelectedProvider',
 );
 
-final hiddenCharacterIdListProvider = RestorableProvider<RestorableSet<String>>(
+final hiddenIdListProvider = RestorableProvider<RestorableSet<String>>(
   (ref) => throw UnimplementedError(),
-  restorationId: 'hiddenCharacterIdListProvider',
+  restorationId: 'hiddenIdListProvider',
 );
 
 class ScriptPage extends ConsumerStatefulWidget {
@@ -106,7 +110,7 @@ class ScriptPage extends ConsumerStatefulWidget {
             firstNight: {},
             otherNight: {},
           ))),
-          hiddenCharacterIdListProvider.overrideWithRestorable(RestorableSet({})),
+          hiddenIdListProvider.overrideWithRestorable(RestorableSet({})),
         ],
         child: const ScriptPage(),
       );
@@ -242,11 +246,11 @@ class ConfirmDeleteScriptDialog extends ConsumerWidget {
         title: const Text('Delete?'),
         content: Text('Are you sure you want to delete ${data.name}?'),
         actions: [
-          ElevatedButton(
+          TextButton(
             onPressed: () => Navigator.of(context).pop(false),
             child: const Text('Cancel'),
           ),
-          ElevatedButton(
+          TextButton(
             onPressed: () => Navigator.of(context).pop(true),
             child: const Text('Delete'),
           ),
@@ -264,7 +268,7 @@ class ConfirmDeleteScriptDialog extends ConsumerWidget {
       error: (error, stackTrace) => AlertDialog(
         title: const Text('Unable to Delete'),
         actions: [
-          ElevatedButton(
+          TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Close'),
           ),
@@ -350,7 +354,7 @@ class DeleteScriptDialog extends ConsumerWidget {
       error: (error, stackTrace) => AlertDialog(
         title: const Text('Delete Failed'),
         actions: [
-          ElevatedButton(
+          TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Close'),
           ),
@@ -433,7 +437,7 @@ class HideButtonState extends ConsumerState<HideButton> with RestorationMixin {
       onComplete: (result) {
         if (result == null) return;
 
-        final hiddenCharacterIdList = ref.read(hiddenCharacterIdListProvider);
+        final hiddenCharacterIdList = ref.read(hiddenIdListProvider);
         hiddenCharacterIdList.value = result;
       },
     );
@@ -453,7 +457,7 @@ class HideButtonState extends ConsumerState<HideButton> with RestorationMixin {
       tooltip: 'Hide Characters',
       onPressed: () async => selectCharacterRouteFuture.present(SelectCharacterArgument(
         script: await ref.read(scriptProvider.future),
-        characterIdList: ref.read(hiddenCharacterIdListProvider).value,
+        characterIdList: ref.read(hiddenIdListProvider).value,
         invert: true,
       ).toJson()),
       icon: const Icon(Icons.visibility),

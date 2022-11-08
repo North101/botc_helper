@@ -8,7 +8,8 @@ enum CharacterType {
   outsider('Outsider', CharacterAlignment.good),
   minion('Minion', CharacterAlignment.evil),
   demon('Demon', CharacterAlignment.evil),
-  traveler('Traveler', null);
+  traveller('Traveller', null),
+  fabled('Fabled', null);
 
   const CharacterType(this.title, this.alignment);
 

@@ -33,6 +33,7 @@ const characterTypes = [
   CharacterType.outsider,
   CharacterType.minion,
   CharacterType.demon,
+  CharacterType.fabled,
 ];
 
 final characterListProvider = StreamProvider((ref) {
@@ -79,8 +80,7 @@ class EditScriptPage extends ConsumerStatefulWidget {
     });
   }
 
-  static Widget withOverrides(EditScriptArguments args) =>
-      RestorableProviderScope(
+  static Widget withOverrides(EditScriptArguments args) => RestorableProviderScope(
         restorationId: 'edit_script_scope',
         restorableOverrides: [
           scriptProvider.overrideWithRestorable(RestorableScriptData(args.script)),
@@ -319,7 +319,7 @@ class ImportScriptDialog extends ConsumerWidget {
       error: (error, stackTrace) => AlertDialog(
         title: const Text('Import Failed'),
         actions: [
-          ElevatedButton(
+          TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Close'),
           ),
@@ -396,7 +396,7 @@ class SaveScriptDialog extends ConsumerWidget {
         return AlertDialog(
           title: const Text('Save Failed'),
           actions: [
-            ElevatedButton(
+            TextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: const Text('Close'),
             ),

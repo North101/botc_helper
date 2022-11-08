@@ -26,7 +26,8 @@ const _$CharacterTypeEnumMap = {
   CharacterType.outsider: 'outsider',
   CharacterType.minion: 'minion',
   CharacterType.demon: 'demon',
-  CharacterType.traveler: 'traveler',
+  CharacterType.traveller: 'traveller',
+  CharacterType.fabled: 'fabled',
 };
 
 CharacterOptionJson _$CharacterOptionJsonFromJson(Map json) =>
