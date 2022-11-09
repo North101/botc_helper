@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class SliverChildSeperatedBuilderDelegate extends SliverChildBuilderDelegate {
@@ -13,6 +15,6 @@ class SliverChildSeperatedBuilderDelegate extends SliverChildBuilderDelegate {
     super.semanticIndexOffset,
   }) : super(
           (context, index) => index.isEven ? builder(context, index ~/ 2) : separatedBy(context, index ~/ 2),
-          childCount: childCount != null ? childCount * 2 : 0,
+          childCount: childCount != null ? max((childCount * 2) - 1, 0) : null,
         );
 }
