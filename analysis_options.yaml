@@ -4,6 +4,7 @@ analyzer:
   exclude:
     - '**/*.freezed.dart'
     - '**/*.g.dart'
+    - lib/db/migrations/*
 
 linter:
   rules:

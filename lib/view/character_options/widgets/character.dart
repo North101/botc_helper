@@ -6,7 +6,10 @@ import 'package:flutter_riverpod_restorable/flutter_riverpod_restorable.dart';
 import '/db/database.dart';
 import '/providers/db.dart';
 import '/view/async_value_builder.dart';
-import '/view/character_filter_page.dart';
+
+final scriptProvider = Provider<ScriptData>((ref) => throw UnimplementedError());
+
+final optionItemProvider = Provider<OptionCharacterItem>((ref) => throw UnimplementedError());
 
 final characterIdProvider = RestorableProvider<RestorableStringN>(
   (ref) => throw UnimplementedError(),
@@ -30,12 +33,48 @@ final characterProvider = StreamProvider((ref) {
   characterIdProvider,
 ]);
 
-class OptionCharacterItemWidget extends ConsumerStatefulWidget {
-  const OptionCharacterItemWidget({
-    required this.optionItem,
-    required this.restorationId,
-    super.key,
-  });
+final characterListProvider = StreamProvider((ref) {
+  final db = ref.watch(dbProvider);
+  final scriptId = ref.watch(scriptProvider.select((value) => value.id));
+  final optionItem = ref.watch(optionItemProvider);
+  return db
+      .listCharacters(
+        where: (character) {
+          final scriptCharacter = character.id.isInQuery(db.characterIdInScript(scriptId));
+          final travellerCharacter = character.type.equalsValue(CharacterType.traveller);
+          final filter = buildFilter(character, optionItem.filter);
+          return (scriptCharacter | travellerCharacter) & filter;
+        },
+        orderBy: (character) => drift.OrderBy([
+          drift.OrderingTerm.asc(character.position),
+        ]),
+      )
+      .watch();
+}, dependencies: [
+  dbProvider,
+  scriptProvider,
+  optionItemProvider,
+]);
+
+drift.Expression<bool> buildFilter(
+  Character character,
+  Iterable<ScriptFilter> filterList,
+) {
+  if (filterList.isEmpty) return const drift.Constant(true);
+  return filterList
+      .map<drift.Expression<bool>>((e) => e.when(
+            type: (type, value) => character.type.equalsValue(value),
+            character: (type, value) => character.id.equals(value),
+            alignment: (type, value) => character.type.isInValues([
+              for (final type in CharacterType.values)
+                if (type.alignment == value) type
+            ]),
+          ))
+      .reduce((value, element) => value | element);
+}
+
+class OptionCharacterItemWidget extends ConsumerWidget {
+  const OptionCharacterItemWidget({super.key});
 
   static Widget withOverrides({
     required String restorationId,
@@ -47,102 +86,85 @@ class OptionCharacterItemWidget extends ConsumerStatefulWidget {
         restorableOverrides: [
           characterIdProvider.overrideWithRestorable(RestorableStringN(optionItem.value)),
         ],
-        overrides: [scriptProvider.overrideWithValue(script)],
-        child: OptionCharacterItemWidget(
-          restorationId: '${restorationId}_page',
-          optionItem: optionItem,
-        ),
+        overrides: [
+          scriptProvider.overrideWithValue(script),
+          optionItemProvider.overrideWithValue(optionItem),
+        ],
+        child: const OptionCharacterItemWidget(),
       );
 
-  final OptionCharacterItem optionItem;
-  final String restorationId;
-
   @override
-  OptionCharacterItemWidgetState createState() => OptionCharacterItemWidgetState();
-}
-
-class OptionCharacterItemWidgetState extends ConsumerState<OptionCharacterItemWidget> with RestorationMixin {
-  late RestorableRouteFuture<CharacterData?> characterFilterRouteFuture;
-
-  @override
-  void initState() {
-    super.initState();
-
-    characterFilterRouteFuture = RestorableRouteFuture<CharacterData?>(
-      onPresent: (navigator, arguments) => navigator.restorablePush(
-        CharacterFilterPage.route,
-        arguments: arguments,
-      ),
-      onComplete: (result) {
-        if (result == null) return;
-
-        ref.read(characterIdProvider).value = result.id;
-      },
-    );
-  }
-
-  @override
-  String? get restorationId => widget.restorationId;
-
-  @override
-  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    registerForRestoration(characterFilterRouteFuture, 'characterFilterRouteFuture');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final script = ref.watch(scriptProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
     final character = ref.watch(characterProvider);
     return AsyncValueBuilder(
       value: character,
-      data: (character) {
-        if (character == null) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: ElevatedButton(
-              child: Padding(
-                padding: const EdgeInsets.all(4),
-                child: Center(
-                  child: Text(
-                    'Select Character',
-                    style: Theme.of(context).textTheme.displaySmall?.copyWith(color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-              onPressed: () => characterFilterRouteFuture.present(CharacterFilterArguments(
-                script: script,
-                scriptFilterList: widget.optionItem.filter,
-              ).toJson()),
-            ),
-          );
-        }
+      data: (character) => character != null ? CharacterCard(character: character) : const CharacterGrid(),
+    );
+  }
+}
 
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Card(
-            child: InkWell(
-              onTap: () => characterFilterRouteFuture.present(CharacterFilterArguments(
-                script: script,
-                scriptFilterList: widget.optionItem.filter,
-              ).toJson()),
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    character.image(),
-                    Text(
-                      character.name,
-                      style: Theme.of(context).textTheme.displaySmall,
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+class CharacterGrid extends ConsumerWidget {
+  const CharacterGrid({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final characterList = ref.watch(characterListProvider);
+    return AsyncValueBuilder(
+      value: characterList,
+      data: (data) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          children: [
+            for (final character in data)
+              InkWell(
+                onTap: () {
+                  ref.read(characterIdProvider).value = character.id;
+                },
+                child: character.image(
+                  height: 80,
+                  width: 80,
                 ),
               ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CharacterCard extends ConsumerWidget {
+  const CharacterCard({
+    required this.character,
+    super.key,
+  });
+
+  final CharacterData character;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Card(
+        child: InkWell(
+          onTap: () {
+            ref.read(characterIdProvider).value = null;
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                character.image(),
+                Text(
+                  character.name,
+                  style: Theme.of(context).textTheme.displaySmall,
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
