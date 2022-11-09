@@ -1,4 +1,3 @@
-import 'package:botc_helper/view/select_character_page.dart';
 import 'package:collection/collection.dart';
 import 'package:drift/drift.dart' as drift;
 import 'package:file_picker/file_picker.dart';
@@ -15,6 +14,7 @@ import '/util/restorable.dart';
 import '/util/script_data.dart';
 import '/view/async_value_builder.dart';
 import '/view/header_list_tile.dart';
+import '/view/select_character_page.dart';
 
 part 'edit_script_page.g.dart';
 
@@ -158,7 +158,6 @@ class EditScriptPageState extends ConsumerState<EditScriptPage> with Restoration
         onPressed: () => selectCharacterRouteFuture.present(SelectCharacterArgument(
           script: null,
           characterIdList: ref.read(characterIdListProvider).value,
-          invert: false,
         ).toJson()),
         child: const Icon(Icons.edit),
       ),

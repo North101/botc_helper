@@ -17,8 +17,6 @@ part 'select_character_page.g.dart';
 
 final scriptProvider = Provider<ScriptData?>((ref) => throw UnimplementedError());
 
-final invertProvider = Provider<bool>((ref) => throw UnimplementedError());
-
 final characterListProvider = StreamProvider((ref) {
   final db = ref.watch(dbProvider);
   final script = ref.watch(scriptProvider);
@@ -60,7 +58,6 @@ class SelectCharacterArgument {
   const SelectCharacterArgument({
     required this.script,
     required this.characterIdList,
-    required this.invert,
   });
 
   factory SelectCharacterArgument.fromJson(Map<String, dynamic> json) => _$SelectCharacterArgumentFromJson(json);
@@ -68,7 +65,6 @@ class SelectCharacterArgument {
   @JsonKey(fromJson: scriptNFromJson, toJson: scriptNToJson)
   final ScriptData? script;
   final Iterable<String> characterIdList;
-  final bool invert;
 
   Map<String, dynamic> toJson() => _$SelectCharacterArgumentToJson(this);
 }
@@ -86,10 +82,9 @@ class SelectCharacterPage extends ConsumerWidget {
   }
 
   static Widget withOverrides(SelectCharacterArgument args) => RestorableProviderScope(
-        restorationId: 'hide_character_page',
+        restorationId: 'select_character_page',
         overrides: [
           scriptProvider.overrideWithValue(args.script),
-          invertProvider.overrideWithValue(args.invert),
         ],
         restorableOverrides: [
           selectedIdListProvider.overrideWithRestorable(RestorableSet(args.characterIdList)),
@@ -102,12 +97,16 @@ class SelectCharacterPage extends ConsumerWidget {
     final characterList = ref.watch(characterListProvider);
     return WillPopScope(
       onWillPop: () async {
-        Navigator.of(context).pop(ref.read(selectedIdListProvider).value);
+        final selectedIdList = ref.read(selectedIdListProvider).value;
+        Navigator.of(context).pop<Iterable<String>>(selectedIdList);
         return false;
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Select Characters'),
+          title: const Text('Characters'),
+          actions: const [
+            SelectButton(),
+          ],
         ),
         body: AsyncValueBuilder(
           value: characterList,
@@ -143,24 +142,18 @@ class HideCharacterTile extends ConsumerWidget {
 
   final CharacterData character;
 
-  bool get isTraveller => character.type == CharacterType.traveller;
-
-  bool isSelected(bool value, bool invert) => value ^ isTraveller ^ invert;
-
   void onChange(WidgetRef ref, bool value) {
-    final invert = ref.read(invertProvider);
     final selectedIdList = ref.read(selectedIdListProvider);
     selectedIdList.value = {
       ...selectedIdList.value.where((e) => e != character.id),
-      if (isSelected(value, invert)) character.id,
+      if (value) character.id,
     };
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final invert = ref.watch(invertProvider);
     final selected = ref.watch(selectedIdListProvider.select((value) {
-      return isSelected(value.value.contains(character.id), invert);
+      return value.value.contains(character.id);
     }));
     return ListTile(
       title: Text(character.name),
@@ -170,6 +163,39 @@ class HideCharacterTile extends ConsumerWidget {
         value: selected,
         onChanged: (value) => onChange(ref, value == true),
       ),
+    );
+  }
+}
+
+class SelectButton extends ConsumerWidget {
+  const SelectButton({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final hasSelected = ref.watch(selectedIdListProvider.select((value) => value.value.isNotEmpty));
+    if (hasSelected) {
+      return IconButton(
+        tooltip: 'Select None',
+        onPressed: () {
+          final selectedIdList = ref.read(selectedIdListProvider);
+          selectedIdList.value = {};
+        },
+        icon: const Icon(Icons.deselect),
+      );
+    }
+
+    return IconButton(
+      tooltip: 'Select All',
+      onPressed: () async {
+        final characterList = await ref.read(characterListProvider.future);
+        final selectedIdList = ref.read(selectedIdListProvider);
+        selectedIdList.value = {
+          for (final characterByType in characterList)
+            if (characterByType.key.alignment != null)
+              for (final character in characterByType.value) character.id,
+        };
+      },
+      icon: const Icon(Icons.select_all),
     );
   }
 }

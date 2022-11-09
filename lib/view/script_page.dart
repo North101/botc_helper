@@ -8,10 +8,10 @@ import '/db/database.dart';
 import '/providers.dart';
 import '/util/restorable.dart';
 import '/view/async_value_builder.dart';
+import '/view/character_list.dart';
 import '/view/character_page.dart';
 import '/view/edit_script_page.dart';
-import 'select_character_page.dart';
-import 'character_list.dart';
+import '/view/select_character_page.dart';
 
 final currentTabProvider = RestorableProvider<RestorableInt>(
   (ref) => throw UnimplementedError(),
@@ -53,7 +53,7 @@ final characterListProvider = StreamProvider((ref) {
 final nightListProvider = StreamProvider.family.autoDispose<Iterable<ListCharacterWithNightResult>, bool>((ref, state) {
   final db = ref.watch(dbProvider);
   final scriptId = ref.watch(scriptIdProvider);
-  final hiddenIdList = ref.watch(hiddenIdListProvider).value;
+  final selectedIdList = ref.watch(selectedIdListProvider).value;
   return db
       .listCharacterWithNight(
         nightType: (character, characterNight) =>
@@ -61,10 +61,11 @@ final nightListProvider = StreamProvider.family.autoDispose<Iterable<ListCharact
         where: (character, characterNight) {
           final infoCharacter = character.type.equalsValue(CharacterType.info);
           final scriptCharacter =
-              character.id.isInQuery(db.characterIdInScript(scriptId)) & character.id.isNotIn(hiddenIdList);
+              character.id.isInQuery(db.characterIdInScript(scriptId));
           final travellerCharacter =
-              character.type.equalsValue(CharacterType.traveller) & character.id.isIn(hiddenIdList);
-          return infoCharacter | scriptCharacter | travellerCharacter;
+              character.type.equalsValue(CharacterType.traveller);
+          final selectedCharacter = character.id.isIn(selectedIdList);
+          return infoCharacter | ((scriptCharacter | travellerCharacter) & selectedCharacter);
         },
         orderBy: (character, characterNight) => drift.OrderBy([
           drift.OrderingTerm.asc(characterNight.position),
@@ -74,7 +75,7 @@ final nightListProvider = StreamProvider.family.autoDispose<Iterable<ListCharact
 }, dependencies: [
   dbProvider,
   scriptIdProvider,
-  hiddenIdListProvider,
+  selectedIdListProvider,
 ]);
 
 final nightSelectedProvider = RestorableProvider<RestorableNightSelected>(
@@ -82,9 +83,9 @@ final nightSelectedProvider = RestorableProvider<RestorableNightSelected>(
   restorationId: 'nightSelectedProvider',
 );
 
-final hiddenIdListProvider = RestorableProvider<RestorableSet<String>>(
+final selectedIdListProvider = RestorableProvider<RestorableSet<String>>(
   (ref) => throw UnimplementedError(),
-  restorationId: 'hiddenIdListProvider',
+  restorationId: 'selectedIdListProvider',
 );
 
 class ScriptPage extends ConsumerStatefulWidget {
@@ -113,7 +114,7 @@ class ScriptPage extends ConsumerStatefulWidget {
             firstNight: {},
             otherNight: {},
           ))),
-          hiddenIdListProvider.overrideWithRestorable(RestorableSet({})),
+          selectedIdListProvider.overrideWithRestorable(RestorableSet({})),
         ],
         child: const ScriptPage(),
       );
@@ -137,6 +138,17 @@ class ScriptPageState extends ConsumerState<ScriptPage> with TickerProviderState
     );
     tabController.addListener(() {
       currentTab.value = tabController.index;
+    });
+
+    ref.listenOnce(characterListProvider, (previous, next) {
+      next.whenData((value) {
+        final selectedIdList = ref.read(selectedIdListProvider);
+        selectedIdList.value = {
+          for (final characterByType in value)
+            if (characterByType.key != CharacterType.traveller)
+              for (final character in characterByType.value) character.id
+        };
+      });
     });
   }
 
@@ -440,8 +452,8 @@ class HideButtonState extends ConsumerState<HideButton> with RestorationMixin {
       onComplete: (result) {
         if (result == null) return;
 
-        final hiddenCharacterIdList = ref.read(hiddenIdListProvider);
-        hiddenCharacterIdList.value = result;
+        final selectedIdList = ref.read(selectedIdListProvider);
+        selectedIdList.value = result;
       },
     );
   }
@@ -460,8 +472,7 @@ class HideButtonState extends ConsumerState<HideButton> with RestorationMixin {
       tooltip: 'Hide Characters',
       onPressed: () async => selectCharacterRouteFuture.present(SelectCharacterArgument(
         script: await ref.read(scriptProvider.future),
-        characterIdList: ref.read(hiddenIdListProvider).value,
-        invert: true,
+        characterIdList: ref.read(selectedIdListProvider).value,
       ).toJson()),
       icon: const Icon(Icons.visibility),
     );

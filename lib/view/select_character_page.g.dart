@@ -11,7 +11,6 @@ SelectCharacterArgument _$SelectCharacterArgumentFromJson(Map json) =>
       script: scriptNFromJson(json['script'] as Map<String, dynamic>?),
       characterIdList:
           (json['characterIdList'] as List<dynamic>).map((e) => e as String),
-      invert: json['invert'] as bool,
     );
 
 Map<String, dynamic> _$SelectCharacterArgumentToJson(
@@ -19,5 +18,4 @@ Map<String, dynamic> _$SelectCharacterArgumentToJson(
     <String, dynamic>{
       'script': scriptNToJson(instance.script),
       'characterIdList': instance.characterIdList.toList(),
-      'invert': instance.invert,
     };
