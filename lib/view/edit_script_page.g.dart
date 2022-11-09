@@ -8,7 +8,7 @@ part of 'edit_script_page.dart';
 
 EditScriptArguments _$EditScriptArgumentsFromJson(Map json) =>
     EditScriptArguments(
-      script: scriptFromJson(json['script'] as Map<String, dynamic>),
+      script: scriptFromJson(json['script'] as Map),
       characterIdList:
           (json['characterIdList'] as List<dynamic>).map((e) => e as String),
     );

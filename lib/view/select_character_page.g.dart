@@ -8,7 +8,7 @@ part of 'select_character_page.dart';
 
 SelectCharacterArgument _$SelectCharacterArgumentFromJson(Map json) =>
     SelectCharacterArgument(
-      script: scriptNFromJson(json['script'] as Map<String, dynamic>?),
+      script: scriptNFromJson(json['script'] as Map?),
       characterIdList:
           (json['characterIdList'] as List<dynamic>).map((e) => e as String),
     );

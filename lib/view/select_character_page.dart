@@ -85,9 +85,7 @@ class SelectCharacterPage extends ConsumerWidget {
         restorationId: 'select_character_page',
         overrides: [
           scriptProvider.overrideWithValue(args.script),
-        ],
-        restorableOverrides: [
-          selectedIdListProvider.overrideWithRestorable(RestorableSet(args.characterIdList)),
+          selectedIdListProvider.overrideWith((ref) => RestorableSet(args.characterIdList)),
         ],
         child: const SelectCharacterPage(),
       );

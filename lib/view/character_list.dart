@@ -33,7 +33,7 @@ class CharacterList extends ConsumerWidget {
                   onTap: onTap,
                 ),
                 (context, index) => const Divider(),
-                childCount: characterByType.value.length
+                childCount: characterByType.value.length,
               ),
             ),
           ),

@@ -15,8 +15,8 @@ dependencies:
   collection: any
   drift: any
   file_picker: any
-  flutter_riverpod_restorable: { path: ../../riverpod_restorable_provider }
-  flutter_riverpod: 2.0.0-dev.09
+  flutter_riverpod_restorable: any
+  flutter_riverpod: any
   flutter_sticky_header: any
   freezed_annotation: any
   json_annotation: any

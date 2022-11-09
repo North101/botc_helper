@@ -47,7 +47,7 @@ class OptionItem with _$OptionItem {
   const factory OptionItem.select(List<String> items, int? value) = OptionSelectItem;
   const factory OptionItem.number(int? value, int? min, int? max) = OptionNumberItem;
   const factory OptionItem.text(String? value) = OptionTextItem;
-  factory OptionItem.fromJson(Map<String, dynamic> json) => _$OptionItemFromJson(json);
+  factory OptionItem.fromJson(Map json) => _$OptionItemFromJson(json.cast());
 }
 
 enum ScriptFilterType {
@@ -62,5 +62,5 @@ class ScriptFilter with _$ScriptFilter {
   const factory ScriptFilter.character(ScriptFilterType type, String value) = ScriptCharacterFilter;
   const factory ScriptFilter.alignment(ScriptFilterType type, CharacterAlignment value) = ScriptAlignmentFilter;
 
-  factory ScriptFilter.fromJson(Map<String, Object?> json) => _$ScriptFilterFromJson(json);
+  factory ScriptFilter.fromJson(Map json) => _$ScriptFilterFromJson(json.cast());
 }

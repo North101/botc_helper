@@ -8,8 +8,8 @@ part of 'character_page.dart';
 
 CharacterPageArguments _$CharacterPageArgumentsFromJson(Map json) =>
     CharacterPageArguments(
-      script: scriptFromJson(json['script'] as Map<String, dynamic>),
-      character: characterFromJson(json['character'] as Map<String, dynamic>),
+      script: scriptFromJson(json['script'] as Map),
+      character: characterFromJson(json['character'] as Map),
     );
 
 Map<String, dynamic> _$CharacterPageArgumentsToJson(

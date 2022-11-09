@@ -60,10 +60,8 @@ final nightListProvider = StreamProvider.family.autoDispose<Iterable<ListCharact
             drift.Variable(const NightTypeConverter().toSql(state ? NightType.firstNight : NightType.otherNight)),
         where: (character, characterNight) {
           final infoCharacter = character.type.equalsValue(CharacterType.info);
-          final scriptCharacter =
-              character.id.isInQuery(db.characterIdInScript(scriptId));
-          final travellerCharacter =
-              character.type.equalsValue(CharacterType.traveller);
+          final scriptCharacter = character.id.isInQuery(db.characterIdInScript(scriptId));
+          final travellerCharacter = character.type.equalsValue(CharacterType.traveller);
           final selectedCharacter = character.id.isIn(selectedIdList);
           return infoCharacter | ((scriptCharacter | travellerCharacter) & selectedCharacter);
         },
@@ -107,14 +105,12 @@ class ScriptPage extends ConsumerStatefulWidget {
         restorationId: 'script_page',
         overrides: [
           scriptIdProvider.overrideWithValue(scriptId),
-        ],
-        restorableOverrides: [
-          currentTabProvider.overrideWithRestorable(RestorableInt(0)),
-          nightSelectedProvider.overrideWithRestorable(RestorableNightSelected(const NightSelected(
+          currentTabProvider.overrideWith((ref) => RestorableInt(0)),
+          nightSelectedProvider.overrideWith((ref) => RestorableNightSelected(const NightSelected(
             firstNight: {},
             otherNight: {},
           ))),
-          selectedIdListProvider.overrideWithRestorable(RestorableSet({})),
+          selectedIdListProvider.overrideWith((ref) => RestorableSet({})),
         ],
         child: const ScriptPage(),
       );
@@ -140,15 +136,13 @@ class ScriptPageState extends ConsumerState<ScriptPage> with TickerProviderState
       currentTab.value = tabController.index;
     });
 
-    ref.listenOnce(characterListProvider, (previous, next) {
-      next.whenData((value) {
-        final selectedIdList = ref.read(selectedIdListProvider);
-        selectedIdList.value = {
-          for (final characterByType in value)
-            if (characterByType.key != CharacterType.traveller)
-              for (final character in characterByType.value) character.id
-        };
-      });
+    ref.read(characterListProvider.future).then((value) {
+      final selectedIdList = ref.read(selectedIdListProvider);
+      selectedIdList.value = {
+        for (final characterByType in value)
+          if (characterByType.key != CharacterType.traveller)
+            for (final character in characterByType.value) character.id
+      };
     });
   }
 
@@ -299,7 +293,7 @@ final deleteScriptProvider = FutureProvider.autoDispose((ref) async {
   await db.deleteScript(script);
 }, dependencies: [
   dbProvider,
-  scriptProvider.future,
+  scriptProvider,
 ]);
 
 class ScriptMoreAction extends ConsumerWidget {

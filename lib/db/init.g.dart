@@ -18,8 +18,7 @@ CharacterJson _$CharacterJsonFromJson(Map json) => CharacterJson(
       $enumDecode(_$CharacterTypeEnumMap, json['type']),
       json['description'] as String,
       (json['options'] as List<dynamic>)
-          .map((e) =>
-              CharacterOptionJson.fromJson(Map<String, dynamic>.from(e as Map)))
+          .map((e) => CharacterOptionJson.fromJson(e as Map))
           .toList(),
     );
 
@@ -37,7 +36,7 @@ CharacterOptionJson _$CharacterOptionJsonFromJson(Map json) =>
     CharacterOptionJson(
       json['title'] as String,
       (json['items'] as List<dynamic>)
-          .map((e) => OptionItem.fromJson(Map<String, dynamic>.from(e as Map)))
+          .map((e) => OptionItem.fromJson(e as Map))
           .toList(),
       json['next'] == null
           ? null
@@ -47,12 +46,10 @@ CharacterOptionJson _$CharacterOptionJsonFromJson(Map json) =>
 
 CharacterNightJson _$CharacterNightJsonFromJson(Map json) => CharacterNightJson(
       (json['first_night'] as List<dynamic>)
-          .map((e) => CharacterNightReminderJson.fromJson(
-              Map<String, dynamic>.from(e as Map)))
+          .map((e) => CharacterNightReminderJson.fromJson(e as Map))
           .toList(),
       (json['other_night'] as List<dynamic>)
-          .map((e) => CharacterNightReminderJson.fromJson(
-              Map<String, dynamic>.from(e as Map)))
+          .map((e) => CharacterNightReminderJson.fromJson(e as Map))
           .toList(),
     );
 

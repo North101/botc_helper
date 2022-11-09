@@ -22,8 +22,8 @@ class OptionAlignmentItemWidget extends ConsumerWidget {
   }) =>
       RestorableProviderScope(
         restorationId: restorationId,
-        restorableOverrides: [
-          alignmentProvider.overrideWithRestorable(RestorableIntN(CharacterAlignment.values.firstWhereOrNull((e) {
+        overrides: [
+          alignmentProvider.overrideWith((ref) => RestorableIntN(CharacterAlignment.values.firstWhereOrNull((e) {
             return e == optionItem.value;
           })?.index)),
         ],

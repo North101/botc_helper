@@ -14,14 +14,12 @@ import '/view/character_options/widgets/text.dart';
 part 'page.g.dart';
 
 final scriptProvider = Provider<ScriptData>((ref) => throw UnimplementedError());
-final characterProvider = Provider<CharacterData>((ref) => throw UnimplementedError());
 final characterOptionProvider = Provider<CharacterOptionItem>((ref) => throw UnimplementedError());
 
 @JsonSerializable()
 class CharacterOptionArguments {
   const CharacterOptionArguments({
     required this.script,
-    required this.character,
     required this.characterOption,
   });
 
@@ -29,8 +27,6 @@ class CharacterOptionArguments {
 
   @JsonKey(fromJson: scriptFromJson, toJson: scriptToJson)
   final ScriptData script;
-  @JsonKey(fromJson: characterFromJson, toJson: characterToJson)
-  final CharacterData character;
   @JsonKey(fromJson: characterOptionItemFromJson, toJson: characterOptionItemToJson)
   final CharacterOptionItem characterOption;
 
@@ -47,13 +43,10 @@ class CharacterOptionPage extends ConsumerWidget {
     });
   }
 
-  static Widget withOverrides(CharacterOptionArguments args) =>
-      RestorableProviderScope(
+  static Widget withOverrides(CharacterOptionArguments args) => RestorableProviderScope(
         restorationId: 'character_option_page',
-        restorableOverrides: const [],
         overrides: [
           scriptProvider.overrideWithValue(args.script),
-          characterProvider.overrideWithValue(args.character),
           characterOptionProvider.overrideWithValue(args.characterOption),
         ],
         child: const CharacterOptionPage(),
@@ -62,7 +55,6 @@ class CharacterOptionPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final script = ref.watch(scriptProvider);
-    final character = ref.watch(characterProvider);
     final characterOption = ref.watch(characterOptionProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('Blood on the Clocktower')),
@@ -91,7 +83,6 @@ class CharacterOptionPage extends ConsumerWidget {
                     CharacterOptionPage.route,
                     arguments: CharacterOptionArguments(
                       script: script,
-                      character: character,
                       characterOption: characterOption.next!,
                     ).toJson(),
                   ),

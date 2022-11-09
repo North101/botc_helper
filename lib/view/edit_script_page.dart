@@ -82,9 +82,9 @@ class EditScriptPage extends ConsumerStatefulWidget {
 
   static Widget withOverrides(EditScriptArguments args) => RestorableProviderScope(
         restorationId: 'edit_script_scope',
-        restorableOverrides: [
-          scriptProvider.overrideWithRestorable(RestorableScriptData(args.script)),
-          characterIdListProvider.overrideWithRestorable(RestorableSet(args.characterIdList)),
+        overrides: [
+          scriptProvider.overrideWith((ref) => RestorableScriptData(args.script)),
+          characterIdListProvider.overrideWith((ref) => RestorableSet(args.characterIdList)),
         ],
         child: const EditScriptPage(),
       );

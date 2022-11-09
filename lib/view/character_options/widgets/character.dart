@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_restorable/flutter_riverpod_restorable.dart';
 
+import '../page.dart';
 import '/db/database.dart';
 import '/providers/db.dart';
 import '/view/async_value_builder.dart';
-
-final scriptProvider = Provider<ScriptData>((ref) => throw UnimplementedError());
 
 final optionItemProvider = Provider<OptionCharacterItem>((ref) => throw UnimplementedError());
 
@@ -83,10 +82,8 @@ class OptionCharacterItemWidget extends ConsumerWidget {
   }) =>
       RestorableProviderScope(
         restorationId: restorationId,
-        restorableOverrides: [
-          characterIdProvider.overrideWithRestorable(RestorableStringN(optionItem.value)),
-        ],
         overrides: [
+          characterIdProvider.overrideWith((ref) => RestorableStringN(optionItem.value)),
           scriptProvider.overrideWithValue(script),
           optionItemProvider.overrideWithValue(optionItem),
         ],

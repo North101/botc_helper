@@ -195,7 +195,7 @@ packages:
     description:
       path: drift
       ref: develop
-      resolved-ref: "22d30bd14962de91bfbcf3a6896c91e62ed713e1"
+      resolved-ref: dfa01c133276a864f44a17f16921f34a51db3355
       url: "https://github.com/simolus3/drift.git"
     source: git
     version: "2.3.0-dev"
@@ -204,7 +204,7 @@ packages:
     description:
       path: drift_dev
       ref: develop
-      resolved-ref: "22d30bd14962de91bfbcf3a6896c91e62ed713e1"
+      resolved-ref: dfa01c133276a864f44a17f16921f34a51db3355
       url: "https://github.com/simolus3/drift.git"
     source: git
     version: "2.3.0-dev"
@@ -282,14 +282,14 @@ packages:
       name: flutter_riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0-dev.9"
+    version: "2.1.1"
   flutter_riverpod_restorable:
     dependency: "direct main"
     description:
-      path: "../../riverpod_restorable_provider"
-      relative: true
-    source: path
-    version: "1.0.1-riverpod-2"
+      name: flutter_riverpod_restorable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   flutter_sticky_header:
     dependency: "direct main"
     description:
@@ -565,7 +565,7 @@ packages:
       name: riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0-dev.9"
+    version: "2.1.1"
   shelf:
     dependency: transitive
     description:
@@ -627,7 +627,7 @@ packages:
     description:
       path: sqlparser
       ref: develop
-      resolved-ref: "22d30bd14962de91bfbcf3a6896c91e62ed713e1"
+      resolved-ref: dfa01c133276a864f44a17f16921f34a51db3355
       url: "https://github.com/simolus3/drift.git"
     source: git
     version: "0.23.3"

@@ -9,7 +9,7 @@ part of 'character_option.dart';
 CharacterOptionItem _$CharacterOptionItemFromJson(Map json) =>
     CharacterOptionItem(
       (json['items'] as List<dynamic>)
-          .map((e) => OptionItem.fromJson(Map<String, dynamic>.from(e as Map)))
+          .map((e) => OptionItem.fromJson(e as Map))
           .toList(),
       json['next'] == null
           ? null
@@ -38,8 +38,7 @@ Map<String, dynamic> _$$OptionLabelItemToJson(_$OptionLabelItem instance) =>
 _$OptionCharacterItem _$$OptionCharacterItemFromJson(Map json) =>
     _$OptionCharacterItem(
       (json['filter'] as List<dynamic>)
-          .map(
-              (e) => ScriptFilter.fromJson(Map<String, Object?>.from(e as Map)))
+          .map((e) => ScriptFilter.fromJson(e as Map))
           .toList(),
       json['value'] as String?,
       $type: json['type'] as String?,

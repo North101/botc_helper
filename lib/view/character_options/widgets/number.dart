@@ -22,8 +22,8 @@ class OptionNumberItemWidget extends ConsumerWidget {
   }) =>
       RestorableProviderScope(
         restorationId: restorationId,
-        restorableOverrides: [
-          numberProvider.overrideWithRestorable(RestorableInt(optionItem.value ?? 0)),
+        overrides: [
+          numberProvider.overrideWith((ref) => RestorableInt(optionItem.value ?? 0)),
         ],
         child: OptionNumberItemWidget(optionItem: optionItem),
       );

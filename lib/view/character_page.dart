@@ -71,7 +71,6 @@ class CharacterPage extends ConsumerWidget {
           scriptProvider.overrideWithValue(args.script),
           characterProvider.overrideWithValue(args.character),
         ],
-        restorableOverrides: const [],
         child: const CharacterPage(),
       );
 
@@ -175,7 +174,6 @@ class CharacterOptionTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final script = ref.watch(scriptProvider);
-    final character = ref.watch(characterProvider);
     return ListTile(
       title: Text(
         option.title,
@@ -185,7 +183,6 @@ class CharacterOptionTile extends ConsumerWidget {
         CharacterOptionPage.route,
         arguments: CharacterOptionArguments(
           script: script,
-          character: character,
           characterOption: option.item,
         ).toJson(),
       ),

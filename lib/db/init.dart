@@ -20,7 +20,7 @@ Future<List<T>> loadJsonList<T>(String key, T Function(dynamic e) toElement) asy
 class ScriptJson {
   const ScriptJson(this.id, this.name, this.characters);
 
-  factory ScriptJson.fromJson(Map<String, dynamic> json) => _$ScriptJsonFromJson(json);
+  factory ScriptJson.fromJson(Map json) => _$ScriptJsonFromJson(json);
 
   final String id;
   final String name;
@@ -31,7 +31,7 @@ class ScriptJson {
 class CharacterJson {
   const CharacterJson(this.id, this.name, this.type, this.description, this.options);
 
-  factory CharacterJson.fromJson(Map<String, dynamic> json) => _$CharacterJsonFromJson(json);
+  factory CharacterJson.fromJson(Map json) => _$CharacterJsonFromJson(json);
 
   static List<CharacterOptionJson> optionsFromJson(List json) =>
       json.map((e) => CharacterOptionJson.fromJson(e)).toList();
@@ -47,7 +47,7 @@ class CharacterJson {
 class CharacterOptionJson {
   const CharacterOptionJson(this.title, this.items, this.next);
 
-  factory CharacterOptionJson.fromJson(Map<String, dynamic> json) => _$CharacterOptionJsonFromJson(json);
+  factory CharacterOptionJson.fromJson(Map json) => _$CharacterOptionJsonFromJson(json);
 
   final String title;
   final List<OptionItem> items;
@@ -58,7 +58,7 @@ class CharacterOptionJson {
 class CharacterNightJson {
   const CharacterNightJson(this.firstNight, this.otherNight);
 
-  factory CharacterNightJson.fromJson(Map<String, dynamic> json) => _$CharacterNightJsonFromJson(json);
+  factory CharacterNightJson.fromJson(Map json) => _$CharacterNightJsonFromJson(json);
 
   static List<CharacterNightReminderJson> characterNightReminder(List json) =>
       listFromJson(json, CharacterNightReminderJson.fromJson);
@@ -73,7 +73,7 @@ class CharacterNightJson {
 class CharacterNightReminderJson {
   const CharacterNightReminderJson(this.id, this.reminder);
 
-  factory CharacterNightReminderJson.fromJson(Map<String, dynamic> json) => _$CharacterNightReminderJsonFromJson(json);
+  factory CharacterNightReminderJson.fromJson(Map json) => _$CharacterNightReminderJsonFromJson(json);
 
   final String id;
   final String reminder;

@@ -21,8 +21,8 @@ class OptionTextItemWidget extends ConsumerWidget {
   }) =>
       RestorableProviderScope(
         restorationId: restorationId,
-        restorableOverrides: [
-          textProvider.overrideWithRestorable(RestorableString(optionItem.value ?? '')),
+        overrides: [
+          textProvider.overrideWith((ref) => RestorableString(optionItem.value ?? '')),
         ],
         child: OptionTextItemWidget(optionItem: optionItem),
       );
