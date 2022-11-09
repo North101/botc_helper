@@ -26,8 +26,9 @@ final characterListProvider = StreamProvider((ref) {
       .listCharacters(
         where: (character) {
           if (script != null) {
-            return character.id.isInQuery(db.characterIdInScript(script.id)) |
-                character.type.equalsValue(CharacterType.traveller);
+            final scriptCharacter = character.id.isInQuery(db.characterIdInScript(script.id));
+            final travellerCharacter = character.type.equalsValue(CharacterType.traveller);
+            return scriptCharacter | travellerCharacter;
           }
 
           return character.type.isInValues(const {
@@ -49,9 +50,9 @@ final characterListProvider = StreamProvider((ref) {
   scriptProvider,
 ]);
 
-final selectedCharacterIdProvider = RestorableProvider<RestorableSet<String>>(
+final selectedIdListProvider = RestorableProvider<RestorableSet<String>>(
   (ref) => throw UnimplementedError(),
-  restorationId: 'selectedCharacterIdProvider',
+  restorationId: 'selectedIdListProvider',
 );
 
 @JsonSerializable()
@@ -91,7 +92,7 @@ class SelectCharacterPage extends ConsumerWidget {
           invertProvider.overrideWithValue(args.invert),
         ],
         restorableOverrides: [
-          selectedCharacterIdProvider.overrideWithRestorable(RestorableSet(args.characterIdList)),
+          selectedIdListProvider.overrideWithRestorable(RestorableSet(args.characterIdList)),
         ],
         child: const SelectCharacterPage(),
       );
@@ -101,11 +102,13 @@ class SelectCharacterPage extends ConsumerWidget {
     final characterList = ref.watch(characterListProvider);
     return WillPopScope(
       onWillPop: () async {
-        Navigator.of(context).pop(ref.read(selectedCharacterIdProvider).value);
+        Navigator.of(context).pop(ref.read(selectedIdListProvider).value);
         return false;
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Select Characters')),
+        appBar: AppBar(
+          title: const Text('Select Characters'),
+        ),
         body: AsyncValueBuilder(
           value: characterList,
           data: (data) => CustomScrollView(
@@ -146,9 +149,9 @@ class HideCharacterTile extends ConsumerWidget {
 
   void onChange(WidgetRef ref, bool value) {
     final invert = ref.read(invertProvider);
-    final nightHidden = ref.read(selectedCharacterIdProvider);
-    nightHidden.value = {
-      ...nightHidden.value.where((e) => e != character.id),
+    final selectedIdList = ref.read(selectedIdListProvider);
+    selectedIdList.value = {
+      ...selectedIdList.value.where((e) => e != character.id),
       if (isSelected(value, invert)) character.id,
     };
   }
@@ -156,7 +159,7 @@ class HideCharacterTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final invert = ref.watch(invertProvider);
-    final selected = ref.watch(selectedCharacterIdProvider.select((value) {
+    final selected = ref.watch(selectedIdListProvider.select((value) {
       return isSelected(value.value.contains(character.id), invert);
     }));
     return ListTile(

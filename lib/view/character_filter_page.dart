@@ -21,10 +21,12 @@ final characterListProvider = StreamProvider((ref) {
   final filterList = ref.watch(filterListProvider);
   return db
       .listCharacters(
-        where: (character) =>
-            (character.id.isInQuery(db.characterIdInScript(scriptId)) |
-                character.type.equalsValue(CharacterType.traveller)) &
-            buildFilter(character, filterList),
+        where: (character) {
+          final scriptCharacter = character.id.isInQuery(db.characterIdInScript(scriptId));
+          final travellerCharacter = character.type.equalsValue(CharacterType.traveller);
+          final filter = buildFilter(character, filterList);
+          return (scriptCharacter | travellerCharacter) & filter;
+        },
         orderBy: (character) => drift.OrderBy([
           drift.OrderingTerm.asc(character.position),
         ]),

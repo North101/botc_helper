@@ -34,9 +34,11 @@ final characterListProvider = StreamProvider((ref) {
   final scriptId = ref.watch(scriptIdProvider);
   return db
       .listCharacters(
-        where: (character) =>
-            character.id.isInQuery(db.characterIdInScript(scriptId)) |
-            character.type.equalsValue(CharacterType.traveller),
+        where: (character) {
+          final scriptCharacter = character.id.isInQuery(db.characterIdInScript(scriptId));
+          final travellerCharacter = character.type.equalsValue(CharacterType.traveller);
+          return scriptCharacter | travellerCharacter;
+        },
         orderBy: (character) => drift.OrderBy([
           drift.OrderingTerm.asc(character.position),
         ]),
@@ -56,13 +58,14 @@ final nightListProvider = StreamProvider.family.autoDispose<Iterable<ListCharact
       .listCharacterWithNight(
         nightType: (character, characterNight) =>
             drift.Variable(const NightTypeConverter().toSql(state ? NightType.firstNight : NightType.otherNight)),
-        where: (character, characterNight) =>
-            (character.id.isInQuery(db.characterIdInScript(scriptId)) |
-                character.type.isInValues(const {
-                  CharacterType.info,
-                  CharacterType.traveller,
-                })) &
-            character.id.isNotIn(hiddenIdList).equalsExp(character.type.equalsValue(CharacterType.traveller).not()),
+        where: (character, characterNight) {
+          final infoCharacter = character.type.equalsValue(CharacterType.info);
+          final scriptCharacter =
+              character.id.isInQuery(db.characterIdInScript(scriptId)) & character.id.isNotIn(hiddenIdList);
+          final travellerCharacter =
+              character.type.equalsValue(CharacterType.traveller) & character.id.isIn(hiddenIdList);
+          return infoCharacter | scriptCharacter | travellerCharacter;
+        },
         orderBy: (character, characterNight) => drift.OrderBy([
           drift.OrderingTerm.asc(characterNight.position),
         ]),
