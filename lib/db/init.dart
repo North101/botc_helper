@@ -40,7 +40,6 @@ class CharacterJson {
   final String name;
   final CharacterType type;
   final String description;
-  @JsonKey(fromJson: optionsFromJson)
   final List<CharacterOptionJson> options;
 }
 
@@ -51,9 +50,7 @@ class CharacterOptionJson {
   factory CharacterOptionJson.fromJson(Map<String, dynamic> json) => _$CharacterOptionJsonFromJson(json);
 
   final String title;
-  @JsonKey(fromJson: characterOptionItemsFromJson)
   final List<OptionItem> items;
-  @JsonKey(fromJson: characterOptionItemNFromJson)
   final CharacterOptionItem? next;
 }
 
@@ -64,11 +61,11 @@ class CharacterNightJson {
   factory CharacterNightJson.fromJson(Map<String, dynamic> json) => _$CharacterNightJsonFromJson(json);
 
   static List<CharacterNightReminderJson> characterNightReminder(List json) =>
-      json.map((e) => CharacterNightReminderJson.fromJson((e as Map).cast())).toList();
+      listFromJson(json, CharacterNightReminderJson.fromJson);
 
-  @JsonKey(name: 'first_night', fromJson: characterNightReminder)
+  @JsonKey(name: 'first_night')
   final List<CharacterNightReminderJson> firstNight;
-  @JsonKey(name: 'other_night', fromJson: characterNightReminder)
+  @JsonKey(name: 'other_night')
   final List<CharacterNightReminderJson> otherNight;
 }
 
@@ -98,7 +95,8 @@ Future<void> initCharacters(Database db) async {
     );
     batch.deleteWhere(
       db.characterOption,
-      (characterOption) => characterOption.characterId.isInQuery(officialCharacters),
+      (characterOption) =>
+          characterOption.characterId.isInQuery(officialCharacters) | characterOption.characterId.isNull(),
     );
     batch.deleteWhere(
       db.character,

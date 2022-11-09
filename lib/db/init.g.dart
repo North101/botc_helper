@@ -17,7 +17,10 @@ CharacterJson _$CharacterJsonFromJson(Map json) => CharacterJson(
       json['name'] as String,
       $enumDecode(_$CharacterTypeEnumMap, json['type']),
       json['description'] as String,
-      CharacterJson.optionsFromJson(json['options'] as List),
+      (json['options'] as List<dynamic>)
+          .map((e) =>
+              CharacterOptionJson.fromJson(Map<String, dynamic>.from(e as Map)))
+          .toList(),
     );
 
 const _$CharacterTypeEnumMap = {
@@ -33,13 +36,24 @@ const _$CharacterTypeEnumMap = {
 CharacterOptionJson _$CharacterOptionJsonFromJson(Map json) =>
     CharacterOptionJson(
       json['title'] as String,
-      characterOptionItemsFromJson(json['items'] as List),
-      characterOptionItemNFromJson(json['next'] as Map?),
+      (json['items'] as List<dynamic>)
+          .map((e) => OptionItem.fromJson(Map<String, dynamic>.from(e as Map)))
+          .toList(),
+      json['next'] == null
+          ? null
+          : CharacterOptionItem.fromJson(
+              Map<String, dynamic>.from(json['next'] as Map)),
     );
 
 CharacterNightJson _$CharacterNightJsonFromJson(Map json) => CharacterNightJson(
-      CharacterNightJson.characterNightReminder(json['first_night'] as List),
-      CharacterNightJson.characterNightReminder(json['other_night'] as List),
+      (json['first_night'] as List<dynamic>)
+          .map((e) => CharacterNightReminderJson.fromJson(
+              Map<String, dynamic>.from(e as Map)))
+          .toList(),
+      (json['other_night'] as List<dynamic>)
+          .map((e) => CharacterNightReminderJson.fromJson(
+              Map<String, dynamic>.from(e as Map)))
+          .toList(),
     );
 
 CharacterNightReminderJson _$CharacterNightReminderJsonFromJson(Map json) =>

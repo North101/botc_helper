@@ -4,6 +4,7 @@ targets:
       json_serializable:
         options:
           any_map: true
+          explicit_to_json: true
       drift_dev:
         options:
           apply_converters_on_variables: true

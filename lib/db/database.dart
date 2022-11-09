@@ -179,26 +179,34 @@ extension CharacterDataEx on CharacterData {
   }
 }
 
+List<T> listFromJson<T>(List<dynamic> json, T Function(Map<String, dynamic> e) fromJson) =>
+    json.cast<Map<String, dynamic>>().map(fromJson).toList();
+List<dynamic> listToJson<T>(List<T> json, dynamic Function(T e) toJson) => json.map(toJson).toList();
+
+T? nullableFromJson<T>(Map<String, dynamic>? json, T Function(Map<String, dynamic> json) nullableFromJson) =>
+    json != null ? nullableFromJson(json) : null;
+Map<String, dynamic>? nullableToJson<T>(T? value, Map<String, dynamic> Function(T value) toJson) =>
+    value != null ? toJson(value) : null;
+
 Map<String, dynamic> scriptToJson(ScriptData script) => script.toJson();
 ScriptData scriptFromJson(Map<String, dynamic> json) => ScriptData.fromJson(json);
 
-Map<String, dynamic>? scriptNToJson(ScriptData? script) => script != null ? scriptToJson(script) : null;
-ScriptData? scriptNFromJson(Map<String, dynamic>? json) => json != null ? scriptFromJson(json) : null;
+Map<String, dynamic>? scriptNToJson(ScriptData? script) => nullableToJson(script, scriptToJson);
+ScriptData? scriptNFromJson(Map<String, dynamic>? json) => nullableFromJson(json, scriptFromJson);
 
 Map<String, dynamic> characterToJson(CharacterData character) => character.toJson();
 CharacterData characterFromJson(Map<String, dynamic> json) => CharacterData.fromJson(json);
 
-List<dynamic> characterOptionItemsToJson(List<OptionItem> items) => items.map((e) => e.toJson()).toList();
-List<OptionItem> characterOptionItemsFromJson(List json) =>
-    json.map((e) => OptionItem.fromJson((e as Map).cast())).toList();
+List<dynamic> characterOptionItemListToJson(List<OptionItem> items) => listToJson(items, (e) => e.toJson());
+List<OptionItem> characterOptionItemListFromJson(List json) => listFromJson(json, OptionItem.fromJson);
 
-Map<String, dynamic> characterOptionItemToJson(CharacterOptionItem data) => data.toJson();
-CharacterOptionItem characterOptionItemFromJson(Map json) => CharacterOptionItem.fromJson(json.cast());
+Map<String, dynamic> characterOptionItemToJson(CharacterOptionItem value) => value.toJson();
+CharacterOptionItem characterOptionItemFromJson(Map<String, dynamic> json) => CharacterOptionItem.fromJson(json);
 
 Map<String, dynamic>? characterOptionItemNToJson(CharacterOptionItem? data) =>
-    data != null ? characterOptionItemToJson(data) : null;
-CharacterOptionItem? characterOptionItemNFromJson(Map? json) => json != null ? characterOptionItemFromJson(json) : null;
+    nullableToJson(data, characterOptionItemToJson);
+CharacterOptionItem? characterOptionItemNFromJson(Map<String, dynamic>? json) =>
+    nullableFromJson(json, characterOptionItemFromJson);
 
-List<ScriptFilter> scriptFilterListFromJson(List<dynamic> json) =>
-    json.map((e) => ScriptFilter.fromJson((e as Map).cast())).toList();
-List<dynamic> scriptFilterListToJson(List<ScriptFilter> list) => list.map((e) => e.toJson()).toList();
+List<dynamic> scriptFilterListToJson(List<ScriptFilter> list) => listToJson(list, (e) => e.toJson());
+List<ScriptFilter> scriptFilterListFromJson(List<dynamic> json) => listFromJson(json, ScriptFilter.fromJson);

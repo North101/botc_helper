@@ -40,10 +40,7 @@ mixin _$OptionItem {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String value) label,
-    required TResult Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)
+    required TResult Function(List<ScriptFilter> filter, String? value)
         character,
     required TResult Function(CharacterAlignment? value) alignment,
     required TResult Function(List<String> items, int? value) select,
@@ -54,11 +51,7 @@ mixin _$OptionItem {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String value)? label,
-    TResult? Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)?
-        character,
+    TResult? Function(List<ScriptFilter> filter, String? value)? character,
     TResult? Function(CharacterAlignment? value)? alignment,
     TResult? Function(List<String> items, int? value)? select,
     TResult? Function(int? value, int? min, int? max)? number,
@@ -68,11 +61,7 @@ mixin _$OptionItem {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String value)? label,
-    TResult Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)?
-        character,
+    TResult Function(List<ScriptFilter> filter, String? value)? character,
     TResult Function(CharacterAlignment? value)? alignment,
     TResult Function(List<String> items, int? value)? select,
     TResult Function(int? value, int? min, int? max)? number,
@@ -205,10 +194,7 @@ class _$OptionLabelItem implements OptionLabelItem {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String value) label,
-    required TResult Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)
+    required TResult Function(List<ScriptFilter> filter, String? value)
         character,
     required TResult Function(CharacterAlignment? value) alignment,
     required TResult Function(List<String> items, int? value) select,
@@ -222,11 +208,7 @@ class _$OptionLabelItem implements OptionLabelItem {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String value)? label,
-    TResult? Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)?
-        character,
+    TResult? Function(List<ScriptFilter> filter, String? value)? character,
     TResult? Function(CharacterAlignment? value)? alignment,
     TResult? Function(List<String> items, int? value)? select,
     TResult? Function(int? value, int? min, int? max)? number,
@@ -239,11 +221,7 @@ class _$OptionLabelItem implements OptionLabelItem {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String value)? label,
-    TResult Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)?
-        character,
+    TResult Function(List<ScriptFilter> filter, String? value)? character,
     TResult Function(CharacterAlignment? value)? alignment,
     TResult Function(List<String> items, int? value)? select,
     TResult Function(int? value, int? min, int? max)? number,
@@ -325,10 +303,7 @@ abstract class _$$OptionCharacterItemCopyWith<$Res> {
           $Res Function(_$OptionCharacterItem) then) =
       __$$OptionCharacterItemCopyWithImpl<$Res>;
   @useResult
-  $Res call(
-      {@JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-          List<ScriptFilter> filter,
-      String? value});
+  $Res call({List<ScriptFilter> filter, String? value});
 }
 
 /// @nodoc
@@ -361,10 +336,7 @@ class __$$OptionCharacterItemCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$OptionCharacterItem implements OptionCharacterItem {
-  const _$OptionCharacterItem(
-      @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-          final List<ScriptFilter> filter,
-      this.value,
+  const _$OptionCharacterItem(final List<ScriptFilter> filter, this.value,
       {final String? $type})
       : _filter = filter,
         $type = $type ?? 'character';
@@ -372,11 +344,8 @@ class _$OptionCharacterItem implements OptionCharacterItem {
   factory _$OptionCharacterItem.fromJson(Map<String, dynamic> json) =>
       _$$OptionCharacterItemFromJson(json);
 
-// ignore: invalid_annotation_target
   final List<ScriptFilter> _filter;
-// ignore: invalid_annotation_target
   @override
-  @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
   List<ScriptFilter> get filter {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_filter);
@@ -418,10 +387,7 @@ class _$OptionCharacterItem implements OptionCharacterItem {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String value) label,
-    required TResult Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)
+    required TResult Function(List<ScriptFilter> filter, String? value)
         character,
     required TResult Function(CharacterAlignment? value) alignment,
     required TResult Function(List<String> items, int? value) select,
@@ -435,11 +401,7 @@ class _$OptionCharacterItem implements OptionCharacterItem {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String value)? label,
-    TResult? Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)?
-        character,
+    TResult? Function(List<ScriptFilter> filter, String? value)? character,
     TResult? Function(CharacterAlignment? value)? alignment,
     TResult? Function(List<String> items, int? value)? select,
     TResult? Function(int? value, int? min, int? max)? number,
@@ -452,11 +414,7 @@ class _$OptionCharacterItem implements OptionCharacterItem {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String value)? label,
-    TResult Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)?
-        character,
+    TResult Function(List<ScriptFilter> filter, String? value)? character,
     TResult Function(CharacterAlignment? value)? alignment,
     TResult Function(List<String> items, int? value)? select,
     TResult Function(int? value, int? min, int? max)? number,
@@ -522,15 +480,12 @@ class _$OptionCharacterItem implements OptionCharacterItem {
 
 abstract class OptionCharacterItem implements OptionItem {
   const factory OptionCharacterItem(
-      @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-          final List<ScriptFilter> filter,
-      final String? value) = _$OptionCharacterItem;
+          final List<ScriptFilter> filter, final String? value) =
+      _$OptionCharacterItem;
 
   factory OptionCharacterItem.fromJson(Map<String, dynamic> json) =
       _$OptionCharacterItem.fromJson;
 
-// ignore: invalid_annotation_target
-  @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
   List<ScriptFilter> get filter;
   String? get value;
   @JsonKey(ignore: true)
@@ -612,10 +567,7 @@ class _$OptionAlignmentItem implements OptionAlignmentItem {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String value) label,
-    required TResult Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)
+    required TResult Function(List<ScriptFilter> filter, String? value)
         character,
     required TResult Function(CharacterAlignment? value) alignment,
     required TResult Function(List<String> items, int? value) select,
@@ -629,11 +581,7 @@ class _$OptionAlignmentItem implements OptionAlignmentItem {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String value)? label,
-    TResult? Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)?
-        character,
+    TResult? Function(List<ScriptFilter> filter, String? value)? character,
     TResult? Function(CharacterAlignment? value)? alignment,
     TResult? Function(List<String> items, int? value)? select,
     TResult? Function(int? value, int? min, int? max)? number,
@@ -646,11 +594,7 @@ class _$OptionAlignmentItem implements OptionAlignmentItem {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String value)? label,
-    TResult Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)?
-        character,
+    TResult Function(List<ScriptFilter> filter, String? value)? character,
     TResult Function(CharacterAlignment? value)? alignment,
     TResult Function(List<String> items, int? value)? select,
     TResult Function(int? value, int? min, int? max)? number,
@@ -816,10 +760,7 @@ class _$OptionSelectItem implements OptionSelectItem {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String value) label,
-    required TResult Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)
+    required TResult Function(List<ScriptFilter> filter, String? value)
         character,
     required TResult Function(CharacterAlignment? value) alignment,
     required TResult Function(List<String> items, int? value) select,
@@ -833,11 +774,7 @@ class _$OptionSelectItem implements OptionSelectItem {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String value)? label,
-    TResult? Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)?
-        character,
+    TResult? Function(List<ScriptFilter> filter, String? value)? character,
     TResult? Function(CharacterAlignment? value)? alignment,
     TResult? Function(List<String> items, int? value)? select,
     TResult? Function(int? value, int? min, int? max)? number,
@@ -850,11 +787,7 @@ class _$OptionSelectItem implements OptionSelectItem {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String value)? label,
-    TResult Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)?
-        character,
+    TResult Function(List<ScriptFilter> filter, String? value)? character,
     TResult Function(CharacterAlignment? value)? alignment,
     TResult Function(List<String> items, int? value)? select,
     TResult Function(int? value, int? min, int? max)? number,
@@ -1022,10 +955,7 @@ class _$OptionNumberItem implements OptionNumberItem {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String value) label,
-    required TResult Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)
+    required TResult Function(List<ScriptFilter> filter, String? value)
         character,
     required TResult Function(CharacterAlignment? value) alignment,
     required TResult Function(List<String> items, int? value) select,
@@ -1039,11 +969,7 @@ class _$OptionNumberItem implements OptionNumberItem {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String value)? label,
-    TResult? Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)?
-        character,
+    TResult? Function(List<ScriptFilter> filter, String? value)? character,
     TResult? Function(CharacterAlignment? value)? alignment,
     TResult? Function(List<String> items, int? value)? select,
     TResult? Function(int? value, int? min, int? max)? number,
@@ -1056,11 +982,7 @@ class _$OptionNumberItem implements OptionNumberItem {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String value)? label,
-    TResult Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)?
-        character,
+    TResult Function(List<ScriptFilter> filter, String? value)? character,
     TResult Function(CharacterAlignment? value)? alignment,
     TResult Function(List<String> items, int? value)? select,
     TResult Function(int? value, int? min, int? max)? number,
@@ -1212,10 +1134,7 @@ class _$OptionTextItem implements OptionTextItem {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String value) label,
-    required TResult Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)
+    required TResult Function(List<ScriptFilter> filter, String? value)
         character,
     required TResult Function(CharacterAlignment? value) alignment,
     required TResult Function(List<String> items, int? value) select,
@@ -1229,11 +1148,7 @@ class _$OptionTextItem implements OptionTextItem {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String value)? label,
-    TResult? Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)?
-        character,
+    TResult? Function(List<ScriptFilter> filter, String? value)? character,
     TResult? Function(CharacterAlignment? value)? alignment,
     TResult? Function(List<String> items, int? value)? select,
     TResult? Function(int? value, int? min, int? max)? number,
@@ -1246,11 +1161,7 @@ class _$OptionTextItem implements OptionTextItem {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String value)? label,
-    TResult Function(
-            @JsonKey(fromJson: fromScriptFilterJson, toJson: toScriptFilterJson)
-                List<ScriptFilter> filter,
-            String? value)?
-        character,
+    TResult Function(List<ScriptFilter> filter, String? value)? character,
     TResult Function(CharacterAlignment? value)? alignment,
     TResult Function(List<String> items, int? value)? select,
     TResult Function(int? value, int? min, int? max)? number,

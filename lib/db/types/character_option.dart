@@ -31,15 +31,7 @@ class CharacterOptionItem {
     this.items,
     this.next,
   );
-  @JsonKey(
-    fromJson: characterOptionItemsFromJson,
-    toJson: characterOptionItemsToJson,
-  )
   final List<OptionItem> items;
-  @JsonKey(
-    fromJson: characterOptionItemNFromJson,
-    toJson: characterOptionItemNToJson,
-  )
   final CharacterOptionItem? next;
 
   factory CharacterOptionItem.fromJson(Map<String, dynamic> json) => _$CharacterOptionItemFromJson(json);
@@ -50,25 +42,13 @@ class CharacterOptionItem {
 @freezed
 class OptionItem with _$OptionItem {
   const factory OptionItem.label(String value) = OptionLabelItem;
-  const factory OptionItem.character(
-    // ignore: invalid_annotation_target
-    @JsonKey(
-      fromJson: fromScriptFilterJson,
-      toJson: toScriptFilterJson,
-    )
-        List<ScriptFilter> filter,
-    String? value,
-  ) = OptionCharacterItem;
+  const factory OptionItem.character(List<ScriptFilter> filter, String? value) = OptionCharacterItem;
   const factory OptionItem.alignment(CharacterAlignment? value) = OptionAlignmentItem;
   const factory OptionItem.select(List<String> items, int? value) = OptionSelectItem;
   const factory OptionItem.number(int? value, int? min, int? max) = OptionNumberItem;
   const factory OptionItem.text(String? value) = OptionTextItem;
   factory OptionItem.fromJson(Map<String, dynamic> json) => _$OptionItemFromJson(json);
 }
-
-List<ScriptFilter> fromScriptFilterJson(List json) =>
-    json.map((e) => ScriptFilter.fromJson((e as Map).cast())).toList();
-List<dynamic> toScriptFilterJson(List<ScriptFilter> json) => json.map((e) => e.toJson()).toList();
 
 enum ScriptFilterType {
   type,

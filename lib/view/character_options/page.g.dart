@@ -10,8 +10,8 @@ CharacterOptionArguments _$CharacterOptionArgumentsFromJson(Map json) =>
     CharacterOptionArguments(
       script: scriptFromJson(json['script'] as Map<String, dynamic>),
       character: characterFromJson(json['character'] as Map<String, dynamic>),
-      characterOption:
-          characterOptionItemFromJson(json['characterOption'] as Map),
+      characterOption: characterOptionItemFromJson(
+          json['characterOption'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CharacterOptionArgumentsToJson(

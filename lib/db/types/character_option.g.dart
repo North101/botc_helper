@@ -8,15 +8,20 @@ part of 'character_option.dart';
 
 CharacterOptionItem _$CharacterOptionItemFromJson(Map json) =>
     CharacterOptionItem(
-      characterOptionItemsFromJson(json['items'] as List),
-      characterOptionItemNFromJson(json['next'] as Map?),
+      (json['items'] as List<dynamic>)
+          .map((e) => OptionItem.fromJson(Map<String, dynamic>.from(e as Map)))
+          .toList(),
+      json['next'] == null
+          ? null
+          : CharacterOptionItem.fromJson(
+              Map<String, dynamic>.from(json['next'] as Map)),
     );
 
 Map<String, dynamic> _$CharacterOptionItemToJson(
         CharacterOptionItem instance) =>
     <String, dynamic>{
-      'items': characterOptionItemsToJson(instance.items),
-      'next': characterOptionItemNToJson(instance.next),
+      'items': instance.items.map((e) => e.toJson()).toList(),
+      'next': instance.next?.toJson(),
     };
 
 _$OptionLabelItem _$$OptionLabelItemFromJson(Map json) => _$OptionLabelItem(
@@ -32,7 +37,10 @@ Map<String, dynamic> _$$OptionLabelItemToJson(_$OptionLabelItem instance) =>
 
 _$OptionCharacterItem _$$OptionCharacterItemFromJson(Map json) =>
     _$OptionCharacterItem(
-      fromScriptFilterJson(json['filter'] as List),
+      (json['filter'] as List<dynamic>)
+          .map(
+              (e) => ScriptFilter.fromJson(Map<String, Object?>.from(e as Map)))
+          .toList(),
       json['value'] as String?,
       $type: json['type'] as String?,
     );
@@ -40,7 +48,7 @@ _$OptionCharacterItem _$$OptionCharacterItemFromJson(Map json) =>
 Map<String, dynamic> _$$OptionCharacterItemToJson(
         _$OptionCharacterItem instance) =>
     <String, dynamic>{
-      'filter': toScriptFilterJson(instance.filter),
+      'filter': instance.filter.map((e) => e.toJson()).toList(),
       'value': instance.value,
       'type': instance.$type,
     };
