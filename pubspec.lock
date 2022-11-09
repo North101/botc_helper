@@ -195,7 +195,7 @@ packages:
     description:
       path: drift
       ref: develop
-      resolved-ref: ae87bb7373fb55f477dc185ad82cc81ffa64f5bd
+      resolved-ref: "22d30bd14962de91bfbcf3a6896c91e62ed713e1"
       url: "https://github.com/simolus3/drift.git"
     source: git
     version: "2.3.0-dev"
@@ -204,7 +204,7 @@ packages:
     description:
       path: drift_dev
       ref: develop
-      resolved-ref: ae87bb7373fb55f477dc185ad82cc81ffa64f5bd
+      resolved-ref: "22d30bd14962de91bfbcf3a6896c91e62ed713e1"
       url: "https://github.com/simolus3/drift.git"
     source: git
     version: "2.3.0-dev"
@@ -618,16 +618,16 @@ packages:
     description:
       path: sqlite3_flutter_libs
       ref: main
-      resolved-ref: "028f85ea50da0c8d221fb7071533cd2e5f1ba92b"
+      resolved-ref: c4bfbb0dd44de21a7181b5856871d1ffa264dda0
       url: "https://github.com/simolus3/sqlite3.dart.git"
     source: git
-    version: "0.5.10"
+    version: "0.5.11+1"
   sqlparser:
     dependency: "direct overridden"
     description:
       path: sqlparser
       ref: develop
-      resolved-ref: ae87bb7373fb55f477dc185ad82cc81ffa64f5bd
+      resolved-ref: "22d30bd14962de91bfbcf3a6896c91e62ed713e1"
       url: "https://github.com/simolus3/drift.git"
     source: git
     version: "0.23.3"
@@ -784,7 +784,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0"
+    version: "3.1.1"
   xdg_directories:
     dependency: transitive
     description:

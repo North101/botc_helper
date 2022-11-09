@@ -198,11 +198,11 @@ class Script extends Table with TableInfo<Script, ScriptData> {
   ScriptData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ScriptData(
-      id: attachedDatabase.options.types
+      id: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      name: attachedDatabase.options.types
+      name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      custom: attachedDatabase.options.types
+      custom: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}custom'])!,
     );
   }
@@ -523,17 +523,17 @@ class Character extends Table with TableInfo<Character, CharacterData> {
   CharacterData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CharacterData(
-      id: attachedDatabase.options.types
+      id: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      name: attachedDatabase.options.types
+      name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      position: attachedDatabase.options.types
+      position: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}position'])!,
-      type: Character.$converter0.fromSql(attachedDatabase.options.types
+      type: Character.$converter0.fromSql(attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}type'])!),
-      description: attachedDatabase.options.types
+      description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
-      custom: attachedDatabase.options.types
+      custom: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}custom'])!,
     );
   }
@@ -717,9 +717,9 @@ class ScriptCharacter extends Table
   ScriptCharacterData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ScriptCharacterData(
-      scriptId: attachedDatabase.options.types
+      scriptId: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}script_id'])!,
-      characterId: attachedDatabase.options.types
+      characterId: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}character_id'])!,
     );
   }
@@ -1014,15 +1014,15 @@ class CharacterOption extends Table
   CharacterOptionData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CharacterOptionData(
-      characterId: attachedDatabase.options.types
+      characterId: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}character_id']),
-      position: attachedDatabase.options.types
+      position: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}position'])!,
-      title: attachedDatabase.options.types
+      title: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
-      item: CharacterOption.$converter0.fromSql(attachedDatabase.options.types
+      item: CharacterOption.$converter0.fromSql(attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}item'])!),
-      custom: attachedDatabase.options.types
+      custom: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}custom'])!,
     );
   }
@@ -1282,13 +1282,13 @@ class CharacterNight extends Table
   CharacterNightData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CharacterNightData(
-      characterId: attachedDatabase.options.types
+      characterId: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}character_id'])!,
-      type: CharacterNight.$converter0.fromSql(attachedDatabase.options.types
+      type: CharacterNight.$converter0.fromSql(attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}type'])!),
-      position: attachedDatabase.options.types
+      position: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}position'])!,
-      reminder: attachedDatabase.options.types
+      reminder: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}reminder'])!,
     );
   }
