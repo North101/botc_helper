@@ -133,32 +133,26 @@ class EditScriptPageState extends ConsumerState<EditScriptPage> with Restoration
           SaveButton(),
         ],
       ),
-      body: Column(
-        children: [
-          const ScriptNameField(),
-          Expanded(
-            child: AsyncValueBuilder(
-              value: characterList,
-              data: (data) => CustomScrollView(
-                slivers: [
-                  for (final characterByType in data)
-                    SliverStickyHeader(
-                      header: HeaderListTile.titleCount(
-                        title: characterByType.key.title,
-                        count: characterByType.value.length,
-                      ),
-                      sliver: SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) => CharacterTile(character: characterByType.value[index]),
-                          childCount: characterByType.value.length,
-                        ),
-                      ),
-                    ),
-                ],
+      body: AsyncValueBuilder(
+        value: characterList,
+        data: (data) => CustomScrollView(
+          slivers: [
+            const SliverToBoxAdapter(child: ScriptNameField()),
+            for (final characterByType in data)
+              SliverStickyHeader(
+                header: HeaderListTile.titleCount(
+                  title: characterByType.key.title,
+                  count: characterByType.value.length,
+                ),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) => CharacterTile(character: characterByType.value[index]),
+                    childCount: characterByType.value.length,
+                  ),
+                ),
               ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => selectCharacterRouteFuture.present(SelectCharacterArgument(
@@ -202,7 +196,7 @@ class ScriptNameFieldState extends ConsumerState<ScriptNameField> {
       (prevValue, value) => setName(value),
     );
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
       child: TextFormField(
         controller: controller,
         decoration: const InputDecoration(labelText: 'Script Name'),
