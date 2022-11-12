@@ -7,6 +7,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '/db/database.dart';
 import '/util/assets.gen.dart';
+import '/util/util.dart';
 
 part 'init.g.dart';
 
@@ -110,21 +111,21 @@ Future<void> initCharacters(Database db) async {
     );
 
     batch.insertAll<Character, CharacterData>(db.character, [
-      for (final character in characterList.asMap().entries)
+      for (final character in characterList.withIndex)
         CharacterCompanion.insert(
           id: character.value.id,
+          position: character.index,
           name: character.value.name,
-          position: character.key,
           type: character.value.type,
           description: character.value.description,
           custom: false,
         ),
     ]);
     batch.insertAll<CharacterOption, CharacterOptionData>(db.characterOption, [
-      for (final generic in genericOptionList.asMap().entries)
+      for (final generic in genericOptionList.withIndex)
         CharacterOptionCompanion.insert(
           characterId: const Value(null),
-          position: generic.key,
+          position: generic.index,
           title: generic.value.title,
           item: CharacterOptionItem(
             generic.value.items,
@@ -135,10 +136,10 @@ Future<void> initCharacters(Database db) async {
     ]);
     batch.insertAll<CharacterOption, CharacterOptionData>(db.characterOption, [
       for (final character in characterList)
-        for (final characterOption in character.options.asMap().entries)
+        for (final characterOption in character.options.withIndex)
           CharacterOptionCompanion.insert(
             characterId: Value(character.id),
-            position: characterOption.key,
+            position: characterOption.index,
             title: characterOption.value.title,
             item: CharacterOptionItem(
               characterOption.value.items,
@@ -148,18 +149,18 @@ Future<void> initCharacters(Database db) async {
           ),
     ]);
     batch.insertAll(db.characterNight, [
-      for (final characterNight in characterNightList.firstNight.asMap().entries)
+      for (final characterNight in characterNightList.firstNight.withIndex)
         CharacterNightData(
           type: NightType.firstNight,
-          position: characterNight.key,
+          position: characterNight.index,
           characterId: characterNight.value.id,
           reminderId: characterNight.value.reminderId ?? characterNight.value.id,
           reminder: characterNight.value.reminder,
         ),
-      for (final characterNight in characterNightList.otherNight.asMap().entries)
+      for (final characterNight in characterNightList.otherNight.withIndex)
         CharacterNightData(
           type: NightType.otherNight,
-          position: characterNight.key,
+          position: characterNight.index,
           characterId: characterNight.value.id,
           reminderId: characterNight.value.reminderId ?? characterNight.value.id,
           reminder: characterNight.value.reminder,
@@ -202,19 +203,19 @@ Future<void> initScripts(Database db) async {
     ]);
     batch.insertAll<ScriptCharacterNight, ScriptCharacterNightData>(db.scriptCharacterNight, [
       for (final script in scriptList)
-        for (final characterId in script.firstNight.asMap().entries)
+        for (final characterId in script.firstNight.withIndex)
           ScriptCharacterNightCompanion.insert(
             scriptId: script.id,
             type: NightType.firstNight,
-            position: characterId.key,
+            position: characterId.index,
             reminderId: characterId.value,
           ),
       for (final script in scriptList)
-        for (final characterId in script.otherNight.asMap().entries)
+        for (final characterId in script.otherNight.withIndex)
           ScriptCharacterNightCompanion.insert(
             scriptId: script.id,
             type: NightType.otherNight,
-            position: characterId.key,
+            position: characterId.index,
             reminderId: characterId.value,
           ),
     ]);

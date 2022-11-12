@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_restorable/flutter_riverpod_restorable.dart';
 
 import '/db/database.dart';
+import '/util/util.dart';
 
 final selectProvider = RestorableProvider<RestorableIntN>(
   (ref) => throw UnimplementedError(),
@@ -48,9 +49,9 @@ class OptionSelectItemWidget extends ConsumerWidget {
         ),
         value: selected.value,
         selectedItemBuilder: (context) => [
-          for (final option in optionItem.items.asMap().entries)
+          for (final option in optionItem.items.withIndex)
             DropdownMenuItem(
-              value: option.key,
+              value: option.index,
               child: Center(
                 child: Text(
                   option.value,
@@ -61,9 +62,9 @@ class OptionSelectItemWidget extends ConsumerWidget {
             ),
         ],
         items: [
-          for (final option in optionItem.items.asMap().entries)
+          for (final option in optionItem.items.withIndex)
             DropdownMenuItem(
-              value: option.key,
+              value: option.index,
               child: Center(
                 child: Text(
                   option.value,
