@@ -18,13 +18,17 @@ Future<List<T>> loadJsonList<T>(String key, T Function(dynamic e) toElement) asy
 
 @JsonSerializable(createToJson: false)
 class ScriptJson {
-  const ScriptJson(this.id, this.name, this.characters);
+  const ScriptJson(this.id, this.name, this.characters, this.firstNight, this.otherNight);
 
   factory ScriptJson.fromJson(Map json) => _$ScriptJsonFromJson(json);
 
   final String id;
   final String name;
   final List<String> characters;
+  @JsonKey(name: 'first_night', defaultValue: [])
+  final List<String> firstNight;
+  @JsonKey(name: 'other_night', defaultValue: [])
+  final List<String> otherNight;
 }
 
 @JsonSerializable(createToJson: false)
@@ -71,11 +75,13 @@ class CharacterNightJson {
 
 @JsonSerializable(createToJson: false)
 class CharacterNightReminderJson {
-  const CharacterNightReminderJson(this.id, this.reminder);
+  const CharacterNightReminderJson(this.id, this.reminderId, this.reminder);
 
   factory CharacterNightReminderJson.fromJson(Map json) => _$CharacterNightReminderJsonFromJson(json);
 
   final String id;
+  @JsonKey(name: 'reminder_id')
+  final String? reminderId;
   final String reminder;
 }
 
@@ -144,16 +150,18 @@ Future<void> initCharacters(Database db) async {
     batch.insertAll(db.characterNight, [
       for (final characterNight in characterNightList.firstNight.asMap().entries)
         CharacterNightData(
-          characterId: characterNight.value.id,
           type: NightType.firstNight,
           position: characterNight.key,
+          characterId: characterNight.value.id,
+          reminderId: characterNight.value.reminderId ?? characterNight.value.id,
           reminder: characterNight.value.reminder,
         ),
       for (final characterNight in characterNightList.otherNight.asMap().entries)
         CharacterNightData(
-          characterId: characterNight.value.id,
           type: NightType.otherNight,
           position: characterNight.key,
+          characterId: characterNight.value.id,
+          reminderId: characterNight.value.reminderId ?? characterNight.value.id,
           reminder: characterNight.value.reminder,
         ),
     ]);
@@ -190,6 +198,24 @@ Future<void> initScripts(Database db) async {
           ScriptCharacterCompanion.insert(
             scriptId: script.id,
             characterId: characterId,
+          ),
+    ]);
+    batch.insertAll<ScriptCharacterNight, ScriptCharacterNightData>(db.scriptCharacterNight, [
+      for (final script in scriptList)
+        for (final characterId in script.firstNight.asMap().entries)
+          ScriptCharacterNightCompanion.insert(
+            scriptId: script.id,
+            type: NightType.firstNight,
+            position: characterId.key,
+            reminderId: characterId.value,
+          ),
+      for (final script in scriptList)
+        for (final characterId in script.otherNight.asMap().entries)
+          ScriptCharacterNightCompanion.insert(
+            scriptId: script.id,
+            type: NightType.otherNight,
+            position: characterId.key,
+            reminderId: characterId.value,
           ),
     ]);
   });

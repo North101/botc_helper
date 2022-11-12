@@ -1,112 +1,124 @@
 [
-    {
-        "title": "This is your Demon",
+  {
+    "title": "You are",
+    "items": [
+      {
+        "type": "label",
+        "value": "You are:"
+      },
+      {
+        "type": "character",
+        "filter": []
+      },
+      {
+        "type": "label",
+        "value": "You are:"
+      },
+      {
+        "type": "alignment"
+      }
+    ]
+  },
+  {
+    "title": "Character",
+    "items": [
+      {
+        "type": "character",
+        "filter": []
+      }
+    ]
+  },
+  {
+    "title": "Alignment",
+    "items": [
+      {
+        "type": "alignment"
+      }
+    ]
+  },
+  {
+    "title": "Number",
+    "items": [
+      {
+        "type": "number"
+      }
+    ]
+  },
+  {
+    "title": "Text",
+    "items": [
+      {
+        "type": "text"
+      }
+    ]
+  },
+  {
+    "title": "Yes/No",
+    "items": [
+      {
+        "type": "select",
         "items": [
-            {
-                "type": "label",
-                "value": "This is your Demon"
-            }
+          "Yes",
+          "No"
         ]
-    },
-    {
-        "title": "These are your Minion(s)",
-        "items": [
-            {
-                "type": "label",
-                "value": "These are your Minion(s)"
-            }
-        ]
-    },
-    {
-        "title": "Not in play",
-        "items": [
-            {
-                "type": "label",
-                "value": "These characters are NOT in play"
-            },
-            {
-                "type": "character",
-                "filter": []
-            },
-            {
-                "type": "character",
-                "filter": []
-            },
-            {
-                "type": "character",
-                "filter": []
-            }
-        ]
-    },
-    {
-        "title": "Did you vote today?",
-        "items": [
-            {
-                "type": "label",
-                "value": "Did you vote today?"
-            }
-        ]
-    },
-    {
-        "title": "Did you nominate today?",
-        "items": [
-            {
-                "type": "label",
-                "value": "Did you nominate today?"
-            }
-        ]
-    },
-    {
-        "title": "You are",
-        "items": [
-            {
-                "type": "label",
-                "value": "You are:"
-            },
-            {
-                "type": "character",
-                "filter": []
-            },
-            {
-                "type": "label",
-                "value": "You are:"
-            },
-            {
-                "type": "alignment"
-            }
-        ]
-    },
-    {
-        "title": "Character",
-        "items": [
-            {
-                "type": "character",
-                "filter": []
-            }
-        ]
-    },
-    {
-        "title": "Alignment",
-        "items": [
-            {
-                "type": "alignment"
-            }
-        ]
-    },
-    {
-        "title": "Number",
-        "items": [
-            {
-                "type": "number"
-            }
-        ]
-    },
-    {
-        "title": "Text",
-        "items": [
-            {
-                "type": "text"
-            }
-        ]
-    }
+      }
+    ]
+  },
+  {
+    "title": "This is your Demon",
+    "items": [
+      {
+        "type": "label",
+        "value": "This is your Demon"
+      }
+    ]
+  },
+  {
+    "title": "These are your Minion(s)",
+    "items": [
+      {
+        "type": "label",
+        "value": "These are your Minion(s)"
+      }
+    ]
+  },
+  {
+    "title": "Not in play",
+    "items": [
+      {
+        "type": "label",
+        "value": "These characters are NOT in play"
+      },
+      {
+        "type": "character",
+        "filter": []
+      },
+      {
+        "type": "character",
+        "filter": []
+      },
+      {
+        "type": "character",
+        "filter": []
+      }
+    ]
+  },
+  {
+    "title": "Did you vote today?",
+    "items": [
+      {
+        "type": "label",
+        "value": "Did you vote today?"
+      }
+    ]
+  },
+  {
+    "title": "Did you nominate today?",
+    "items": [
+      {
+        "type": "label",
+        "value": "Did you nominate today?"
+      }
+    ]
+  }
 ]

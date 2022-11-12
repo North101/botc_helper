@@ -736,6 +736,583 @@ class ScriptCharacter extends Table
   bool get dontWriteConstraints => true;
 }
 
+class CharacterNightData extends DataClass
+    implements Insertable<CharacterNightData> {
+  final NightType type;
+  final int position;
+  final String characterId;
+  final String reminderId;
+  final String reminder;
+  const CharacterNightData(
+      {required this.type,
+      required this.position,
+      required this.characterId,
+      required this.reminderId,
+      required this.reminder});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    {
+      final converter = CharacterNight.$converter0;
+      map['type'] = Variable<String>(converter.toSql(type));
+    }
+    map['position'] = Variable<int>(position);
+    map['character_id'] = Variable<String>(characterId);
+    map['reminder_id'] = Variable<String>(reminderId);
+    map['reminder'] = Variable<String>(reminder);
+    return map;
+  }
+
+  CharacterNightCompanion toCompanion(bool nullToAbsent) {
+    return CharacterNightCompanion(
+      type: Value(type),
+      position: Value(position),
+      characterId: Value(characterId),
+      reminderId: Value(reminderId),
+      reminder: Value(reminder),
+    );
+  }
+
+  factory CharacterNightData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CharacterNightData(
+      type: CharacterNight.$converter0
+          .fromJson(serializer.fromJson<String>(json['type'])),
+      position: serializer.fromJson<int>(json['position']),
+      characterId: serializer.fromJson<String>(json['character_id']),
+      reminderId: serializer.fromJson<String>(json['reminder_id']),
+      reminder: serializer.fromJson<String>(json['reminder']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'type':
+          serializer.toJson<String>(CharacterNight.$converter0.toJson(type)),
+      'position': serializer.toJson<int>(position),
+      'character_id': serializer.toJson<String>(characterId),
+      'reminder_id': serializer.toJson<String>(reminderId),
+      'reminder': serializer.toJson<String>(reminder),
+    };
+  }
+
+  CharacterNightData copyWith(
+          {NightType? type,
+          int? position,
+          String? characterId,
+          String? reminderId,
+          String? reminder}) =>
+      CharacterNightData(
+        type: type ?? this.type,
+        position: position ?? this.position,
+        characterId: characterId ?? this.characterId,
+        reminderId: reminderId ?? this.reminderId,
+        reminder: reminder ?? this.reminder,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('CharacterNightData(')
+          ..write('type: $type, ')
+          ..write('position: $position, ')
+          ..write('characterId: $characterId, ')
+          ..write('reminderId: $reminderId, ')
+          ..write('reminder: $reminder')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(type, position, characterId, reminderId, reminder);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CharacterNightData &&
+          other.type == this.type &&
+          other.position == this.position &&
+          other.characterId == this.characterId &&
+          other.reminderId == this.reminderId &&
+          other.reminder == this.reminder);
+}
+
+class CharacterNightCompanion extends UpdateCompanion<CharacterNightData> {
+  final Value<NightType> type;
+  final Value<int> position;
+  final Value<String> characterId;
+  final Value<String> reminderId;
+  final Value<String> reminder;
+  const CharacterNightCompanion({
+    this.type = const Value.absent(),
+    this.position = const Value.absent(),
+    this.characterId = const Value.absent(),
+    this.reminderId = const Value.absent(),
+    this.reminder = const Value.absent(),
+  });
+  CharacterNightCompanion.insert({
+    required NightType type,
+    required int position,
+    required String characterId,
+    required String reminderId,
+    required String reminder,
+  })  : type = Value(type),
+        position = Value(position),
+        characterId = Value(characterId),
+        reminderId = Value(reminderId),
+        reminder = Value(reminder);
+  static Insertable<CharacterNightData> custom({
+    Expression<String>? type,
+    Expression<int>? position,
+    Expression<String>? characterId,
+    Expression<String>? reminderId,
+    Expression<String>? reminder,
+  }) {
+    return RawValuesInsertable({
+      if (type != null) 'type': type,
+      if (position != null) 'position': position,
+      if (characterId != null) 'character_id': characterId,
+      if (reminderId != null) 'reminder_id': reminderId,
+      if (reminder != null) 'reminder': reminder,
+    });
+  }
+
+  CharacterNightCompanion copyWith(
+      {Value<NightType>? type,
+      Value<int>? position,
+      Value<String>? characterId,
+      Value<String>? reminderId,
+      Value<String>? reminder}) {
+    return CharacterNightCompanion(
+      type: type ?? this.type,
+      position: position ?? this.position,
+      characterId: characterId ?? this.characterId,
+      reminderId: reminderId ?? this.reminderId,
+      reminder: reminder ?? this.reminder,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (type.present) {
+      final converter = CharacterNight.$converter0;
+      map['type'] = Variable<String>(converter.toSql(type.value));
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (characterId.present) {
+      map['character_id'] = Variable<String>(characterId.value);
+    }
+    if (reminderId.present) {
+      map['reminder_id'] = Variable<String>(reminderId.value);
+    }
+    if (reminder.present) {
+      map['reminder'] = Variable<String>(reminder.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CharacterNightCompanion(')
+          ..write('type: $type, ')
+          ..write('position: $position, ')
+          ..write('characterId: $characterId, ')
+          ..write('reminderId: $reminderId, ')
+          ..write('reminder: $reminder')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class CharacterNight extends Table
+    with TableInfo<CharacterNight, CharacterNightData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  CharacterNight(this.attachedDatabase, [this._alias]);
+  final VerificationMeta _typeMeta = const VerificationMeta('type');
+  late final GeneratedColumnWithTypeConverter<NightType, String> type =
+      GeneratedColumn<String>('type', aliasedName, false,
+              type: DriftSqlType.string,
+              requiredDuringInsert: true,
+              $customConstraints: 'NOT NULL')
+          .withConverter<NightType>(CharacterNight.$converter0);
+  final VerificationMeta _positionMeta = const VerificationMeta('position');
+  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+      'position', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  final VerificationMeta _characterIdMeta =
+      const VerificationMeta('characterId');
+  late final GeneratedColumn<String> characterId = GeneratedColumn<String>(
+      'character_id', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL REFERENCES character(id)');
+  final VerificationMeta _reminderIdMeta = const VerificationMeta('reminderId');
+  late final GeneratedColumn<String> reminderId = GeneratedColumn<String>(
+      'reminder_id', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  final VerificationMeta _reminderMeta = const VerificationMeta('reminder');
+  late final GeneratedColumn<String> reminder = GeneratedColumn<String>(
+      'reminder', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  @override
+  List<GeneratedColumn> get $columns =>
+      [type, position, characterId, reminderId, reminder];
+  @override
+  String get aliasedName => _alias ?? 'character_night';
+  @override
+  String get actualTableName => 'character_night';
+  @override
+  VerificationContext validateIntegrity(Insertable<CharacterNightData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    context.handle(_typeMeta, const VerificationResult.success());
+    if (data.containsKey('position')) {
+      context.handle(_positionMeta,
+          position.isAcceptableOrUnknown(data['position']!, _positionMeta));
+    } else if (isInserting) {
+      context.missing(_positionMeta);
+    }
+    if (data.containsKey('character_id')) {
+      context.handle(
+          _characterIdMeta,
+          characterId.isAcceptableOrUnknown(
+              data['character_id']!, _characterIdMeta));
+    } else if (isInserting) {
+      context.missing(_characterIdMeta);
+    }
+    if (data.containsKey('reminder_id')) {
+      context.handle(
+          _reminderIdMeta,
+          reminderId.isAcceptableOrUnknown(
+              data['reminder_id']!, _reminderIdMeta));
+    } else if (isInserting) {
+      context.missing(_reminderIdMeta);
+    }
+    if (data.containsKey('reminder')) {
+      context.handle(_reminderMeta,
+          reminder.isAcceptableOrUnknown(data['reminder']!, _reminderMeta));
+    } else if (isInserting) {
+      context.missing(_reminderMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {type, position};
+  @override
+  CharacterNightData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CharacterNightData(
+      type: CharacterNight.$converter0.fromSql(attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])!),
+      position: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}position'])!,
+      characterId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}character_id'])!,
+      reminderId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}reminder_id'])!,
+      reminder: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}reminder'])!,
+    );
+  }
+
+  @override
+  CharacterNight createAlias(String alias) {
+    return CharacterNight(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<NightType, String, String> $converter0 =
+      const NightTypeConverter();
+  @override
+  List<String> get customConstraints =>
+      const ['PRIMARY KEY (type, position)', 'UNIQUE (type, reminder_id)'];
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class ScriptCharacterNightData extends DataClass
+    implements Insertable<ScriptCharacterNightData> {
+  final String scriptId;
+  final NightType type;
+  final int position;
+  final String reminderId;
+  const ScriptCharacterNightData(
+      {required this.scriptId,
+      required this.type,
+      required this.position,
+      required this.reminderId});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['script_id'] = Variable<String>(scriptId);
+    {
+      final converter = ScriptCharacterNight.$converter0;
+      map['type'] = Variable<String>(converter.toSql(type));
+    }
+    map['position'] = Variable<int>(position);
+    map['reminder_id'] = Variable<String>(reminderId);
+    return map;
+  }
+
+  ScriptCharacterNightCompanion toCompanion(bool nullToAbsent) {
+    return ScriptCharacterNightCompanion(
+      scriptId: Value(scriptId),
+      type: Value(type),
+      position: Value(position),
+      reminderId: Value(reminderId),
+    );
+  }
+
+  factory ScriptCharacterNightData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ScriptCharacterNightData(
+      scriptId: serializer.fromJson<String>(json['script_id']),
+      type: ScriptCharacterNight.$converter0
+          .fromJson(serializer.fromJson<String>(json['type'])),
+      position: serializer.fromJson<int>(json['position']),
+      reminderId: serializer.fromJson<String>(json['reminder_id']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'script_id': serializer.toJson<String>(scriptId),
+      'type': serializer
+          .toJson<String>(ScriptCharacterNight.$converter0.toJson(type)),
+      'position': serializer.toJson<int>(position),
+      'reminder_id': serializer.toJson<String>(reminderId),
+    };
+  }
+
+  ScriptCharacterNightData copyWith(
+          {String? scriptId,
+          NightType? type,
+          int? position,
+          String? reminderId}) =>
+      ScriptCharacterNightData(
+        scriptId: scriptId ?? this.scriptId,
+        type: type ?? this.type,
+        position: position ?? this.position,
+        reminderId: reminderId ?? this.reminderId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('ScriptCharacterNightData(')
+          ..write('scriptId: $scriptId, ')
+          ..write('type: $type, ')
+          ..write('position: $position, ')
+          ..write('reminderId: $reminderId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(scriptId, type, position, reminderId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ScriptCharacterNightData &&
+          other.scriptId == this.scriptId &&
+          other.type == this.type &&
+          other.position == this.position &&
+          other.reminderId == this.reminderId);
+}
+
+class ScriptCharacterNightCompanion
+    extends UpdateCompanion<ScriptCharacterNightData> {
+  final Value<String> scriptId;
+  final Value<NightType> type;
+  final Value<int> position;
+  final Value<String> reminderId;
+  const ScriptCharacterNightCompanion({
+    this.scriptId = const Value.absent(),
+    this.type = const Value.absent(),
+    this.position = const Value.absent(),
+    this.reminderId = const Value.absent(),
+  });
+  ScriptCharacterNightCompanion.insert({
+    required String scriptId,
+    required NightType type,
+    required int position,
+    required String reminderId,
+  })  : scriptId = Value(scriptId),
+        type = Value(type),
+        position = Value(position),
+        reminderId = Value(reminderId);
+  static Insertable<ScriptCharacterNightData> custom({
+    Expression<String>? scriptId,
+    Expression<String>? type,
+    Expression<int>? position,
+    Expression<String>? reminderId,
+  }) {
+    return RawValuesInsertable({
+      if (scriptId != null) 'script_id': scriptId,
+      if (type != null) 'type': type,
+      if (position != null) 'position': position,
+      if (reminderId != null) 'reminder_id': reminderId,
+    });
+  }
+
+  ScriptCharacterNightCompanion copyWith(
+      {Value<String>? scriptId,
+      Value<NightType>? type,
+      Value<int>? position,
+      Value<String>? reminderId}) {
+    return ScriptCharacterNightCompanion(
+      scriptId: scriptId ?? this.scriptId,
+      type: type ?? this.type,
+      position: position ?? this.position,
+      reminderId: reminderId ?? this.reminderId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (scriptId.present) {
+      map['script_id'] = Variable<String>(scriptId.value);
+    }
+    if (type.present) {
+      final converter = ScriptCharacterNight.$converter0;
+      map['type'] = Variable<String>(converter.toSql(type.value));
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (reminderId.present) {
+      map['reminder_id'] = Variable<String>(reminderId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ScriptCharacterNightCompanion(')
+          ..write('scriptId: $scriptId, ')
+          ..write('type: $type, ')
+          ..write('position: $position, ')
+          ..write('reminderId: $reminderId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class ScriptCharacterNight extends Table
+    with TableInfo<ScriptCharacterNight, ScriptCharacterNightData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  ScriptCharacterNight(this.attachedDatabase, [this._alias]);
+  final VerificationMeta _scriptIdMeta = const VerificationMeta('scriptId');
+  late final GeneratedColumn<String> scriptId = GeneratedColumn<String>(
+      'script_id', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL REFERENCES script(id)');
+  final VerificationMeta _typeMeta = const VerificationMeta('type');
+  late final GeneratedColumnWithTypeConverter<NightType, String> type =
+      GeneratedColumn<String>('type', aliasedName, false,
+              type: DriftSqlType.string,
+              requiredDuringInsert: true,
+              $customConstraints: 'NOT NULL')
+          .withConverter<NightType>(ScriptCharacterNight.$converter0);
+  final VerificationMeta _positionMeta = const VerificationMeta('position');
+  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+      'position', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  final VerificationMeta _reminderIdMeta = const VerificationMeta('reminderId');
+  late final GeneratedColumn<String> reminderId = GeneratedColumn<String>(
+      'reminder_id', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL REFERENCES character_night(reminder_id)');
+  @override
+  List<GeneratedColumn> get $columns => [scriptId, type, position, reminderId];
+  @override
+  String get aliasedName => _alias ?? 'script_character_night';
+  @override
+  String get actualTableName => 'script_character_night';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<ScriptCharacterNightData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('script_id')) {
+      context.handle(_scriptIdMeta,
+          scriptId.isAcceptableOrUnknown(data['script_id']!, _scriptIdMeta));
+    } else if (isInserting) {
+      context.missing(_scriptIdMeta);
+    }
+    context.handle(_typeMeta, const VerificationResult.success());
+    if (data.containsKey('position')) {
+      context.handle(_positionMeta,
+          position.isAcceptableOrUnknown(data['position']!, _positionMeta));
+    } else if (isInserting) {
+      context.missing(_positionMeta);
+    }
+    if (data.containsKey('reminder_id')) {
+      context.handle(
+          _reminderIdMeta,
+          reminderId.isAcceptableOrUnknown(
+              data['reminder_id']!, _reminderIdMeta));
+    } else if (isInserting) {
+      context.missing(_reminderIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {scriptId, type, position};
+  @override
+  ScriptCharacterNightData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ScriptCharacterNightData(
+      scriptId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}script_id'])!,
+      type: ScriptCharacterNight.$converter0.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])!),
+      position: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}position'])!,
+      reminderId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}reminder_id'])!,
+    );
+  }
+
+  @override
+  ScriptCharacterNight createAlias(String alias) {
+    return ScriptCharacterNight(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<NightType, String, String> $converter0 =
+      const NightTypeConverter();
+  @override
+  List<String> get customConstraints => const [
+        'PRIMARY KEY (script_id, type, position)',
+        'UNIQUE (script_id, type, reminder_id)'
+      ];
+  @override
+  bool get dontWriteConstraints => true;
+}
+
 class CharacterOptionData extends DataClass
     implements Insertable<CharacterOptionData> {
   final String? characterId;
@@ -1041,280 +1618,16 @@ class CharacterOption extends Table
   bool get dontWriteConstraints => true;
 }
 
-class CharacterNightData extends DataClass
-    implements Insertable<CharacterNightData> {
-  final String characterId;
-  final NightType type;
-  final int position;
-  final String reminder;
-  const CharacterNightData(
-      {required this.characterId,
-      required this.type,
-      required this.position,
-      required this.reminder});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['character_id'] = Variable<String>(characterId);
-    {
-      final converter = CharacterNight.$converter0;
-      map['type'] = Variable<String>(converter.toSql(type));
-    }
-    map['position'] = Variable<int>(position);
-    map['reminder'] = Variable<String>(reminder);
-    return map;
-  }
-
-  CharacterNightCompanion toCompanion(bool nullToAbsent) {
-    return CharacterNightCompanion(
-      characterId: Value(characterId),
-      type: Value(type),
-      position: Value(position),
-      reminder: Value(reminder),
-    );
-  }
-
-  factory CharacterNightData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return CharacterNightData(
-      characterId: serializer.fromJson<String>(json['character_id']),
-      type: CharacterNight.$converter0
-          .fromJson(serializer.fromJson<String>(json['type'])),
-      position: serializer.fromJson<int>(json['position']),
-      reminder: serializer.fromJson<String>(json['reminder']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'character_id': serializer.toJson<String>(characterId),
-      'type':
-          serializer.toJson<String>(CharacterNight.$converter0.toJson(type)),
-      'position': serializer.toJson<int>(position),
-      'reminder': serializer.toJson<String>(reminder),
-    };
-  }
-
-  CharacterNightData copyWith(
-          {String? characterId,
-          NightType? type,
-          int? position,
-          String? reminder}) =>
-      CharacterNightData(
-        characterId: characterId ?? this.characterId,
-        type: type ?? this.type,
-        position: position ?? this.position,
-        reminder: reminder ?? this.reminder,
-      );
-  @override
-  String toString() {
-    return (StringBuffer('CharacterNightData(')
-          ..write('characterId: $characterId, ')
-          ..write('type: $type, ')
-          ..write('position: $position, ')
-          ..write('reminder: $reminder')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(characterId, type, position, reminder);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is CharacterNightData &&
-          other.characterId == this.characterId &&
-          other.type == this.type &&
-          other.position == this.position &&
-          other.reminder == this.reminder);
-}
-
-class CharacterNightCompanion extends UpdateCompanion<CharacterNightData> {
-  final Value<String> characterId;
-  final Value<NightType> type;
-  final Value<int> position;
-  final Value<String> reminder;
-  const CharacterNightCompanion({
-    this.characterId = const Value.absent(),
-    this.type = const Value.absent(),
-    this.position = const Value.absent(),
-    this.reminder = const Value.absent(),
-  });
-  CharacterNightCompanion.insert({
-    required String characterId,
-    required NightType type,
-    required int position,
-    required String reminder,
-  })  : characterId = Value(characterId),
-        type = Value(type),
-        position = Value(position),
-        reminder = Value(reminder);
-  static Insertable<CharacterNightData> custom({
-    Expression<String>? characterId,
-    Expression<String>? type,
-    Expression<int>? position,
-    Expression<String>? reminder,
-  }) {
-    return RawValuesInsertable({
-      if (characterId != null) 'character_id': characterId,
-      if (type != null) 'type': type,
-      if (position != null) 'position': position,
-      if (reminder != null) 'reminder': reminder,
-    });
-  }
-
-  CharacterNightCompanion copyWith(
-      {Value<String>? characterId,
-      Value<NightType>? type,
-      Value<int>? position,
-      Value<String>? reminder}) {
-    return CharacterNightCompanion(
-      characterId: characterId ?? this.characterId,
-      type: type ?? this.type,
-      position: position ?? this.position,
-      reminder: reminder ?? this.reminder,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (characterId.present) {
-      map['character_id'] = Variable<String>(characterId.value);
-    }
-    if (type.present) {
-      final converter = CharacterNight.$converter0;
-      map['type'] = Variable<String>(converter.toSql(type.value));
-    }
-    if (position.present) {
-      map['position'] = Variable<int>(position.value);
-    }
-    if (reminder.present) {
-      map['reminder'] = Variable<String>(reminder.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('CharacterNightCompanion(')
-          ..write('characterId: $characterId, ')
-          ..write('type: $type, ')
-          ..write('position: $position, ')
-          ..write('reminder: $reminder')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class CharacterNight extends Table
-    with TableInfo<CharacterNight, CharacterNightData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  CharacterNight(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _characterIdMeta =
-      const VerificationMeta('characterId');
-  late final GeneratedColumn<String> characterId = GeneratedColumn<String>(
-      'character_id', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      $customConstraints: 'NOT NULL REFERENCES character(id)');
-  final VerificationMeta _typeMeta = const VerificationMeta('type');
-  late final GeneratedColumnWithTypeConverter<NightType, String> type =
-      GeneratedColumn<String>('type', aliasedName, false,
-              type: DriftSqlType.string,
-              requiredDuringInsert: true,
-              $customConstraints: 'NOT NULL')
-          .withConverter<NightType>(CharacterNight.$converter0);
-  final VerificationMeta _positionMeta = const VerificationMeta('position');
-  late final GeneratedColumn<int> position = GeneratedColumn<int>(
-      'position', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      $customConstraints: 'NOT NULL');
-  final VerificationMeta _reminderMeta = const VerificationMeta('reminder');
-  late final GeneratedColumn<String> reminder = GeneratedColumn<String>(
-      'reminder', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      $customConstraints: 'NOT NULL');
-  @override
-  List<GeneratedColumn> get $columns => [characterId, type, position, reminder];
-  @override
-  String get aliasedName => _alias ?? 'character_night';
-  @override
-  String get actualTableName => 'character_night';
-  @override
-  VerificationContext validateIntegrity(Insertable<CharacterNightData> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('character_id')) {
-      context.handle(
-          _characterIdMeta,
-          characterId.isAcceptableOrUnknown(
-              data['character_id']!, _characterIdMeta));
-    } else if (isInserting) {
-      context.missing(_characterIdMeta);
-    }
-    context.handle(_typeMeta, const VerificationResult.success());
-    if (data.containsKey('position')) {
-      context.handle(_positionMeta,
-          position.isAcceptableOrUnknown(data['position']!, _positionMeta));
-    } else if (isInserting) {
-      context.missing(_positionMeta);
-    }
-    if (data.containsKey('reminder')) {
-      context.handle(_reminderMeta,
-          reminder.isAcceptableOrUnknown(data['reminder']!, _reminderMeta));
-    } else if (isInserting) {
-      context.missing(_reminderMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {characterId, type};
-  @override
-  CharacterNightData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return CharacterNightData(
-      characterId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}character_id'])!,
-      type: CharacterNight.$converter0.fromSql(attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}type'])!),
-      position: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}position'])!,
-      reminder: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}reminder'])!,
-    );
-  }
-
-  @override
-  CharacterNight createAlias(String alias) {
-    return CharacterNight(attachedDatabase, alias);
-  }
-
-  static JsonTypeConverter2<NightType, String, String> $converter0 =
-      const NightTypeConverter();
-  @override
-  List<String> get customConstraints =>
-      const ['PRIMARY KEY (character_id, type)', 'UNIQUE (type, position)'];
-  @override
-  bool get dontWriteConstraints => true;
-}
-
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(e);
   _$Database.connect(DatabaseConnection c) : super.connect(c);
   late final Script script = Script(this);
   late final Character character = Character(this);
   late final ScriptCharacter scriptCharacter = ScriptCharacter(this);
-  late final CharacterOption characterOption = CharacterOption(this);
   late final CharacterNight characterNight = CharacterNight(this);
+  late final ScriptCharacterNight scriptCharacterNight =
+      ScriptCharacterNight(this);
+  late final CharacterOption characterOption = CharacterOption(this);
   Selectable<ScriptData> listScripts({ListScripts$where? where}) {
     var $arrayStartIndex = 1;
     final generatedwhere = $write(
@@ -1374,38 +1687,37 @@ abstract class _$Database extends GeneratedDatabase {
   }
 
   Selectable<ListCharacterWithNightResult> listCharacterWithNight(
-      {required ListCharacterWithNight$nightType nightType,
+      {required NightType nightType,
+      String? scriptId,
       ListCharacterWithNight$where? where,
       ListCharacterWithNight$orderBy? orderBy}) {
-    var $arrayStartIndex = 1;
-    final generatednightType = $write(
-        nightType(this.character, this.characterNight),
-        hasMultipleTables: true,
-        startIndex: $arrayStartIndex);
-    $arrayStartIndex += generatednightType.amountOfVariables;
+    var $arrayStartIndex = 3;
     final generatedwhere = $write(
-        where?.call(this.character, this.characterNight) ??
+        where?.call(this.character, this.characterNight,
+                this.scriptCharacterNight) ??
             const CustomExpression('(TRUE)'),
         hasMultipleTables: true,
         startIndex: $arrayStartIndex);
     $arrayStartIndex += generatedwhere.amountOfVariables;
     final generatedorderBy = $write(
-        orderBy?.call(this.character, this.characterNight) ??
+        orderBy?.call(this.character, this.characterNight,
+                this.scriptCharacterNight) ??
             const OrderBy.nothing(),
         hasMultipleTables: true,
         startIndex: $arrayStartIndex);
     $arrayStartIndex += generatedorderBy.amountOfVariables;
     return customSelect(
-        'SELECT"character"."id" AS "nested_0.id", "character"."name" AS "nested_0.name", "character"."position" AS "nested_0.position", "character"."type" AS "nested_0.type", "character"."description" AS "nested_0.description", "character"."custom" AS "nested_0.custom","character_night"."character_id" AS "nested_1.character_id", "character_night"."type" AS "nested_1.type", "character_night"."position" AS "nested_1.position", "character_night"."reminder" AS "nested_1.reminder" FROM character INNER JOIN character_night ON character_night.character_id = character.id AND character_night.type = ${generatednightType.sql} WHERE ${generatedwhere.sql} ${generatedorderBy.sql}',
+        'SELECT"character"."id" AS "nested_0.id", "character"."name" AS "nested_0.name", "character"."position" AS "nested_0.position", "character"."type" AS "nested_0.type", "character"."description" AS "nested_0.description", "character"."custom" AS "nested_0.custom","character_night"."type" AS "nested_1.type", "character_night"."position" AS "nested_1.position", "character_night"."character_id" AS "nested_1.character_id", "character_night"."reminder_id" AS "nested_1.reminder_id", "character_night"."reminder" AS "nested_1.reminder","script_character_night"."script_id" AS "nested_2.script_id", "script_character_night"."type" AS "nested_2.type", "script_character_night"."position" AS "nested_2.position", "script_character_night"."reminder_id" AS "nested_2.reminder_id" FROM character INNER JOIN character_night ON character_night.character_id = character.id AND character_night.type = ?1 LEFT JOIN script_character_night ON script_character_night.script_id = ?2 AND script_character_night.reminder_id = character_night.reminder_id AND script_character_night.type = character_night.type WHERE ${generatedwhere.sql} ${generatedorderBy.sql}',
         variables: [
-          ...generatednightType.introducedVariables,
+          Variable<String>(CharacterNight.$converter0.toSql(nightType)),
+          Variable<String>(scriptId),
           ...generatedwhere.introducedVariables,
           ...generatedorderBy.introducedVariables
         ],
         readsFrom: {
           character,
           characterNight,
-          ...generatednightType.watchedTables,
+          scriptCharacterNight,
           ...generatedwhere.watchedTables,
           ...generatedorderBy.watchedTables,
         }).asyncMap((QueryRow row) async {
@@ -1413,6 +1725,8 @@ abstract class _$Database extends GeneratedDatabase {
         character: await character.mapFromRow(row, tablePrefix: 'nested_0'),
         characterNight:
             await characterNight.mapFromRow(row, tablePrefix: 'nested_1'),
+        scriptCharacterNight: await scriptCharacterNight.mapFromRowOrNull(row,
+            tablePrefix: 'nested_2'),
       );
     });
   }
@@ -1421,8 +1735,14 @@ abstract class _$Database extends GeneratedDatabase {
   Iterable<TableInfo<Table, dynamic>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [script, character, scriptCharacter, characterOption, characterNight];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+        script,
+        character,
+        scriptCharacter,
+        characterNight,
+        scriptCharacterNight,
+        characterOption
+      ];
   @override
   DriftDatabaseOptions get options =>
       const DriftDatabaseOptions(storeDateTimeAsText: true);
@@ -1437,31 +1757,38 @@ typedef ListCharacterOptions$where = Expression<bool> Function(
 class ListCharacterWithNightResult {
   final CharacterData character;
   final CharacterNightData characterNight;
+  final ScriptCharacterNightData? scriptCharacterNight;
   ListCharacterWithNightResult({
     required this.character,
     required this.characterNight,
+    this.scriptCharacterNight,
   });
   @override
-  int get hashCode => Object.hash(character, characterNight);
+  int get hashCode =>
+      Object.hash(character, characterNight, scriptCharacterNight);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ListCharacterWithNightResult &&
           other.character == this.character &&
-          other.characterNight == this.characterNight);
+          other.characterNight == this.characterNight &&
+          other.scriptCharacterNight == this.scriptCharacterNight);
   @override
   String toString() {
     return (StringBuffer('ListCharacterWithNightResult(')
           ..write('character: $character, ')
-          ..write('characterNight: $characterNight')
+          ..write('characterNight: $characterNight, ')
+          ..write('scriptCharacterNight: $scriptCharacterNight')
           ..write(')'))
         .toString();
   }
 }
 
-typedef ListCharacterWithNight$nightType = Expression<String> Function(
-    Character character, CharacterNight character_night);
 typedef ListCharacterWithNight$where = Expression<bool> Function(
-    Character character, CharacterNight character_night);
+    Character character,
+    CharacterNight character_night,
+    ScriptCharacterNight script_character_night);
 typedef ListCharacterWithNight$orderBy = OrderBy Function(
-    Character character, CharacterNight character_night);
+    Character character,
+    CharacterNight character_night,
+    ScriptCharacterNight script_character_night);

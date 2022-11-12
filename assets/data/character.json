@@ -755,7 +755,22 @@
               "type": "label",
               "value": "Choose 2 players:\nYou learn if they are the same alignment."
             }
-          ]
+          ],
+          "next": {
+            "items": [
+              {
+                "type": "label",
+                "value": "Their alignment is the:"
+              },
+              {
+                "type": "select",
+                "items": [
+                  "Same",
+                  "Different"
+                ]
+              }
+            ]
+          }
         }
       }
     ]
@@ -1330,7 +1345,38 @@
     "name": "Lunatic",
     "type": "outsider",
     "description": "You think you are a Demon, but you are not. The Demon knows who you are & who you choose at night.",
-    "options": []
+    "options": [
+      {
+        "title": "These are your Minion(s)",
+        "items": [
+          {
+            "type": "label",
+            "value": "These are your Minion(s)"
+          }
+        ]
+      },
+      {
+        "title": "Not in play",
+        "items": [
+          {
+            "type": "label",
+            "value": "These characters are NOT in play"
+          },
+          {
+            "type": "character",
+            "filter": []
+          },
+          {
+            "type": "character",
+            "filter": []
+          },
+          {
+            "type": "character",
+            "filter": []
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "mutant",

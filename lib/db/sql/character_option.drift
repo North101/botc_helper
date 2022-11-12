@@ -1,4 +1,5 @@
 import '/db/database.dart';
+
 import 'character.drift';
 
 CREATE TABLE character_option (

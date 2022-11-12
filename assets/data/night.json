@@ -38,7 +38,8 @@
     },
     {
       "id": "lunatic",
-      "reminder": "If 7 or more players: Show the Lunatic a number of arbitrary 'Minions', players equal to the number of Minions in play. Show 3 character tokens of arbitrary good characters. If the token received by the Lunatic is a Demon that would wake tonight: Allow the Lunatic to do the Demon actions. Place their 'attack' markers. Wake the Demon. Show the Demon\u2019s real character token. Show them the Lunatic player. If the Lunatic attacked players: Show the real demon each marked player. Remove any Lunatic 'attack' markers."
+      "reminder_id": "lunatic_info",
+      "reminder": "If 7 or more players: Show the Lunatic a number of arbitrary 'Minions', players equal to the number of Minions in play. Show 3 character tokens of arbitrary good characters."
     },
     {
       "id": "demon",
@@ -94,7 +95,7 @@
     },
     {
       "id": "devils_advocate",
-      "reminder": "The Devil\u2019s Advocate points to a living player. That player survives execution tomorrow."
+      "reminder": "The Devil's Advocate points to a living player. That player survives execution tomorrow."
     },
     {
       "id": "evil_twin",
@@ -115,6 +116,10 @@
     {
       "id": "mezepheles",
       "reminder": "Show the Mezepheles their secret word."
+    },
+    {
+      "id": "lunatic",
+      "reminder": "If the token received by the Lunatic is a Demon that would wake tonight: Allow the Lunatic to do the Demon actions. Place their 'attack' markers. Wake the Demon. Show the Demon's real character token. Show them the Lunatic player. If the Lunatic attacked players: Show the real demon each marked player. Remove any Lunatic 'attack' markers."
     },
     {
       "id": "pukka",
@@ -296,7 +301,7 @@
     },
     {
       "id": "devils_advocate",
-      "reminder": "The Devil\u2019s Advocate points to a living player, different from the previous night. That player survives execution tomorrow."
+      "reminder": "The Devil's Advocate points to a living player, different from the previous night. That player survives execution tomorrow."
     },
     {
       "id": "witch",
@@ -396,7 +401,7 @@
     },
     {
       "id": "gossip",
-      "reminder": "If the Gossip\u2019s public statement was true: Choose a player not protected from dying tonight. That player dies."
+      "reminder": "If the Gossip's public statement was true: Choose a player not protected from dying tonight. That player dies."
     },
     {
       "id": "acrobat",
@@ -448,11 +453,11 @@
     },
     {
       "id": "grandmother",
-      "reminder": "If the Grandmother\u2019s grandchild was killed by the Demon tonight: The Grandmother dies."
+      "reminder": "If the Grandmother's grandchild was killed by the Demon tonight: The Grandmother dies."
     },
     {
       "id": "ravenkeeper",
-      "reminder": "If the Ravenkeeper died tonight: The Ravenkeeper points to a player. Show that player\u2019s character token."
+      "reminder": "If the Ravenkeeper died tonight: The Ravenkeeper points to a player. Show that player's character token."
     },
     {
       "id": "empath",
@@ -464,7 +469,7 @@
     },
     {
       "id": "undertaker",
-      "reminder": "If a player was executed today: Show that player\u2019s character token."
+      "reminder": "If a player was executed today: Show that player's character token."
     },
     {
       "id": "dreamer",
@@ -488,7 +493,7 @@
     },
     {
       "id": "juggler",
-      "reminder": "If today was the Juggler\u2019s first day: Show the hand signal for the number (0, 1, 2, etc.) of 'Correct' markers. Remove markers."
+      "reminder": "If today was the Juggler's first day: Show the hand signal for the number (0, 1, 2, etc.) of 'Correct' markers. Remove markers."
     },
     {
       "id": "balloonist",

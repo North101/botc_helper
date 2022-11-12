@@ -10,6 +10,14 @@ ScriptJson _$ScriptJsonFromJson(Map json) => ScriptJson(
       json['id'] as String,
       json['name'] as String,
       (json['characters'] as List<dynamic>).map((e) => e as String).toList(),
+      (json['first_night'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+      (json['other_night'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
     );
 
 CharacterJson _$CharacterJsonFromJson(Map json) => CharacterJson(
@@ -56,5 +64,6 @@ CharacterNightJson _$CharacterNightJsonFromJson(Map json) => CharacterNightJson(
 CharacterNightReminderJson _$CharacterNightReminderJsonFromJson(Map json) =>
     CharacterNightReminderJson(
       json['id'] as String,
+      json['reminder_id'] as String?,
       json['reminder'] as String,
     );

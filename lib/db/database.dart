@@ -24,6 +24,7 @@ import 'package:path_provider/path_provider.dart';
 
 import '/db/init.dart';
 import '/db/migrations/schema_v3.dart' as v3;
+import '/db/migrations/schema_v5.dart' as v5;
 import '/db/types/character_option.dart';
 import '/db/types/character_type.dart';
 import '/db/types/night_type.dart';
@@ -39,6 +40,7 @@ part 'database.g.dart';
   'sql/character_night.drift',
   'sql/character_option.drift',
   'sql/character.drift',
+  'sql/script_character_night.drift',
   'sql/script_character.drift',
   'sql/script.drift',
 })
@@ -56,7 +58,7 @@ class Database extends _$Database {
   }
 
   @override
-  int schemaVersion = 4;
+  int schemaVersion = 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -65,6 +67,12 @@ class Database extends _$Database {
             final db = v3.DatabaseAtV3(executor);
             await m.alterTable(TableMigration(db.character));
             await m.createTable(db.characterNight);
+          }
+          if (from < 5) {
+            final db = v5.DatabaseAtV5(executor);
+            await m.drop(db.characterNight);
+            await m.createTable(db.characterNight);
+            await m.createTable(db.scriptCharacterNight);
           }
         },
         beforeOpen: (details) async {
@@ -76,8 +84,8 @@ class Database extends _$Database {
               }
             });
           } else if (details.hadUpgrade) {
-            if (details.versionBefore! < 4) {
-              await initCharacters(this);
+            if (details.versionBefore! < 5) {
+              await initDatabase(this);
             }
           }
         },

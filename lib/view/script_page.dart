@@ -56,17 +56,17 @@ final nightListProvider = StreamProvider.family.autoDispose<Iterable<ListCharact
   final selectedIdList = ref.watch(selectedIdListProvider).value;
   return db
       .listCharacterWithNight(
-        nightType: (character, characterNight) =>
-            drift.Variable(const NightTypeConverter().toSql(state ? NightType.firstNight : NightType.otherNight)),
-        where: (character, characterNight) {
+        nightType: state ? NightType.firstNight : NightType.otherNight,
+        scriptId: scriptId,
+        where: (character, characterNight, scriptCharacterNight) {
           final infoCharacter = character.type.equalsValue(CharacterType.info);
           final scriptCharacter = character.id.isInQuery(db.characterIdInScript(scriptId));
           final travellerCharacter = character.type.equalsValue(CharacterType.traveller);
           final selectedCharacter = character.id.isIn(selectedIdList);
           return infoCharacter | ((scriptCharacter | travellerCharacter) & selectedCharacter);
         },
-        orderBy: (character, characterNight) => drift.OrderBy([
-          drift.OrderingTerm.asc(characterNight.position),
+        orderBy: (character, characterNight, scriptCharacterNight) => drift.OrderBy([
+          drift.OrderingTerm.asc(drift.coalesce([scriptCharacterNight.position, characterNight.position])),
         ]),
       )
       .watch();

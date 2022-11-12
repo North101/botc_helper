@@ -1,0 +1,16 @@
+import 'package:drift/drift.dart';
+
+import '/db/database.dart';
+
+import 'script.drift';
+import 'character_night.drift';
+
+CREATE TABLE script_character_night(
+  script_id TEXT NOT NULL REFERENCES script(id),
+  type TEXT MAPPED BY `const NightTypeConverter()` NOT NULL,
+  position INT NOT NULL,
+  reminder_id TEXT NOT NULL REFERENCES character_night(reminder_id),
+
+  PRIMARY KEY (script_id, type, position),
+  UNIQUE (script_id, type, reminder_id)
+);
